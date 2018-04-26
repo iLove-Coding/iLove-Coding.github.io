@@ -91,18 +91,18 @@
 
 
 
-<meta name="description" content="###概念？  函数防抖(debounce)：当调用动作过n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间函数节流(throttle)：预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期注：函数节流与函数防抖都是为了限制函数的执行频次，以优化函数触发频率过高导致的响应速度跟不上触发频率，出现延迟、卡顿等现象  ###应用场景？  win">
+<meta name="description" content="概念？ 函数防抖(debounce)：当调用动作过n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间函数节流(throttle)：预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期注：函数节流与函数防抖都是为了限制函数的执行频次，以优化函数触发频率过高导致的响应速度跟不上触发频率，出现延迟、卡顿等现象  应用场景？ window对象的re">
 <meta name="keywords" content="性能优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="节流与防抖">
 <meta property="og:url" content="https://ilove-coding.github.io/2018/04/12/节流与防抖/index.html">
 <meta property="og:site_name" content="潼潼爱coding">
-<meta property="og:description" content="###概念？  函数防抖(debounce)：当调用动作过n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间函数节流(throttle)：预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期注：函数节流与函数防抖都是为了限制函数的执行频次，以优化函数触发频率过高导致的响应速度跟不上触发频率，出现延迟、卡顿等现象  ###应用场景？  win">
+<meta property="og:description" content="概念？ 函数防抖(debounce)：当调用动作过n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间函数节流(throttle)：预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期注：函数节流与函数防抖都是为了限制函数的执行频次，以优化函数触发频率过高导致的响应速度跟不上触发频率，出现延迟、卡顿等现象  应用场景？ window对象的re">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-26T03:20:36.352Z">
+<meta property="og:updated_time" content="2018-04-26T03:52:23.963Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="节流与防抖">
-<meta name="twitter:description" content="###概念？  函数防抖(debounce)：当调用动作过n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间函数节流(throttle)：预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期注：函数节流与函数防抖都是为了限制函数的执行频次，以优化函数触发频率过高导致的响应速度跟不上触发频率，出现延迟、卡顿等现象  ###应用场景？  win">
+<meta name="twitter:description" content="概念？ 函数防抖(debounce)：当调用动作过n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间函数节流(throttle)：预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期注：函数节流与函数防抖都是为了限制函数的执行频次，以优化函数触发频率过高导致的响应速度跟不上触发频率，出现延迟、卡顿等现象  应用场景？ window对象的re">
 
 
 
@@ -386,18 +386,16 @@
       
 
       
-        <p>###概念？</p>
-<blockquote>
+        <h3 id="概念？"><a href="#概念？" class="headerlink" title="概念？"></a>概念？</h3><blockquote>
 <p>函数防抖(debounce)：当调用动作过n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间<br>函数节流(throttle)：预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期<br>注：函数节流与函数防抖都是为了限制函数的执行频次，以优化函数触发频率过高导致的响应速度跟不上触发频率，出现延迟、卡顿等现象</p>
 </blockquote>
-<p>###应用场景？</p>
-<ul>
+<h3 id="应用场景？"><a href="#应用场景？" class="headerlink" title="应用场景？"></a>应用场景？</h3><ul>
 <li>window对象的resize、scroll事件</li>
 <li>拖拽时的mousemove事件</li>
 <li>文字输入、自动完成的keyup事件</li>
 </ul>
-<p>###区别？<br><strong>函数防抖：</strong>触发事件，事件将在10秒后执行，这10秒内如果再次触发该事件，就重新计时10秒<br><strong>函数节流：</strong>触发事件，开启定时器，保证10秒后准时执行，定时器存在的情况下再触发该事件直接返回  </p>
-<p>###结合场景代码举例？<br><strong>函数防抖：</strong>注册时邮箱的输入框，随着用户的输入，实时判断邮箱格式是否正确。此时，每一次的用户输入都触发邮箱格式检查事件造成了浪费，于是设置两次输入之间的时间间隔大于800ms时（用户结束输入时），再执行检查邮箱格式。</p>
+<h3 id="区别？"><a href="#区别？" class="headerlink" title="区别？"></a>区别？</h3><p><strong>函数防抖：</strong>触发事件，事件将在10秒后执行，这10秒内如果再次触发该事件，就重新计时10秒<br><strong>函数节流：</strong>触发事件，开启定时器，保证10秒后准时执行，定时器存在的情况下再触发该事件直接返回  </p>
+<h3 id="结合场景代码举例？"><a href="#结合场景代码举例？" class="headerlink" title="结合场景代码举例？"></a>结合场景代码举例？</h3><p><strong>函数防抖：</strong>注册时邮箱的输入框，随着用户的输入，实时判断邮箱格式是否正确。此时，每一次的用户输入都触发邮箱格式检查事件造成了浪费，于是设置两次输入之间的时间间隔大于800ms时（用户结束输入时），再执行检查邮箱格式。</p>
 <pre>
 const filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/; 
 $("#email").on("keyup",checkEmail()); 
@@ -602,8 +600,17 @@ $(window).scroll(loadMore());
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -716,6 +723,22 @@ $(window).scroll(loadMore());
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念？"><span class="nav-number">1.</span> <span class="nav-text">概念？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用场景？"><span class="nav-number">2.</span> <span class="nav-text">应用场景？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区别？"><span class="nav-number">3.</span> <span class="nav-text">区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结合场景代码举例？"><span class="nav-number">4.</span> <span class="nav-text">结合场景代码举例？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
