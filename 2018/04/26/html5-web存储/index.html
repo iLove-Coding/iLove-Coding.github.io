@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "45775042"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="web存储," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="潼潼爱coding" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="以前客户端存储数据都是由 cookie 完成的。但是 cookie 不适合大量数据的存储，因为它们由每个对服务器的请求来传递，这使得 cookie 速度很慢而且效率也不高。HTML5 提供了两种在客户端存储数据的新方法：localStorage&amp;amp; sessionStorage  localStorage - 没有时间限制的数据存储localStorage 方法存储的数据没有时间限制。 基">
+<meta name="keywords" content="web存储">
+<meta property="og:type" content="article">
+<meta property="og:title" content="html5 web存储">
+<meta property="og:url" content="https://ilove-coding.github.io/2018/04/26/html5-web存储/index.html">
+<meta property="og:site_name" content="潼潼爱coding">
+<meta property="og:description" content="以前客户端存储数据都是由 cookie 完成的。但是 cookie 不适合大量数据的存储，因为它们由每个对服务器的请求来传递，这使得 cookie 速度很慢而且效率也不高。HTML5 提供了两种在客户端存储数据的新方法：localStorage&amp;amp; sessionStorage  localStorage - 没有时间限制的数据存储localStorage 方法存储的数据没有时间限制。 基">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-26T05:32:02.210Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="html5 web存储">
+<meta name="twitter:description" content="以前客户端存储数据都是由 cookie 完成的。但是 cookie 不适合大量数据的存储，因为它们由每个对服务器的请求来传递，这使得 cookie 速度很慢而且效率也不高。HTML5 提供了两种在客户端存储数据的新方法：localStorage&amp;amp; sessionStorage  localStorage - 没有时间限制的数据存储localStorage 方法存储的数据没有时间限制。 基">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ilove-coding.github.io/2018/04/26/html5-web存储/"/>
+
+
+
+
+
+
+  <title>html5 web存储 | 潼潼爱coding</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/iLove-Coding"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">潼潼爱coding</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端开发小迷妹~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2018/04/26/html5-web存储/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tongtong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="潼潼爱coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">html5 web存储</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-26T12:24:00+08:00">
+                2018-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web存储/" itemprop="url" rel="index">
+                    <span itemprop="name">web存储</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>以前客户端存储数据都是由 cookie 完成的。但是 cookie 不适合大量数据的存储，因为它们由每个对服务器的请求来传递，这使得 cookie 速度很慢而且效率也不高。<br>HTML5 提供了两种在客户端存储数据的新方法：localStorage&amp; sessionStorage</p>
+</blockquote>
+<h3 id="localStorage-没有时间限制的数据存储"><a href="#localStorage-没有时间限制的数据存储" class="headerlink" title="localStorage - 没有时间限制的数据存储"></a>localStorage - 没有时间限制的数据存储</h3><p>localStorage 方法存储的数据没有时间限制。</p>
+<h5 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h5><ul>
+<li><p>存值 localStorage.setItem(key,value) [如果key的value存在时，更新key的值]</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   　localStorage.name = <span class="string">"123"</span>; </span><br><span class="line">   　localStorage[<span class="string">"name"</span>] = <span class="string">"123"</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>取值 localStorage.getItem(key,value) [如果key的value不存在时，返回null]</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = localStorage.name;</span><br><span class="line"><span class="keyword">var</span> name = localStorage[<span class="string">"name"</span>];</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除 localStorage.remove(key) [清除单项key的值]</p>
+</li>
+<li>清除 localStorage.clear() [表示清除localStorage存储的所有数据]</li>
+</ul>
+<h5 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h5><p>当需要存储的数据很多时，可以将数据存储到数组中并转换成JSON格式的数据。  </p>
+<ol>
+<li>JSON.stringify(data) 将对象转换成JSON格式的数据串。  </li>
+<li>JSON.parse(data)将数据解析成对象并返回解析后的对象。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = &#123;<span class="string">"name"</span>:<span class="string">"moomoo"</span>,<span class="string">"age"</span>:<span class="number">2</span>,<span class="string">"eat"</span>:<span class="string">"apple"</span>&#125;;</span><br><span class="line">localStorage.setItem(<span class="string">"arr"</span>,<span class="built_in">JSON</span>.stringify(arr));</span><br><span class="line">arr = <span class="built_in">JSON</span>.parse(localStorage.getItem(<span class="string">"arr"</span>));</span><br></pre></td></tr></table></figure>
+<h5 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h5><p>localStorage存储的数据是不能跨浏览器共用的，也就是说存储在浏览器的数据只能在这个浏览器中访问，现在各个浏览器的存储空间是5M。</p>
+<h3 id="sessionStorage-针对一个-session-的数据存储"><a href="#sessionStorage-针对一个-session-的数据存储" class="headerlink" title="sessionStorage - 针对一个 session 的数据存储"></a>sessionStorage - 针对一个 session 的数据存储</h3><p>sessionStorage是个全局对象，它维护着在页面会话(page session)期间有效的存储空间。只要浏览器开着，页面会话周期就会一直持续。当页面重新载入(reload)或者被恢复(restores)时，页面会话也是一直存在的。每在新标签或者新窗口中打开一个新页面，都会初始化一个新的会话，也就是说sessionStorage针对一个 session 进行数据存储。当用户关闭浏览器窗口后，数据会被删除。</p>
+<p><strong>当浏览器被意外刷新的时候，一些临时数据应当被保存和恢复。sessionStorage 对象在处理这种情况的时候是最有用的。sessionStorage自动保存一个文本域中的内容，如果浏览器被意外刷新，则恢复该文本域中的内容，所以不会丢失任何输入的数据。</strong></p>
+<h5 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h5><p>sessionStorage 方法与localStorage的方法相似</p>
+<h3 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h3><p>并不是所有的浏览器都支持。如果你想在没有原生支持localStorage对象的浏览器中使用它，可以在你编写的 JavaScript代码的首部插入下面两段代码中的任意一段。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!<span class="built_in">window</span>.localStorage) &#123;</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(<span class="built_in">window</span>, <span class="string">"localStorage"</span>, <span class="keyword">new</span> (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> aKeys = [], oStorage = &#123;&#125;;</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(oStorage, <span class="string">"getItem"</span>, &#123;</span><br><span class="line">      value: <span class="function"><span class="keyword">function</span> (<span class="params">sKey</span>) </span>&#123; <span class="keyword">return</span> sKey ? <span class="keyword">this</span>[sKey] : <span class="literal">null</span>; &#125;,</span><br><span class="line">      writable: <span class="literal">false</span>,</span><br><span class="line">      configurable: <span class="literal">false</span>,</span><br><span class="line">      enumerable: <span class="literal">false</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(oStorage, <span class="string">"key"</span>, &#123;</span><br><span class="line">      value: <span class="function"><span class="keyword">function</span> (<span class="params">nKeyId</span>) </span>&#123; <span class="keyword">return</span> aKeys[nKeyId]; &#125;,</span><br><span class="line">      writable: <span class="literal">false</span>,</span><br><span class="line">      configurable: <span class="literal">false</span>,</span><br><span class="line">      enumerable: <span class="literal">false</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(oStorage, <span class="string">"setItem"</span>, &#123;</span><br><span class="line">      value: <span class="function"><span class="keyword">function</span> (<span class="params">sKey, sValue</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!sKey) &#123; <span class="keyword">return</span>; &#125;</span><br><span class="line">        <span class="built_in">document</span>.cookie = <span class="built_in">escape</span>(sKey) + <span class="string">"="</span> + <span class="built_in">escape</span>(sValue) + <span class="string">"; path=/"</span>;</span><br><span class="line">      &#125;,</span><br><span class="line">      writable: <span class="literal">false</span>,</span><br><span class="line">      configurable: <span class="literal">false</span>,</span><br><span class="line">      enumerable: <span class="literal">false</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(oStorage, <span class="string">"length"</span>, &#123;</span><br><span class="line">      get: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> aKeys.length; &#125;,</span><br><span class="line">      configurable: <span class="literal">false</span>,</span><br><span class="line">      enumerable: <span class="literal">false</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(oStorage, <span class="string">"removeItem"</span>, &#123;</span><br><span class="line">      value: <span class="function"><span class="keyword">function</span> (<span class="params">sKey</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!sKey) &#123; <span class="keyword">return</span>; &#125;</span><br><span class="line">        <span class="keyword">var</span> sExpDate = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">        sExpDate.setDate(sExpDate.getDate() - <span class="number">1</span>);</span><br><span class="line">        <span class="built_in">document</span>.cookie = <span class="built_in">escape</span>(sKey) + <span class="string">"=; expires="</span> + sExpDate.toGMTString() + <span class="string">"; path=/"</span>;</span><br><span class="line">      &#125;,</span><br><span class="line">      writable: <span class="literal">false</span>,</span><br><span class="line">      configurable: <span class="literal">false</span>,</span><br><span class="line">      enumerable: <span class="literal">false</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">this</span>.get = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> iThisIndx;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> sKey <span class="keyword">in</span> oStorage) &#123;</span><br><span class="line">        iThisIndx = aKeys.indexOf(sKey);</span><br><span class="line">        <span class="keyword">if</span> (iThisIndx === <span class="number">-1</span>) &#123; oStorage.setItem(sKey, oStorage[sKey]); &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123; aKeys.splice(iThisIndx, <span class="number">1</span>); &#125;</span><br><span class="line">        <span class="keyword">delete</span> oStorage[sKey];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">for</span> (aKeys; aKeys.length &gt; <span class="number">0</span>; aKeys.splice(<span class="number">0</span>, <span class="number">1</span>)) &#123; oStorage.removeItem(aKeys[<span class="number">0</span>]); &#125;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> iCouple, iKey, iCouplId = <span class="number">0</span>, aCouples = <span class="built_in">document</span>.cookie.split(<span class="regexp">/\s*;\s*/</span>); iCouplId &lt; aCouples.length; iCouplId++) &#123;</span><br><span class="line">        iCouple = aCouples[iCouplId].split(<span class="regexp">/\s*=\s*/</span>);</span><br><span class="line">        <span class="keyword">if</span> (iCouple.length &gt; <span class="number">1</span>) &#123;</span><br><span class="line">          oStorage[iKey = <span class="built_in">unescape</span>(iCouple[<span class="number">0</span>])] = <span class="built_in">unescape</span>(iCouple[<span class="number">1</span>]);</span><br><span class="line">          aKeys.push(iKey);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> oStorage;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">this</span>.configurable = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">this</span>.enumerable = <span class="literal">true</span>;</span><br><span class="line">  &#125;)());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!<span class="built_in">window</span>.localStorage) &#123;</span><br><span class="line">  <span class="built_in">window</span>.localStorage = &#123;</span><br><span class="line">    getItem: <span class="function"><span class="keyword">function</span> (<span class="params">sKey</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!sKey || !<span class="keyword">this</span>.hasOwnProperty(sKey)) &#123; <span class="keyword">return</span> <span class="literal">null</span>; &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">unescape</span>(<span class="built_in">document</span>.cookie.replace(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"(?:^|.*;\\s*)"</span> + <span class="built_in">escape</span>(sKey).replace(<span class="regexp">/[\-\.\+\*]/g</span>, <span class="string">"\\$&amp;"</span>) + <span class="string">"\\s*\\=\\s*((?:[^;](?!;))*[^;]?).*"</span>), <span class="string">"$1"</span>));</span><br><span class="line">    &#125;,</span><br><span class="line">    key: <span class="function"><span class="keyword">function</span> (<span class="params">nKeyId</span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">unescape</span>(<span class="built_in">document</span>.cookie.replace(<span class="regexp">/\s*\=(?:.(?!;))*$/</span>, <span class="string">""</span>).split(<span class="regexp">/\s*\=(?:[^;](?!;))*[^;]?;\s*/</span>)[nKeyId]); &#125;,</span><br><span class="line">    setItem: <span class="function"><span class="keyword">function</span> (<span class="params">sKey, sValue</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(!sKey) &#123; <span class="keyword">return</span>; &#125;</span><br><span class="line">      <span class="built_in">document</span>.cookie = <span class="built_in">escape</span>(sKey) + <span class="string">"="</span> + <span class="built_in">escape</span>(sValue) + <span class="string">"; path=/"</span>;</span><br><span class="line">      <span class="keyword">this</span>.length = <span class="built_in">document</span>.cookie.match(<span class="regexp">/\=/g</span>).length;</span><br><span class="line">    &#125;,</span><br><span class="line">    length: <span class="number">0</span>,</span><br><span class="line">    removeItem: <span class="function"><span class="keyword">function</span> (<span class="params">sKey</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!sKey || !<span class="keyword">this</span>.hasOwnProperty(sKey)) &#123; <span class="keyword">return</span>; &#125;</span><br><span class="line">      <span class="keyword">var</span> sExpDate = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">      sExpDate.setDate(sExpDate.getDate() - <span class="number">1</span>);</span><br><span class="line">      <span class="built_in">document</span>.cookie = <span class="built_in">escape</span>(sKey) + <span class="string">"=; expires="</span> + sExpDate.toGMTString() + <span class="string">"; path=/"</span>;</span><br><span class="line">      <span class="keyword">this</span>.length--;</span><br><span class="line">    &#125;,</span><br><span class="line">    hasOwnProperty: <span class="function"><span class="keyword">function</span> (<span class="params">sKey</span>) </span>&#123; <span class="keyword">return</span> (<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"(?:^|;\\s*)"</span> + <span class="built_in">escape</span>(sKey).replace(<span class="regexp">/[\-\.\+\*]/g</span>, <span class="string">"\\$&amp;"</span>) + <span class="string">"\\s*\\="</span>)).test(<span class="built_in">document</span>.cookie); &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="built_in">window</span>.localStorage.length = (<span class="built_in">document</span>.cookie.match(<span class="regexp">/\=/g</span>) || <span class="built_in">window</span>.localStorage).length;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2018/04/26/html5-web存储/">html5 web存储</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
+  <p><span>发布时间:</span>2018年04月26日 - 12:04</p>
+  <p><span>最后更新:</span>2018年04月26日 - 13:04</p>
+  <p><span>原始链接:</span><a href="/2018/04/26/html5-web存储/" title="html5 web存储">https://ilove-coding.github.io/2018/04/26/html5-web存储/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2018/04/26/html5-web存储/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+</div>
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/path/to/wechat-reward-image" alt="tongtong 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/path/to/alipay-reward-image" alt="tongtong 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+<div>
+
+  <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>-------------</div>
+    
+</div>
+
+</div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/web存储/" rel="tag"><i class="fa fa-tag"></i> web存储</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/12/正则表达式/" rel="next" title="正则表达式">
+                <i class="fa fa-chevron-left"></i> 正则表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzQxNS85OTcx"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif"
+                alt="tongtong" />
+            
+              <p class="site-author-name" itemprop="name">tongtong</p>
+              <p class="site-description motion-element" itemprop="description">爱生活 爱学习</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/iLove-Coding" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/b210912af0f2" target="_blank" title="jianshu">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>jianshu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ife.baidu.com/" title="百度前端技术学院" target="_blank">百度前端技术学院</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://wf.uisdc.com/cn/" title="google前端开发基础" target="_blank">google前端开发基础</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.36zhen.com/t?id=3448" title="前端书籍资料" target="_blank">前端书籍资料</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#localStorage-没有时间限制的数据存储"><span class="nav-number">1.</span> <span class="nav-text">localStorage - 没有时间限制的数据存储</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基本用法"><span class="nav-number">1.0.1.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#补充"><span class="nav-number">1.0.2.</span> <span class="nav-text">补充</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#说明"><span class="nav-number">1.0.3.</span> <span class="nav-text">说明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sessionStorage-针对一个-session-的数据存储"><span class="nav-number">2.</span> <span class="nav-text">sessionStorage - 针对一个 session 的数据存储</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基本用法-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">基本用法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#兼容性"><span class="nav-number">3.</span> <span class="nav-text">兼容性</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongtong</span>
+
+  
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+-->
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

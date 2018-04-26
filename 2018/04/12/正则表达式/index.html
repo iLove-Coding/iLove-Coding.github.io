@@ -99,7 +99,7 @@
 <meta property="og:site_name" content="潼潼爱coding">
 <meta property="og:description" content="关于正则表达式，工作中用到的其实不多，常见的就是邮箱，手机号验证，总是用到了现搜，刚好今天完成了市场需求，等待另一个需求确认ing…有时间系统总结一下琐碎的正则表达式～慢慢补充  定义正则121. var re = new RegExp(&apos;a&apos;);  //定义一个正则对象，参数就是想要制定的规则。2. var re = /a/;  //简写方法，性能更好，不能为空，不然以为是注释 正则常用方法">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-26T04:03:32.192Z">
+<meta property="og:updated_time" content="2018-04-26T05:37:44.379Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式">
 <meta name="twitter:description" content="关于正则表达式，工作中用到的其实不多，常见的就是邮箱，手机号验证，总是用到了现搜，刚好今天完成了市场需求，等待另一个需求确认ing…有时间系统总结一下琐碎的正则表达式～慢慢补充  定义正则121. var re = new RegExp(&apos;a&apos;);  //定义一个正则对象，参数就是想要制定的规则。2. var re = /a/;  //简写方法，性能更好，不能为空，不然以为是注释 正则常用方法">
@@ -403,6 +403,7 @@
 | \D | 非数字 |
 | \w | 字符（字母，数字，下划线_） |
 | \W | 非字符 |
+| 开发阶段 | 开发时长 |
 </code></pre><ul>
 <li><p>search()：在字符串搜索符合正则的内容，搜索到就返回出现的位置（从0开始，如果匹配的不只是一个字母，那只会返回第一个字母的位置），如果搜索失败就返回-1<br>用法：字符串.search(正则)<br>在字符串中查找符合正则的内容，忽略大小写：i–ignore(正则默认是区分大小写的，如果不区分大小写的话，在正则的最后加标识i)<br>例如：在字符串中找字母b，且不区分大小写</p>
   <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var str = <span class="string">'abcdfdg'</span>;</span><br><span class="line">var re = <span class="regexp">/B/i</span>;</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span>var  re = new RegExp(<span class="string">'B'</span>,<span class="string">'i'</span>);</span><br><span class="line">alert(str.search(re)); <span class="regexp">//</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
@@ -428,7 +429,7 @@
   <p><span>本文标题:</span><a href="/2018/04/12/正则表达式/">正则表达式</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
   <p><span>发布时间:</span>2018年04月12日 - 14:04</p>
-  <p><span>最后更新:</span>2018年04月26日 - 12:04</p>
+  <p><span>最后更新:</span>2018年04月26日 - 13:04</p>
   <p><span>原始链接:</span><a href="/2018/04/12/正则表达式/" title="正则表达式">https://ilove-coding.github.io/2018/04/12/正则表达式/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2018/04/12/正则表达式/"  aria-label="复制成功！"></i></span>
   </p>
@@ -518,6 +519,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/26/html5-web存储/" rel="prev" title="html5 web存储">
+                html5 web存储 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -609,7 +614,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -620,7 +625,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -631,7 +636,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
