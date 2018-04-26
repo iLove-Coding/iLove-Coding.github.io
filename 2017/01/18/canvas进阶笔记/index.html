@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "45775042"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="canvas笔记," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="潼潼爱coding" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="1.加载图像123456789101112131415161718&amp;lt;canvas id=&quot;mycanvas&quot; width=&quot;500&quot; height=&quot;500&quot; style=&quot;background-color: #ddd&quot;&amp;gt;&amp;lt;/canvas&amp;gt;&amp;lt;script&amp;gt;    var canvas = document.getElementById(&quot;mycanvas&quot;);">
+<meta name="keywords" content="canvas笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="canvas进阶笔记">
+<meta property="og:url" content="https://ilove-coding.github.io/2017/01/18/canvas进阶笔记/index.html">
+<meta property="og:site_name" content="潼潼爱coding">
+<meta property="og:description" content="1.加载图像123456789101112131415161718&amp;lt;canvas id=&quot;mycanvas&quot; width=&quot;500&quot; height=&quot;500&quot; style=&quot;background-color: #ddd&quot;&amp;gt;&amp;lt;/canvas&amp;gt;&amp;lt;script&amp;gt;    var canvas = document.getElementById(&quot;mycanvas&quot;);">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-20T13:49:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="canvas进阶笔记">
+<meta name="twitter:description" content="1.加载图像123456789101112131415161718&amp;lt;canvas id=&quot;mycanvas&quot; width=&quot;500&quot; height=&quot;500&quot; style=&quot;background-color: #ddd&quot;&amp;gt;&amp;lt;/canvas&amp;gt;&amp;lt;script&amp;gt;    var canvas = document.getElementById(&quot;mycanvas&quot;);">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ilove-coding.github.io/2017/01/18/canvas进阶笔记/"/>
+
+
+
+
+
+
+  <title>canvas进阶笔记 | 潼潼爱coding</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/iLove-Coding"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">潼潼爱coding</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端开发小迷妹~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2017/01/18/canvas进阶笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tongtong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="潼潼爱coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">canvas进阶笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-18T22:09:13+08:00">
+                2017-01-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/canvas/" itemprop="url" rel="index">
+                    <span itemprop="name">canvas</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-加载图像"><a href="#1-加载图像" class="headerlink" title="1.加载图像"></a>1.加载图像</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"mycanvas"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span> <span class="attr">style</span>=<span class="string">"background-color: #ddd"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"mycanvas"</span>);</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> ctx = canvas.getContext(<span class="string">"2d"</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//1.创建image对象</span></span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> image = <span class="keyword">new</span> Image();</span></span><br><span class="line"><span class="actionscript">    <span class="comment">//2.设置image的src</span></span></span><br><span class="line"><span class="actionscript">    image.src = <span class="string">'img/plane.png'</span>;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//监听image的onload事件，绘制图片到画板</span></span></span><br><span class="line"><span class="actionscript">    image.onload = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="undefined">        ctx.drawImage(image, 50, 50);</span></span><br><span class="line"><span class="actionscript">        <span class="comment">//改变图片的位置和大小</span></span></span><br><span class="line"><span class="undefined">        ctx.drawImage(image, 150, 50, 60, 100);</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="2-图像裁切"><a href="#2-图像裁切" class="headerlink" title="2.图像裁切"></a>2.图像裁切</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"mycanvas"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span> <span class="attr">style</span>=<span class="string">"background-color: #ddd"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"mycanvas"</span>);</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> ctx = canvas.getContext(<span class="string">"2d"</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//但是有时候我们并不需要使用完整的图像，而只是图像的一部分内容，这个时候我们就需要使用图像裁剪</span></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//context.drawImage(image, source_x, source_y, source_width, source_height, x, y, width, heigh);</span></span></span><br><span class="line"><span class="undefined">    /*</span></span><br><span class="line"><span class="undefined">     image：源图像对象</span></span><br><span class="line"><span class="undefined">     source_x：源图像的裁剪区原点横坐标</span></span><br><span class="line"><span class="undefined">     source_y：源图像的裁剪区原点纵坐标</span></span><br><span class="line"><span class="undefined">     source_width：源图像的裁剪区宽度</span></span><br><span class="line"><span class="undefined">     source_height：源图像的裁剪区高度</span></span><br><span class="line"><span class="undefined">     x：在画布上绘制图像的原点横坐标</span></span><br><span class="line"><span class="undefined">     y：在画布上绘制图像的原点纵坐标</span></span><br><span class="line"><span class="undefined">     width：在画布上绘制图像的宽度</span></span><br><span class="line"><span class="undefined">     heigh：在画布上绘制图像的高度</span></span><br><span class="line"><span class="undefined">     */</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//举例：</span></span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> image = <span class="keyword">new</span> Image();</span></span><br><span class="line"><span class="actionscript">    image.src = <span class="string">'http://coding.imweb.io/img/p3/retina-pixel.jpg'</span>;</span></span><br><span class="line"><span class="actionscript">    image.onload = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="undefined">        ctx.drawImage(image, 300, 300, 180, 180);</span></span><br><span class="line"><span class="actionscript">        <span class="comment">//加载图片后，边截取图片且缩放展示在画布左上角</span></span></span><br><span class="line"><span class="undefined">        ctx.drawImage(image, 260, 260, 480, 480, 0, 0, 240, 240);</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="3-requestAnimationFrame"><a href="#3-requestAnimationFrame" class="headerlink" title="3.requestAnimationFrame"></a>3.requestAnimationFrame</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"mycanvas"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span> <span class="attr">style</span>=<span class="string">"border: solid 1px #ddd"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    /*</span></span><br><span class="line"><span class="undefined">    如果我们需要实现动画，只需要设置定时不断地绘制下一帧的画面便可以了。</span></span><br><span class="line"><span class="undefined">    在 JavaScript 中我们可以使用 setTimeout 和 setInterval 来设置延时任务。</span></span><br><span class="line"><span class="undefined">    因此在很长时间以来，计时器一直都是 JavaScript 动画的最核心技术。</span></span><br><span class="line"><span class="undefined">    如下面的代码就是使用 setTimeout 方法来实现基本的动画循环：</span></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">animate</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 动画内容</span></span></span><br><span class="line"><span class="undefined">        animation1();</span></span><br><span class="line"><span class="undefined">        animation2();</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 间隔100ms执行动画循环</span></span></span><br><span class="line"><span class="actionscript">        setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="undefined">            animate();</span></span><br><span class="line"><span class="undefined">        &#125;, 100);</span></span><br><span class="line"><span class="undefined">     &#125;</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 执行动画</span></span></span><br><span class="line"><span class="undefined">        animate();</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        早期的动画循环时候，最关键的问题是确定循环间隔的时长。一方面，循环间隔必须足够短，这样才能动画效果显得更平滑流畅；</span></span><br><span class="line"><span class="undefined">        另一方面，循环时隔还要足够长，这样才能确保浏览器有能力渲染产生的变化。我们知道大多数的显示器的刷新频率是 60Hz ，</span></span><br><span class="line"><span class="undefined">        即相当于在每秒钟中屏幕会重绘 60 次。因此最平滑动画的最佳循环间隔是 1000ms/60，约等于 16.7ms。</span></span><br><span class="line"><span class="undefined">    */</span></span><br><span class="line"><span class="undefined">    /*</span></span><br><span class="line"><span class="undefined">    *setTimeout 和 setInterval 问题</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    无论是 setTimeout 和 setInterval 都并不是十分精准。</span></span><br><span class="line"><span class="undefined">    我们知道 JavaScript 是一个单线程的解释器，在一定时间能只能执行一段代码。</span></span><br><span class="line"><span class="undefined">    为了要控制代码的执行顺序，就需要通过一个 JavaScript任务队列 来进行管理控制（任务会按照添加到队列的顺序执行）。</span></span><br><span class="line"><span class="undefined">    通过 setTimeout 和 setInterval 我们能够设置延时多长时间把我们的代码任务添加到 JavaScript任务队列 中。</span></span><br><span class="line"><span class="undefined">    如果当前任务队列是空的，那么添加的代码可以立即执行；如果队列不是空的，则新添加的任务需要等到其前面所有的任务都执行完成才能执行。</span></span><br><span class="line"><span class="undefined">    由于前面的任务到底需要多少时间执行完，是不确定的，所以没有办法保证，setTimeout 和 setInterval 指定的任务，一定会按照预定时间执行。</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    如下面的代码：</span></span><br><span class="line"><span class="undefined">    setTimeout(animateTask, 1000 / 60);</span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 耗时长的任务</span></span></span><br><span class="line"><span class="undefined">    longTimeTask();</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    上面代码的 setTimeout，我们制定 16.7ms 后运行 animateTask 任务。</span></span><br><span class="line"><span class="undefined">    但是，如果由于后面的 longTimeTask 执行（当前脚本的同步任务））非常耗时，</span></span><br><span class="line"><span class="undefined">    即使过了 16.7ms 仍无法结束，那么延迟执行的 animateTask 就只有等着，只有等到前面的任务都运行完，才能轮到它执行。</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    */</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    /*</span></span><br><span class="line"><span class="undefined">    requestAnimationFrame</span></span><br><span class="line"><span class="undefined">    由于 setTimeout 和 setInterval 的不精准问题，促使了 requestAnimationFrame 的诞生。</span></span><br><span class="line"><span class="undefined">    requestAnimationFrame 是专门为实现高性能的帧动画而设计的一个API，目前已在多个浏览器得到了支持，你可以把它用在 DOM 上的效果切换或者 Canvas 画布动画中。</span></span><br><span class="line"><span class="undefined">    requestAnimationFrame 并不是定时器，但和 setTimeout 很相似，在没有 requestAnimationFrame 的浏览器一般都是用setTimeout模拟。</span></span><br><span class="line"><span class="undefined">    requestAnimationFrame 跟屏幕刷新同步（大多数是 60Hz ）。</span></span><br><span class="line"><span class="undefined">    如果浏览器支持 requestAnimationFrame , 则不建议使用 setTimeout 来做动画。</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    下面是我们常规使用 requestAnimationFrame 的兼容写法，当浏览器不兼容的 requestAnimationFrame 时则通过使用 setTimeout 来模拟实现,且设定渲染间隔为 1000ms/60。</span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 判断是否有 requestAnimationFrame 方法，如果有则模拟实现</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.requestAnimFrame =</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.requestAnimationFrame ||</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.webkitRequestAnimationFrame ||</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.mozRequestAnimationFrame ||</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.oRequestAnimationFrame ||</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.msRequestAnimationFrame ||</span></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span><span class="params">(callback)</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="built_in">window</span>.setTimeout(callback, <span class="number">1000</span> / <span class="number">30</span>);</span></span><br><span class="line"><span class="undefined">        &#125;;</span></span><br><span class="line"><span class="undefined">    */</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//举例：下面我们将使用 requestAnimationFrame 来实现一个物体来回移动的动画</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"mycanvas"</span>);</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> ctx = canvas.getContext(<span class="string">"2d"</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.requestAnimFrame =</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.requestAnimationFrame ||</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.webkitRequestAnimationFrame ||</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.mozRequestAnimationFrame ||</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.oRequestAnimationFrame ||</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.msRequestAnimationFrame ||</span></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="params">(callback)</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="built_in">window</span>.setTimeout(callback, <span class="number">1000</span> / <span class="number">30</span>);</span></span><br><span class="line"><span class="undefined">        &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//绘制的圆的对象</span></span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> circle = &#123;</span></span><br><span class="line"><span class="actionscript">        <span class="comment">//圆心坐标</span></span></span><br><span class="line"><span class="undefined">        x: 250,</span></span><br><span class="line"><span class="undefined">        y: 250,</span></span><br><span class="line"><span class="actionscript">        <span class="comment">//半径</span></span></span><br><span class="line"><span class="undefined">        radius: 50,</span></span><br><span class="line"><span class="actionscript">        <span class="comment">//移动方向</span></span></span><br><span class="line"><span class="actionscript">        direction: <span class="string">'right'</span>,</span></span><br><span class="line"><span class="actionscript">        <span class="comment">//移动圆形</span></span></span><br><span class="line"><span class="actionscript">        move: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">if</span> (<span class="keyword">this</span>.direction === <span class="string">'right'</span>) &#123;</span></span><br><span class="line"><span class="actionscript">                <span class="keyword">if</span> (<span class="keyword">this</span>.x &lt;= <span class="number">430</span>) &#123;</span></span><br><span class="line"><span class="actionscript">                    <span class="keyword">this</span>.x += <span class="number">5</span>;</span></span><br><span class="line"><span class="actionscript">                &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="actionscript">                    <span class="keyword">this</span>.direction = <span class="string">'left'</span>;</span></span><br><span class="line"><span class="undefined">                &#125;</span></span><br><span class="line"><span class="actionscript">            &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="actionscript">                <span class="keyword">if</span> (<span class="keyword">this</span>.x &gt;= <span class="number">60</span>) &#123;</span></span><br><span class="line"><span class="actionscript">                    <span class="keyword">this</span>.x -= <span class="number">5</span>;</span></span><br><span class="line"><span class="actionscript">                &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="actionscript">                    <span class="keyword">this</span>.direction = <span class="string">'right'</span>;</span></span><br><span class="line"><span class="undefined">                &#125;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;,</span></span><br><span class="line"><span class="actionscript">        draw: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">            <span class="comment">//绘制图形</span></span></span><br><span class="line"><span class="undefined">            ctx.beginPath();</span></span><br><span class="line"><span class="actionscript">            <span class="comment">//设置开始角度为0，结束角度为2π弧度</span></span></span><br><span class="line"><span class="javascript">            ctx.arc(<span class="keyword">this</span>.x, <span class="keyword">this</span>.y, <span class="keyword">this</span>.radius, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>);</span></span><br><span class="line"><span class="actionscript">            ctx.fillStyle = <span class="string">'#00c09b'</span>;</span></span><br><span class="line"><span class="undefined">            ctx.fill();</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//动画执行函数</span></span></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">animate</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 随机更新圆形位置</span></span></span><br><span class="line"><span class="undefined">        circle.move();</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 清除画布</span></span></span><br><span class="line"><span class="undefined">        ctx.clearRect(0, 0, canvas.width, canvas.height);</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 绘画圆</span></span></span><br><span class="line"><span class="undefined">        circle.draw();</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 使用requestAnimationFrame实现动画循环</span></span></span><br><span class="line"><span class="undefined">        requestAnimationFrame(animate);</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//执行第一帧的元，即初始化的圆</span></span></span><br><span class="line"><span class="undefined">    circle.draw();</span></span><br><span class="line"><span class="actionscript">    <span class="comment">//执行animate</span></span></span><br><span class="line"><span class="undefined">    animate();</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="4-动画循环"><a href="#4-动画循环" class="headerlink" title="4.动画循环"></a>4.动画循环</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"mycanvas"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span> <span class="attr">style</span>=<span class="string">"border: solid 1px #ddd"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"mycanvas"</span>);</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> ctx = canvas.getContext(<span class="string">"2d"</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//1.初始化元素</span></span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> monster = &#123;</span></span><br><span class="line"><span class="undefined">        x: 30,</span></span><br><span class="line"><span class="undefined">        y: 50,</span></span><br><span class="line"><span class="undefined">        size: 60,</span></span><br><span class="line"><span class="undefined">        speed: 5</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="actionscript">    <span class="comment">//初始化画面</span></span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> image = <span class="keyword">new</span> Image();</span></span><br><span class="line"><span class="actionscript">    image.src = <span class="string">'img/enemy.png'</span>;</span></span><br><span class="line"><span class="actionscript">    image.onload = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        ctx.drawImage(image, monster.x, monster.y, monster.size, monster.size);</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//动画函数，利用requestAnimationFrame去执行</span></span></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">animate</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">if</span> (monster.x &gt; <span class="number">400</span>) &#123;</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">return</span>;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        monster.x += monster.speed;</span></span><br><span class="line"><span class="undefined">        ctx.clearRect(0, 0, canvas.width, canvas.height);</span></span><br><span class="line"><span class="undefined">        ctx.drawImage(image, monster.x, monster.y, monster.size, monster.size)</span></span><br><span class="line"><span class="undefined">        requestAnimationFrame(animate);</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    animate();</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="5-canvas键盘处理"><a href="#5-canvas键盘处理" class="headerlink" title="5.canvas键盘处理"></a>5.canvas键盘处理</h1><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line">&lt;canvas id=<span class="string">"mycanvas"</span> <span class="built_in">width</span>=<span class="string">"500"</span> <span class="built_in">height</span>=<span class="string">"500"</span> style=<span class="string">"border: solid 1px #ddd"</span>&gt;&lt;/canvas&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 键盘事件处理</span></span><br><span class="line"><span class="comment">     在制作 PC 端的游戏的时候，我们经常需要监听键盘的事件，以便响应用户的键盘操作。</span></span><br><span class="line"><span class="comment">     目前，对键盘事件的支持主要遵循的是 DOM0级。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     按键相关事件</span></span><br><span class="line"><span class="comment">     键盘操作涉及下面三种事件：</span></span><br><span class="line"><span class="comment">     keydown：当用户按下键盘上的任意键时触发，而且如果按住按住不放的话，会重复触发此事件。</span></span><br><span class="line"><span class="comment">     keypress：当用户按下键盘上的字符键时触发，而且如果按住不放的，会重复触发此事件（按下Esc键也会触发这个事件）。</span></span><br><span class="line"><span class="comment">     keyup：当用户释放键盘上的键时触发。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     按键过程:</span></span><br><span class="line"><span class="comment">     用户按下键盘上的字符键时</span></span><br><span class="line"><span class="comment">     首先会触发 keydown 事件</span></span><br><span class="line"><span class="comment">     然后紧接着触发 keypress 事件</span></span><br><span class="line"><span class="comment">     最后触发 keyup事件</span></span><br><span class="line"><span class="comment">     如果用户按下了一个字符键不放，就会重复触发 keydown 和 keypress 事件，直到用户松开该键为止。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     键码（keyCode）对照表</span></span><br><span class="line"><span class="comment">     在发送 keydown 和 keyup 事件时，event 对象的 keyCode 属性中会包含一个代码，与键盘上一个特定的键对应。</span></span><br><span class="line"><span class="comment">     如下图，为我们键盘键位的 keyCode 对照表：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">        <span class="comment">//举例：简单实现键盘控制物体移动</span></span><br><span class="line"><span class="comment">//    window.requestAnimFrame =</span></span><br><span class="line"><span class="comment">//        window.requestAnimationFrame ||</span></span><br><span class="line"><span class="comment">//        window.webkitRequestAnimationFrame ||</span></span><br><span class="line"><span class="comment">//        window.mozRequestAnimationFrame ||</span></span><br><span class="line"><span class="comment">//        window.oRequestAnimationFrame ||</span></span><br><span class="line"><span class="comment">//        window.msRequestAnimationFrame ||</span></span><br><span class="line"><span class="comment">//        function(callback) &#123;</span></span><br><span class="line"><span class="comment">//            window.setTimeout(callback, 1000 / 30);</span></span><br><span class="line"><span class="comment">//        &#125;;</span></span><br><span class="line"></span><br><span class="line">    var canvas = document.getElementById(<span class="string">"mycanvas"</span>);</span><br><span class="line">    var ctx = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line"></span><br><span class="line">    var <span class="built_in">rect</span> = &#123;</span><br><span class="line">        x: <span class="number">290</span>, <span class="comment">// 矩形的 x 坐标</span></span><br><span class="line">        y: <span class="number">400</span>, <span class="comment">// 矩形的 y 坐标</span></span><br><span class="line">        <span class="built_in">width</span>: <span class="number">60</span>, <span class="comment">// 矩形的宽度</span></span><br><span class="line">        <span class="built_in">height</span>: <span class="number">100</span>, <span class="comment">// 矩形的高度</span></span><br><span class="line">        speed: <span class="number">100</span>, <span class="comment">// 矩形移动的步伐</span></span><br><span class="line">        direction: <span class="number">0</span>,<span class="comment">//移动方向</span></span><br><span class="line">        timePointer: <span class="number">0</span>, <span class="comment">//时间戳</span></span><br><span class="line">        keyValue:<span class="number">-1</span>,</span><br><span class="line">        onpress:<span class="keyword">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    document.onkeydown = function (e) &#123;</span><br><span class="line">        console.<span class="built_in">log</span>(<span class="number">11</span>);</span><br><span class="line"><span class="comment">//      获取被按下的键值 (兼容写法)</span></span><br><span class="line"></span><br><span class="line">        var <span class="built_in">key</span> = e.<span class="built_in">keyCode</span> || e.which || e.charCode;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">rect</span>.keyValue==<span class="number">-1</span>&amp;&amp;<span class="built_in">rect</span>.onpress==<span class="keyword">false</span>) &#123;</span><br><span class="line">            <span class="built_in">rect</span>.keyValue = <span class="built_in">key</span>;</span><br><span class="line">            <span class="built_in">rect</span>.onpress = <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">rect</span>.timePointer = <span class="keyword">new</span> Date().getTime();</span><br><span class="line">        <span class="built_in">rect</span>.xPointer= <span class="built_in">rect</span>.x;</span><br><span class="line">        <span class="keyword">switch</span> (<span class="built_in">key</span>) &#123;</span><br><span class="line">            <span class="comment">// 点击左方向键</span></span><br><span class="line">            <span class="keyword">case</span> <span class="number">37</span>:</span><br><span class="line">                <span class="built_in">rect</span>.direction = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">// 点击右方向键</span></span><br><span class="line">            <span class="keyword">case</span> <span class="number">39</span>:</span><br><span class="line">                <span class="built_in">rect</span>.direction = <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    document.onkeyup = function (e) &#123;</span><br><span class="line">        var <span class="built_in">key</span> = e.<span class="built_in">keyCode</span> || e.which || e.charCode;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">rect</span>.keyValue==<span class="built_in">key</span>)&#123;</span><br><span class="line">            <span class="built_in">rect</span>.direction = <span class="number">0</span>;</span><br><span class="line">            <span class="built_in">rect</span>.keyValue = <span class="number">-1</span>;</span><br><span class="line">            <span class="built_in">rect</span>.onpress = <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    var <span class="built_in">image</span> = <span class="keyword">new</span> Image();</span><br><span class="line">    <span class="built_in">image</span>.src = <span class="string">'img/plane.png'</span>;</span><br><span class="line">    <span class="built_in">image</span>.onload = function () &#123;</span><br><span class="line">        ctx.drawImage(<span class="built_in">image</span>, <span class="built_in">rect</span>.x, <span class="built_in">rect</span>.y, <span class="built_in">rect</span>.<span class="built_in">width</span>, <span class="built_in">rect</span>.<span class="built_in">height</span>)</span><br><span class="line">    &#125;;</span><br><span class="line">    function drawRect() &#123;</span><br><span class="line">        <span class="comment">//清除画布</span></span><br><span class="line">        ctx.clearRect(<span class="number">0</span>, <span class="number">0</span>, canvas.<span class="built_in">width</span>, canvas.<span class="built_in">height</span>);</span><br><span class="line"><span class="comment">//        获取当前时间</span></span><br><span class="line">        var nowTime = <span class="keyword">new</span> Date().getTime();</span><br><span class="line">        <span class="comment">//获取时间间隔</span></span><br><span class="line">        var t = (nowTime-<span class="built_in">rect</span>.timePointer)/<span class="number">1000</span>;</span><br><span class="line"><span class="comment">//        console.log(t);</span></span><br><span class="line">        <span class="built_in">rect</span>.timePointer = nowTime;</span><br><span class="line">        <span class="comment">//计算位移</span></span><br><span class="line">        <span class="built_in">rect</span>.x += <span class="built_in">rect</span>.direction*<span class="built_in">rect</span>.speed*t;</span><br><span class="line"></span><br><span class="line">        ctx.drawImage(<span class="built_in">image</span>, <span class="built_in">rect</span>.x, <span class="built_in">rect</span>.y, <span class="built_in">rect</span>.<span class="built_in">width</span>, <span class="built_in">rect</span>.<span class="built_in">height</span>);</span><br><span class="line">        requestAnimationFrame(drawRect);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//第一次绘制</span></span><br><span class="line">    drawRect();</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="6-碰撞检测"><a href="#6-碰撞检测" class="headerlink" title="6.碰撞检测"></a>6.碰撞检测</h1><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"mycanvas"</span> <span class="attr">width</span>=<span class="string">"500"</span> <span class="attr">height</span>=<span class="string">"500"</span> <span class="attr">style</span>=<span class="string">"border: solid 1px #ddd"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span></span><br><span class="line"><span class="xml">    /*</span></span><br><span class="line"><span class="xml">        在实现 Canvas 游戏和动画中，往往需要解决物体相互碰撞的情况如。</span></span><br><span class="line"><span class="xml">        对于物体碰撞相关的问题，我们会在动画中采用 碰撞检测 来解决，以此实现更为逼真的动画。</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">        碰撞检测关键步骤</span></span><br><span class="line"><span class="xml">        碰撞检测需要处理经历下面两个关键的步骤：</span></span><br><span class="line"><span class="xml">                                            计算判断两个物体是否发生碰撞</span></span><br><span class="line"><span class="xml">                                            发生碰撞后，两个物体的状态和动画效果的处理</span></span><br><span class="line"><span class="xml">        计算碰撞:只要两个物体相互接触，它们就会发生碰撞。</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">        我们可以看到 矩形2 和 矩形1 之间没有发生碰撞共有四种可能的情况：</span></span><br><span class="line"><span class="xml">            矩形2的右侧 离 矩形1的左侧有一段距离</span></span><br><span class="line"><span class="xml">            矩形2的左侧 离 矩形1的右侧有一段距离</span></span><br><span class="line"><span class="xml">            矩形2的底部 离 矩形1的顶部有一段距离</span></span><br><span class="line"><span class="xml">            矩形2的顶部 离 矩形1的底部有一段距离</span></span><br><span class="line"><span class="xml">        当符合上面其中一种情况，则两个矩形没有发生碰撞。</span></span><br><span class="line"><span class="xml">        因此通过逆向推导我们可以得出：当上面四种情况都不满足的时候，则代表两个矩形碰撞了。</span></span><br><span class="line"><span class="xml">        在代码中，我们可以这样写：</span></span><br><span class="line"><span class="xml">            // 判断四边是否都没有空隙</span></span><br><span class="line"><span class="xml">            if (!(rect2.x + rect2.width <span class="tag">&lt; <span class="attr">rect1.x</span>) &amp;&amp;</span></span></span><br><span class="line"><span class="xml">                !(rect1.x + rect1.width <span class="tag">&lt; <span class="attr">rect2.x</span>) &amp;&amp;</span></span></span><br><span class="line"><span class="xml">                !(rect2.y + rect2.height <span class="tag">&lt; <span class="attr">rect1.y</span>) &amp;&amp;</span></span></span><br><span class="line"><span class="xml">                !(rect1.y + rect1.height <span class="tag">&lt; <span class="attr">rect2.y</span>)) </span></span><span class="template-variable">&#123;</span></span><br><span class="line"><span class="template-variable">                // 物体碰撞了</span></span><br><span class="line"><span class="template-variable">            &#125;</span><span class="xml"></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">        圆形物体碰撞检测:</span></span><br><span class="line"><span class="xml">        假设发生碰撞的物体是圆形时，检测碰撞则变得比较复杂了，前面矩形所使用的碰撞检测，并不能判断圆形物体的情况。</span></span><br><span class="line"><span class="xml">        如下图的情况：</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">        那么如何检测两圆是否碰撞了呢？这个时候又到了考验我们数理化的知识了。</span></span><br><span class="line"><span class="xml">        检测两圆是否相交：当两个圆心之间的距离是否小于两个圆的半径之和。这是已经被证实的数学运算。</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">        其中 dx 和 dy 分别表示两个圆之间的横坐标和纵坐标的差值。 即 dx = x2 - x1; dy = y2 - y1;</span></span><br><span class="line"><span class="xml">        然后我们需要通过 勾股定理 计算两个圆心之间的距离。如下图：</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">        因此我们碰撞检测的代码可以这样写：</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">        var dx = circle2.x - circle1.x;</span></span><br><span class="line"><span class="xml">        var dy = circle2.y - circle1.y;</span></span><br><span class="line"><span class="xml">        var distance = Math.sqrt((dx * dx) + (dy * dy));</span></span><br><span class="line"><span class="xml">        if (distance <span class="tag">&lt; <span class="attr">circle1.radius</span> + <span class="attr">circle2.radius</span>) </span></span><span class="template-variable">&#123;</span></span><br><span class="line"><span class="template-variable">          // 两个圆形碰撞了</span></span><br><span class="line"><span class="template-variable">        &#125;</span><span class="xml"></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">        碰撞后的处理</span></span><br><span class="line"><span class="xml">        当检测到碰撞后，则可以对碰撞的物体进行状态设置了，可以是相互毁灭，或者是反弹等。这里大家可以根据场景来决定。</span></span><br><span class="line"><span class="xml">    */</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml">`</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2017/01/18/canvas进阶笔记/">canvas进阶笔记</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
+  <p><span>发布时间:</span>2017年01月18日 - 22:01</p>
+  <p><span>最后更新:</span>2018年01月20日 - 21:01</p>
+  <p><span>原始链接:</span><a href="/2017/01/18/canvas进阶笔记/" title="canvas进阶笔记">https://ilove-coding.github.io/2017/01/18/canvas进阶笔记/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2017/01/18/canvas进阶笔记/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+</div>
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/path/to/wechat-reward-image" alt="tongtong 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/path/to/alipay-reward-image" alt="tongtong 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+<div>
+
+  <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>-------------</div>
+    
+</div>
+
+</div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/canvas笔记/" rel="tag"><i class="fa fa-tag"></i> canvas笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/18/canvas入门笔记/" rel="prev" title="canvas入门笔记">
+                canvas入门笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzQxNS85OTcx"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif"
+                alt="tongtong" />
+            
+              <p class="site-author-name" itemprop="name">tongtong</p>
+              <p class="site-description motion-element" itemprop="description">爱生活 爱学习</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/iLove-Coding" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/b210912af0f2" target="_blank" title="jianshu">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>jianshu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ife.baidu.com/" title="百度前端技术学院" target="_blank">百度前端技术学院</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://wf.uisdc.com/cn/" title="google前端开发基础" target="_blank">google前端开发基础</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.36zhen.com/t?id=3448" title="前端书籍资料" target="_blank">前端书籍资料</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-加载图像"><span class="nav-number">1.</span> <span class="nav-text">1.加载图像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-图像裁切"><span class="nav-number">2.</span> <span class="nav-text">2.图像裁切</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-requestAnimationFrame"><span class="nav-number">3.</span> <span class="nav-text">3.requestAnimationFrame</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-动画循环"><span class="nav-number">4.</span> <span class="nav-text">4.动画循环</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-canvas键盘处理"><span class="nav-number">5.</span> <span class="nav-text">5.canvas键盘处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-碰撞检测"><span class="nav-number">6.</span> <span class="nav-text">6.碰撞检测</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongtong</span>
+
+  
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+-->
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
