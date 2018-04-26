@@ -91,18 +91,18 @@
 
 
 
-<meta name="description" content="gulp是一个自动任务运行器，它充分借鉴了unix操作系统的管道（pipe）思想，操作上比grunt简单  ##1.安装gulp需要全局安装，然后再在项目的开发目录中安装为本地模块。先进入项目目录，运行下面的命令     npm i -g gulp      npm i --save-dev gulp   ##2.gulpfile.js 项目根目录中的gulpfile.js,是gulp的配置文件">
+<meta name="description" content="gulp是一个自动任务运行器，它充分借鉴了unix操作系统的管道（pipe）思想，操作上比grunt简单  1.安装gulp需要全局安装，然后再在项目的开发目录中安装为本地模块。先进入项目目录，运行下面的命令   12npm i -g gulp     npm i --save-dev gulp 2.gulpfile.js项目根目录中的gulpfile.js,是gulp的配置文件，例如：   1">
 <meta name="keywords" content="gulp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="gulp:任务自动管理工具">
 <meta property="og:url" content="https://ilove-coding.github.io/2018/03/19/gulp-任务自动管理工具/index.html">
 <meta property="og:site_name" content="潼潼爱coding">
-<meta property="og:description" content="gulp是一个自动任务运行器，它充分借鉴了unix操作系统的管道（pipe）思想，操作上比grunt简单  ##1.安装gulp需要全局安装，然后再在项目的开发目录中安装为本地模块。先进入项目目录，运行下面的命令     npm i -g gulp      npm i --save-dev gulp   ##2.gulpfile.js 项目根目录中的gulpfile.js,是gulp的配置文件">
+<meta property="og:description" content="gulp是一个自动任务运行器，它充分借鉴了unix操作系统的管道（pipe）思想，操作上比grunt简单  1.安装gulp需要全局安装，然后再在项目的开发目录中安装为本地模块。先进入项目目录，运行下面的命令   12npm i -g gulp     npm i --save-dev gulp 2.gulpfile.js项目根目录中的gulpfile.js,是gulp的配置文件，例如：   1">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-19T09:29:37.418Z">
+<meta property="og:updated_time" content="2018-04-26T05:50:04.634Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gulp:任务自动管理工具">
-<meta name="twitter:description" content="gulp是一个自动任务运行器，它充分借鉴了unix操作系统的管道（pipe）思想，操作上比grunt简单  ##1.安装gulp需要全局安装，然后再在项目的开发目录中安装为本地模块。先进入项目目录，运行下面的命令     npm i -g gulp      npm i --save-dev gulp   ##2.gulpfile.js 项目根目录中的gulpfile.js,是gulp的配置文件">
+<meta name="twitter:description" content="gulp是一个自动任务运行器，它充分借鉴了unix操作系统的管道（pipe）思想，操作上比grunt简单  1.安装gulp需要全局安装，然后再在项目的开发目录中安装为本地模块。先进入项目目录，运行下面的命令   12npm i -g gulp     npm i --save-dev gulp 2.gulpfile.js项目根目录中的gulpfile.js,是gulp的配置文件，例如：   1">
 
 
 
@@ -389,191 +389,46 @@
         <blockquote>
 <p>gulp是一个自动任务运行器，它充分借鉴了unix操作系统的管道（pipe）思想，操作上比grunt简单</p>
 </blockquote>
-<p>##1.安装<br>gulp需要全局安装，然后再在项目的开发目录中安装为本地模块。先进入项目目录，运行下面的命令  </p>
-<pre>
-<code>
-npm i -g gulp     
-npm i --save-dev gulp
-</code>
-</pre>
-##2.gulpfile.js
-项目根目录中的gulpfile.js,是gulp的配置文件，例如：  
-<pre>
-<code>
-var gulp = require('gulp');
-var uglify = require('gulp-uglify');
-gulp.task('minify',function(){
-    gulp.src('js/app.js')
-    .pipe(uglify())
-    .pipe(gulp.dest('build'))
-})
-</code>
-</pre>
-上面的代码中，gulpfile.js加载gulp和gulp-uglify模块之后，使用gulp模块的task方法指定任务minify.task方法有两个参数，第一个是任务名，第二个是任务函数。在任务函数中，使用gulp模块的src方法，指定所要处理的文件，然后使用pipe方法，将上一步的输出转为当前的输入，进行链式处理
-
-task方法的回调函数使用了两次pipe方法，也就是说做了两种处理，第一种处理是使用gulp-uglify模块，压缩源码；第二种处理是使用gulp模块的dest方法，将上一步的输出写入本地文件，这里是build.js
-
-执行minify任务时，就在项目目录下执行下面的命令就可以了
-<pre>
-<code>
-$ gulp minify
-</code>
-</pre>
-从这个例子可以看到，gulp充分使用了“管道”的思想，就是一个数据流(stream):src方法读入文件产生数据流，dest方法将数据流写入文件，中间就是一些中间步骤，每一步都对数据流进行一些处理
-下面是另一个数据流的例子
-<pre>
-<code>
-gulp.task('js',function(){
-    return gulp.src('js/*.js')
-    .pipe(jshint())
-    .pipe(uglify())
-    .pipe(concat('app,js'))
-    .pipe(gulp.dest('build'))
-})
-</code>
-</pre>
-上面代码使用pipe命令，分别进行jshint，uglify,concat三步处理
-##3.gulp模块的方法
-###3.1 src()
-gulp模块的src方法，用于产生数据流。它的参数表示所要处理的文件，这些指定的文件会转成数据流。
-参数的写法一般有以下几种形式
->js/app.js:指定确切的文件名  
->js/*.js:某个目录所有后缀名为js的文件  
->js/**/*.js:某个目录及其所有子目录中的所有后缀名为js的文件
->  
->*.+(js css):匹配项目根目录下，所有后缀名为js或css的文件
-
-src方法的参数还可以是一个数组，用来指定多个成员
-<pre>
-<code>
-gulp.src(['js/**/*.js','!js/**/*.min.js'])
-</code>
-</pre>
-##3.2 dest()
-dest方法将管道的输出写入文件，同时将这些输出继续输出，所以可以依次调用多次dest方法，将输出写入多个目录。如果有目录不存在，将会被新建
-<pre>
-<code>
-gulp.src('./client/templates/*.jade')
-    .pipe(jade())
-    .pipe(gulp.dest('./build/templates'))
-    .pipe(minify())
-    .pipe(gulp.dest('./build/minified_templates'));
-</code>
-</pre>
-dest方法还可以接受第二个参数，表示配置对象
-<pre>
-<code>
-gulp.dest('build',{
-cwd:'./app',
-mode:'0644'
-})
-</code>
-</pre>
-配置对象有两个字段，cwd字段指定写入路径的基准目录，默认是当前目录；mode字段指定写入文件的权限，默认是0777
-##3.3 task()
-task方法用于定义具体的任务，它的第一个参数是任务名，第二个参数是任务函数。下面是一个非常简单的任务函数
-<pre>
-<code>
-gulp.task('greet',function(){
-    console.log('hello world');
-})
-</code>
-</pre>
-task方法还可以指定按顺序运行的一组任务
-<pre>
-<code>
-gulp.task('build',['css','js','imgs'])
-</code>
-</pre>
-上面的代码先指定build任务，它由css,js,imgs三个任务所组成，task方法会并发执行这三个任务。注意，由于每个任务都是异步调用，所以没有办法保证js任务的开始运行的时间，正是css任务运行结束。
-
-如果希望各个任务严格按次序执行，可以把前一个任务写成后一个任务的依赖模块
-<pre>
-<code>
-gulp.task('css',['greet'],function(){
-  //deal with css here
-})
-</code>
-</pre>
-上面代码表明，css任务依赖greet任务，所以css一定会在greet运行完成之后再运行。
-task方法的回调函数，还可以接受一个函数作为参数，这对异步任务非常有用
-
-<pre>
-<code>//执行shell命令
-var exec = require('child_process').exec;
-gulp.task('jekyll',function(cb){
-    exec('jekyll build',function(err) {
-        if(err) return cb(err); //return error
-        cb(); //finished task
-    })
-})
-</code>
-</pre>
-
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h2><p>gulp需要全局安装，然后再在项目的开发目录中安装为本地模块。先进入项目目录，运行下面的命令  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i -g gulp     </span><br><span class="line">npm i --save-dev gulp</span><br></pre></td></tr></table></figure>
+<h2 id="2-gulpfile-js"><a href="#2-gulpfile-js" class="headerlink" title="2.gulpfile.js"></a>2.gulpfile.js</h2><p>项目根目录中的gulpfile.js,是gulp的配置文件，例如：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</span><br><span class="line"><span class="keyword">var</span> uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>);</span><br><span class="line">gulp.task(<span class="string">'minify'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    gulp.src(<span class="string">'js/app.js'</span>)</span><br><span class="line">    .pipe(uglify())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'build'</span>))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>上面的代码中，gulpfile.js加载gulp和gulp-uglify模块之后，使用gulp模块的task方法指定任务minify.task方法有两个参数，第一个是任务名，第二个是任务函数。在任务函数中，使用gulp模块的src方法，指定所要处理的文件，然后使用pipe方法，将上一步的输出转为当前的输入，进行链式处理</p>
+<p>task方法的回调函数使用了两次pipe方法，也就是说做了两种处理，第一种处理是使用gulp-uglify模块，压缩源码；第二种处理是使用gulp模块的dest方法，将上一步的输出写入本地文件，这里是build.js</p>
+<p>执行minify任务时，就在项目目录下执行下面的命令就可以了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gulp minify</span><br></pre></td></tr></table></figure>
+<p>从这个例子可以看到，gulp充分使用了“管道”的思想，就是一个数据流(stream):src方法读入文件产生数据流，dest方法将数据流写入文件，中间就是一些中间步骤，每一步都对数据流进行一些处理<br>下面是另一个数据流的例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">'js'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> gulp.src(<span class="string">'js/*.js'</span>)</span><br><span class="line">    .pipe(jshint())</span><br><span class="line">    .pipe(uglify())</span><br><span class="line">    .pipe(concat(<span class="string">'app,js'</span>))</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'build'</span>))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>上面代码使用pipe命令，分别进行jshint，uglify,concat三步处理</p>
+<h2 id="3-gulp模块的方法"><a href="#3-gulp模块的方法" class="headerlink" title="3.gulp模块的方法"></a>3.gulp模块的方法</h2><h3 id="3-1-src"><a href="#3-1-src" class="headerlink" title="3.1 src()"></a>3.1 src()</h3><p>gulp模块的src方法，用于产生数据流。它的参数表示所要处理的文件，这些指定的文件会转成数据流。<br>参数的写法一般有以下几种形式</p>
+<blockquote>
+<p>js/app.js:指定确切的文件名<br>js/<em>.js:某个目录所有后缀名为js的文件<br>js/**/</em>.js:某个目录及其所有子目录中的所有后缀名为js的文件</p>
+<p>*.+(js css):匹配项目根目录下，所有后缀名为js或css的文件</p>
+</blockquote>
+<p>src方法的参数还可以是一个数组，用来指定多个成员</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gulp.src([<span class="string">'js/**/*.js'</span>,<span class="string">'!js/**/*.min.js'</span>])</span><br></pre></td></tr></table></figure>
+<h2 id="3-2-dest"><a href="#3-2-dest" class="headerlink" title="3.2 dest()"></a>3.2 dest()</h2><p>dest方法将管道的输出写入文件，同时将这些输出继续输出，所以可以依次调用多次dest方法，将输出写入多个目录。如果有目录不存在，将会被新建</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">gulp.src(<span class="string">'./client/templates/*.jade'</span>)</span><br><span class="line">    .pipe(jade())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'./build/templates'</span>))</span><br><span class="line">    .pipe(minify())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'./build/minified_templates'</span>));</span><br><span class="line">&lt;<span class="regexp">/code&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>pre&gt;</span><br><span class="line">dest方法还可以接受第二个参数，表示配置对象</span><br><span class="line">&lt;pre&gt;</span><br><span class="line">&lt;code&gt;</span><br><span class="line">gulp.dest(<span class="string">'build'</span>,&#123;</span><br><span class="line">cwd:<span class="string">'./app'</span>,</span><br><span class="line">mode:<span class="string">'0644'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>配置对象有两个字段，cwd字段指定写入路径的基准目录，默认是当前目录；mode字段指定写入文件的权限，默认是0777</p>
+<h2 id="3-3-task"><a href="#3-3-task" class="headerlink" title="3.3 task()"></a>3.3 task()</h2><p>task方法用于定义具体的任务，它的第一个参数是任务名，第二个参数是任务函数。下面是一个非常简单的任务函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">'greet'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'hello world'</span>);</span><br><span class="line">&#125;)</span><br><span class="line">&lt;<span class="regexp">/code&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>pre&gt;</span><br><span class="line">task方法还可以指定按顺序运行的一组任务</span><br><span class="line">&lt;pre&gt;</span><br><span class="line">&lt;code&gt;</span><br><span class="line">gulp.task(<span class="string">'build'</span>,[<span class="string">'css'</span>,<span class="string">'js'</span>,<span class="string">'imgs'</span>])</span><br></pre></td></tr></table></figure>
+<p>上面的代码先指定build任务，它由css,js,imgs三个任务所组成，task方法会并发执行这三个任务。注意，由于每个任务都是异步调用，所以没有办法保证js任务的开始运行的时间，正是css任务运行结束。</p>
+<p>如果希望各个任务严格按次序执行，可以把前一个任务写成后一个任务的依赖模块</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">'css'</span>,[<span class="string">'greet'</span>],<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//deal with css here</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>上面代码表明，css任务依赖greet任务，所以css一定会在greet运行完成之后再运行。<br>task方法的回调函数，还可以接受一个函数作为参数，这对异步任务非常有用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//执行shell命令</span></span><br><span class="line"><span class="keyword">var</span> exec = <span class="built_in">require</span>(<span class="string">'child_process'</span>).exec;</span><br><span class="line">gulp.task(<span class="string">'jekyll'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">cb</span>)</span>&#123;</span><br><span class="line">    exec(<span class="string">'jekyll build'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(err) <span class="keyword">return</span> cb(err); <span class="comment">//return error</span></span><br><span class="line">        cb(); <span class="comment">//finished task</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>如果一个任务的名字为default,表明它是“默认任务”，在命令行直接输入gulp命令，就会运行该任务。</p>
-<pre>
-<code>
-gulp.task('default',function(){
-   //default task
-})
-//或者
-gulp.task('default',['styles','jshint','watch']);
-</code>
-</pre>
-执行的时候，直接gulp，就会运行styles,jshint,watch三个任务
-##3.4 watch()
-watch方法用于指定需要监视的文件。一旦这些文件发送变动，就会运行指定任务。
-<pre>
-<code>
-gulp.task('watch',function(){
-    gulp.watch('templates/*.tmpl.html',['build']);
-})
-</code>
-</pre>
-上面代码指定，一旦templates目录中的模版文件发生变化，就运行build任务。  
-watch方法也可以用回调函数，代替指定的任务
-
-<pre>
-<code>
-gulp.watch('templates/*.tmpl.html',function(event) {
-    console.log('event type:'+event.type);
-    onsole.log('event path' +event.path);
-})
-</code>
-</pre>
-另一种写法是watch方法所监控的文件发生变化时（修改、增加、删除文件），会触发change事件。  
-可以对change事件指定回调函数。
-<pre>
-<code>
-var watcher = gulp.watch('templates/*.tmpl.html', ['build']);
-watcher.on('change', function (event) {
-   console.log('Event type: ' + event.type);
-   console.log('Event path: ' + event.path);
-});
-</code>
-</pre>
-除了change事件，watch方法还可能触发以下事件。
-
-
-##gulp-load-plugins模块  
-一般情况下，gulpfile.js中的模块需要一个个加载。
-<pre>
-<code>
-var gulp = require('gulp'),
-    jshint = require('gulp-jshint'),
-    uglify = require('gulp-uglify'),
-    concat = require('gulp-concat');
-
-gulp.task('js', function () {
-   return gulp.src('js/*.js')
-      .pipe(jshint())
-      .pipe(jshint.reporter('default'))
-      .pipe(uglify())
-      .pipe(concat('app.js'))
-      .pipe(gulp.dest('build'));
-});
-</code>
-</pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">'default'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="comment">//default task</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//或者</span></span><br><span class="line">gulp.task(<span class="string">'default'</span>,[<span class="string">'styles'</span>,<span class="string">'jshint'</span>,<span class="string">'watch'</span>]);</span><br></pre></td></tr></table></figure>
+<p>执行的时候，直接gulp，就会运行styles,jshint,watch三个任务</p>
+<h2 id="3-4-watch"><a href="#3-4-watch" class="headerlink" title="3.4 watch()"></a>3.4 watch()</h2><p>watch方法用于指定需要监视的文件。一旦这些文件发送变动，就会运行指定任务。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">'watch'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    gulp.watch(<span class="string">'templates/*.tmpl.html'</span>,[<span class="string">'build'</span>]);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>上面代码指定，一旦templates目录中的模版文件发生变化，就运行build任务。<br>watch方法也可以用回调函数，代替指定的任务</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gulp.watch(<span class="string">'templates/*.tmpl.html'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'event type:'</span>+event.type);</span><br><span class="line">    onsole.log(<span class="string">'event path'</span> +event.path);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>另一种写法是watch方法所监控的文件发生变化时（修改、增加、删除文件），会触发change事件。<br>可以对change事件指定回调函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> watcher = gulp.watch(<span class="string">'templates/*.tmpl.html'</span>, [<span class="string">'build'</span>]);</span><br><span class="line">watcher.on(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'Event type: '</span> + event.type);</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'Event path: '</span> + event.path);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>除了change事件，watch方法还可能触发以下事件。</p>
+<h2 id="gulp-load-plugins模块"><a href="#gulp-load-plugins模块" class="headerlink" title="gulp-load-plugins模块"></a>gulp-load-plugins模块</h2><p>一般情况下，gulpfile.js中的模块需要一个个加载。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>),</span><br><span class="line">    jshint = <span class="built_in">require</span>(<span class="string">'gulp-jshint'</span>),</span><br><span class="line">    uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>),</span><br><span class="line">    concat = <span class="built_in">require</span>(<span class="string">'gulp-concat'</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'js'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="keyword">return</span> gulp.src(<span class="string">'js/*.js'</span>)</span><br><span class="line">      .pipe(jshint())</span><br><span class="line">      .pipe(jshint.reporter(<span class="string">'default'</span>))</span><br><span class="line">      .pipe(uglify())</span><br><span class="line">      .pipe(concat(<span class="string">'app.js'</span>))</span><br><span class="line">      .pipe(gulp.dest(<span class="string">'build'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -594,7 +449,7 @@ gulp.task('js', function () {
   <p><span>本文标题:</span><a href="/2018/03/19/gulp-任务自动管理工具/">gulp:任务自动管理工具</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
   <p><span>发布时间:</span>2018年03月19日 - 16:03</p>
-  <p><span>最后更新:</span>2018年03月19日 - 17:03</p>
+  <p><span>最后更新:</span>2018年04月26日 - 13:04</p>
   <p><span>原始链接:</span><a href="/2018/03/19/gulp-任务自动管理工具/" title="gulp:任务自动管理工具">https://ilove-coding.github.io/2018/03/19/gulp-任务自动管理工具/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2018/03/19/gulp-任务自动管理工具/"  aria-label="复制成功！"></i></span>
   </p>
@@ -750,8 +605,17 @@ gulp.task('js', function () {
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -864,6 +728,22 @@ gulp.task('js', function () {
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-安装"><span class="nav-number">1.</span> <span class="nav-text">1.安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-gulpfile-js"><span class="nav-number">2.</span> <span class="nav-text">2.gulpfile.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-gulp模块的方法"><span class="nav-number">3.</span> <span class="nav-text">3.gulp模块的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-src"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 src()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-dest"><span class="nav-number">4.</span> <span class="nav-text">3.2 dest()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-task"><span class="nav-number">5.</span> <span class="nav-text">3.3 task()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-watch"><span class="nav-number">6.</span> <span class="nav-text">3.4 watch()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gulp-load-plugins模块"><span class="nav-number">7.</span> <span class="nav-text">gulp-load-plugins模块</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
