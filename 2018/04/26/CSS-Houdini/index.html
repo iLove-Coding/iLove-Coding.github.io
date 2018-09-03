@@ -91,18 +91,23 @@
 
 
 
-<meta name="description" content="爱生活 爱学习">
+<meta name="description" content="Houdini(来源于一位伟大的美国魔术师)，是 W3C 新成立的一个任务小组，它的终极目标是实现 css 属性的完全兼容。Houdini 提出了一个前无古人的的设想：开放 CSS 的 API 给开发者，开发者可以通过这套接口自行扩展 CSS，并提供相应的工具允许开发者介入浏览器渲染引擎的样式和布局流程中。注：参考的原文链接  Houdini能解决什么问题？ 你能使用任何的CSS属性，并且在不同">
 <meta name="keywords" content="进击的css">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSS Houdini">
 <meta property="og:url" content="https://ilove-coding.github.io/2018/04/26/CSS-Houdini/index.html">
 <meta property="og:site_name" content="潼潼爱coding">
-<meta property="og:description" content="爱生活 爱学习">
+<meta property="og:description" content="Houdini(来源于一位伟大的美国魔术师)，是 W3C 新成立的一个任务小组，它的终极目标是实现 css 属性的完全兼容。Houdini 提出了一个前无古人的的设想：开放 CSS 的 API 给开发者，开发者可以通过这套接口自行扩展 CSS，并提供相应的工具允许开发者介入浏览器渲染引擎的样式和布局流程中。注：参考的原文链接  Houdini能解决什么问题？ 你能使用任何的CSS属性，并且在不同">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-26T07:39:22.994Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/iLove-Coding/post_img/master/css%E6%A0%87%E5%87%86%E5%88%B6%E5%AE%9A%E6%B5%81%E7%A8%8B%E5%9B%BE1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/iLove-Coding/post_img/master/js%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%91%E5%B8%83%E6%B5%81%E7%A8%8B1.png">
+<meta property="og:image" content="https://imgly.net/img/G6M.png">
+<meta property="og:image" content="https://codersblock.com/blog/images/houdini-support-grid.png">
+<meta property="og:updated_time" content="2018-05-03T06:34:20.420Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSS Houdini">
-<meta name="twitter:description" content="爱生活 爱学习">
+<meta name="twitter:description" content="Houdini(来源于一位伟大的美国魔术师)，是 W3C 新成立的一个任务小组，它的终极目标是实现 css 属性的完全兼容。Houdini 提出了一个前无古人的的设想：开放 CSS 的 API 给开发者，开发者可以通过这套接口自行扩展 CSS，并提供相应的工具允许开发者介入浏览器渲染引擎的样式和布局流程中。注：参考的原文链接  Houdini能解决什么问题？ 你能使用任何的CSS属性，并且在不同">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/iLove-Coding/post_img/master/css%E6%A0%87%E5%87%86%E5%88%B6%E5%AE%9A%E6%B5%81%E7%A8%8B%E5%9B%BE1.png">
 
 
 
@@ -386,7 +391,44 @@
       
 
       
-        
+        <blockquote>
+<p>Houdini(来源于一位伟大的美国魔术师)，是 W3C 新成立的一个任务小组，它的终极目标是实现 css 属性的完全兼容。<br>Houdini 提出了一个前无古人的的设想：开放 CSS 的 API 给开发者，开发者可以通过这套接口自行扩展 CSS，并提供相应的工具允许开发者介入浏览器渲染引擎的样式和布局流程中。<br>注：参考的<a href="https://www.smashingmagazine.com/2016/03/houdini-maybe-the-most-exciting-development-in-css-youve-never-heard-of/" target="_blank" rel="noopener">原文链接</a></p>
+</blockquote>
+<h3 id="Houdini能解决什么问题？"><a href="#Houdini能解决什么问题？" class="headerlink" title="Houdini能解决什么问题？"></a>Houdini能解决什么问题？</h3><blockquote>
+<p>你能使用任何的CSS属性，并且在不同浏览器中它们都能正常运行，你的开发体验将会多么舒适。再设想一下，任何你在博客、大会上听到的新特性——比如CSS grids，CSS snap points和sticky positioning，都能够通过某种方式像原生CSS一样得到完美运行，所有的一切只需要你从Github上复制一段代码，那将会多么美好。<br>这正是Houdini的目标，这正是其组织所为之奋斗的未来。</p>
+</blockquote>
+<p>允许一个新特性被写入 CSS 标准需要经过一整套标准制定流程，这个流程可能要经历很长的时间<br><img src="https://raw.githubusercontent.com/iLove-Coding/post_img/master/css%E6%A0%87%E5%87%86%E5%88%B6%E5%AE%9A%E6%B5%81%E7%A8%8B%E5%9B%BE1.png" width="100%" height="auto"></p>
+<h5 id="一个最常见的例子："><a href="#一个最常见的例子：" class="headerlink" title="一个最常见的例子："></a>一个最常见的例子：</h5><p>flex布局分为旧版本dispaly: box;，过渡版本dispaly: flex box; 标准版本display: flex;。<br>所以如果你只是写新版本的语法形式，是肯定存在兼容性问题的。<br>需要注意所有都是向下兼容的，所以写法的顺序一定要写好了才起作用。就是把旧语法写在底下，个别不兼容的移动设置才会识别，那些带box的一定要写在最下面即可。：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>: -webkit-flex;  <span class="comment">/* 新版本语法: Chrome 21+ */</span></span><br><span class="line">    <span class="attribute">display</span>: flex;          <span class="comment">/* 新版本语法: Opera 12.1, Firefox 22+ */</span></span><br><span class="line">    <span class="attribute">display</span>: -webkit-box;   <span class="comment">/* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */</span></span><br><span class="line">    <span class="attribute">display</span>: -moz-box;      <span class="comment">/* 老版本语法: Firefox (buggy) */</span></span><br><span class="line">    <span class="attribute">display</span>: -ms-flexbox;   <span class="comment">/* 混合版本语法: IE 10 */</span>   </span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.flex1</span> &#123;            </span><br><span class="line">    <span class="attribute">-webkit-flex</span>: <span class="number">1</span>;        <span class="comment">/* Chrome */</span>  </span><br><span class="line">    <span class="attribute">-ms-flex</span>: <span class="number">1</span>             <span class="comment">/* IE 10 */</span>  </span><br><span class="line">    flex: <span class="number">1</span>;                <span class="comment">/* NEW, Spec - Opera 12.1, Firefox 20+ */</span></span><br><span class="line">    <span class="attribute">-webkit-box-flex</span>: <span class="number">1</span>     <span class="comment">/* OLD - iOS 6-, Safari 3.1-6 */</span>  </span><br><span class="line">    -moz-box-flex: <span class="number">1</span>;       <span class="comment">/* OLD - Firefox 19- */</span>       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>虽然随着现代浏览器的自动更新机制，问题总有解决的那一天。但是按照现在的新属性发布流程，最新的浏览器也会和新属性提案仍然存在一个时间差。</p>
+<p>同样在 web 世界里，对于如今的 JavaScript 来说却是简单粗暴：<br><img src="https://raw.githubusercontent.com/iLove-Coding/post_img/master/js%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%91%E5%B8%83%E6%B5%81%E7%A8%8B1.png" width="80%" height="auto" style="display:block"><br>在 JS 社区里，人们在抱怨它一天一个样，跑得太快追得太累；而 CSS 社区，人们却在叹息着花精力去学习新事物是件多么吃力不讨好的事儿 </p>
+<h5 id="CSS的polyfill"><a href="#CSS的polyfill" class="headerlink" title="CSS的polyfill?"></a>CSS的polyfill?</h5><p>这样看写CSS的polyfill似乎一个好办法。伴随着优秀的polyfill，CSS将会发展得跟Javascript一样快，对吗？<br>Javascript是一门动态语言，这意味着你可以用JS去polyfill它自身。也正因为它动态的特性，它是非常易于扩展的。从另一个角度来说，CSS几乎不能被自己所polyfill。在某些情况下，你可以通过构建的方法实现CSS的polyfill（POSTCSS就是干这个的）；然而当你想要polyfill任何依赖于DOM结构的，或者某一元素样式或位置的东西的时候，你不得不在客户端运行你的polyfill逻辑。不幸的是，浏览器很难实现这个需求。</p>
+<p>下面的图片展示的是浏览器对于一个HTML文档从接收到渲染的基本过程。其中蓝色区域就是Javascript有能力作出控制的步骤：<br><img src="https://imgly.net/img/G6M.png" width="80%" height="auto" style="display:block"></p>
+<p>作为开发者，我们无法控制浏览器是如何将HTML和CSS解析为DOM 和 CSS 对象模型（CSSOM）的；无法控制整个渲染过程；无法控制浏览器是如何选择把元素渲染到DOM上面的，或者如何把内容填充到屏幕上展现给用户；你也无法控制浏览器是如何排版的。</p>
+<p>我们唯一能够完全控制的只有DOM这一块。在这种时候CSSOM是可用的；即便如此，引用Houdini网站的一句话，这是“蹩脚的，浏览器之间不一致的，缺乏论证的特性。”</p>
+<h3 id="Houdini是什么？"><a href="#Houdini是什么？" class="headerlink" title="Houdini是什么？"></a>Houdini是什么？</h3><p>上文提到过，开发者仅有一点点权利去操作浏览器的渲染过程。确实，只有DOM和CSSOM能够被开发者操作。</p>
+<p>为了解决这个问题，Houdini小组提供了一些新的方法，第一次让开发者得以进入到渲染过程中的其他步骤。下面的图片展示的是渲染过程以及新的方法是如何被使用而修改当中的步骤的。（注意灰色部分的方法是计划中的但仍在修改的。）</p>
+<h3 id="浏览器支持度"><a href="#浏览器支持度" class="headerlink" title="浏览器支持度"></a>浏览器支持度</h3><p><a href="https://codersblock.com/blog/say-hello-to-houdini-and-the-css-paint-api/" target="_blank" rel="noopener">原文链接</a><br><img src="https://codersblock.com/blog/images/houdini-support-grid.png" width="80%" height="auto" style="display:block"></p>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p>让我们来回顾一下Houdini（特别是CSS Paint API）的一些好东西。</p>
+<ul>
+<li>给你创造你自己视觉效果的自由  </li>
+<li>不依赖于向DOM添加额外的元素或伪元素  </li>
+<li>作为你的浏览器渲染管道的一部分执行，提高效率  </li>
+<li>比Polyfills更高效，更轻便  </li>
+<li>提供了使用CSS Hacks的替代方案  </li>
+<li>作为一处抽象和模块化的方法，通过一个Paint Worklet能包含更多的视觉逻辑  </li>
+<li>让你可以创建全新类型的动画  </li>
+<li>允许开发人员在浏览器实现新特性之前来解决未来浏览器支持问题  </li>
+<li>五大浏览器厂商都打算支持Houdini </li>
+</ul>
+<p>当然，有优点就必然有缺点。  </p>
+<ul>
+<li>大量的Houdini仍在发展中</li>
+<li>Houdini本身需要良好的浏览器支持，才能开始缓解未来浏览器的支持问题   </li>
+<li>浏览器必须加载一个Paint Worklet文件，然后才能使用它，这可能导致样式弹出（pop-in）  </li>
+<li>当前的开发者工具不支持设置断点或在Paint Worklet中使用debugger语句（尽管你仍然可以使用console.log()）  </li>
+</ul>
+
       
     </div>
     
@@ -406,7 +448,7 @@
   <p><span>本文标题:</span><a href="/2018/04/26/CSS-Houdini/">CSS Houdini</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
   <p><span>发布时间:</span>2018年04月26日 - 15:04</p>
-  <p><span>最后更新:</span>2018年04月26日 - 15:04</p>
+  <p><span>最后更新:</span>2018年05月03日 - 14:05</p>
   <p><span>原始链接:</span><a href="/2018/04/26/CSS-Houdini/" title="CSS Houdini">https://ilove-coding.github.io/2018/04/26/CSS-Houdini/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2018/04/26/CSS-Houdini/"  aria-label="复制成功！"></i></span>
   </p>
@@ -497,6 +539,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/04/26/前端性能监控-window-performance/" rel="prev" title="前端性能监控-window.performance">
+                前端性能监控-window.performance <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -558,8 +604,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -578,7 +633,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -589,7 +644,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -600,7 +655,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -672,6 +727,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Houdini能解决什么问题？"><span class="nav-number">1.</span> <span class="nav-text">Houdini能解决什么问题？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#一个最常见的例子："><span class="nav-number">1.0.1.</span> <span class="nav-text">一个最常见的例子：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CSS的polyfill"><span class="nav-number">1.0.2.</span> <span class="nav-text">CSS的polyfill?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Houdini是什么？"><span class="nav-number">2.</span> <span class="nav-text">Houdini是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器支持度"><span class="nav-number">3.</span> <span class="nav-text">浏览器支持度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优缺点"><span class="nav-number">4.</span> <span class="nav-text">优缺点</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
