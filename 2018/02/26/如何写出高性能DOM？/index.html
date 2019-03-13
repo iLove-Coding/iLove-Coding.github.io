@@ -91,18 +91,18 @@
 
 
 
-<meta name="description" content="为什么要写高性能DOM？一个网站，在页面上承载最多内容的就是DOM，而且无论是我们通过加载JS、加载图片，他们也是通过写HTML标签来实现的。而我们性能优化要做的无非就是几大块： 站点的网络消耗DOM的初始化过程（浏览器）DOM的结构以及动态操作（人为）JS执行过程（浏览器）JS逻辑组织（人为）站点的网络消耗我们基本上没法控制的，而且网络环境非常复杂，我们作为一个下行的终端实际上选择不了你接触什么">
+<meta name="description" content="为什么要写高性能DOM?一个网站，在页面上承载最多内容的就是DOM，而且无论是我们通过加载JS、加载图片，他们也是通过写HTML标签来实现的。而我们性能优化要做的无非就是几大块：  站点的网络消耗   DOM的初始化过程（浏览器）   DOM的结构以及动态操作（人为）   JS执行过程（浏览器）   JS逻辑组织（人为）    站点的网络消耗我们基本上没法控制的，而且网络环境非常复杂，我们作为一个">
 <meta name="keywords" content="性能优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何写出高性能DOM？">
 <meta property="og:url" content="https://ilove-coding.github.io/2018/02/26/如何写出高性能DOM？/index.html">
 <meta property="og:site_name" content="潼潼爱coding">
-<meta property="og:description" content="为什么要写高性能DOM？一个网站，在页面上承载最多内容的就是DOM，而且无论是我们通过加载JS、加载图片，他们也是通过写HTML标签来实现的。而我们性能优化要做的无非就是几大块： 站点的网络消耗DOM的初始化过程（浏览器）DOM的结构以及动态操作（人为）JS执行过程（浏览器）JS逻辑组织（人为）站点的网络消耗我们基本上没法控制的，而且网络环境非常复杂，我们作为一个下行的终端实际上选择不了你接触什么">
+<meta property="og:description" content="为什么要写高性能DOM?一个网站，在页面上承载最多内容的就是DOM，而且无论是我们通过加载JS、加载图片，他们也是通过写HTML标签来实现的。而我们性能优化要做的无非就是几大块：  站点的网络消耗   DOM的初始化过程（浏览器）   DOM的结构以及动态操作（人为）   JS执行过程（浏览器）   JS逻辑组织（人为）    站点的网络消耗我们基本上没法控制的，而且网络环境非常复杂，我们作为一个">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-12T03:06:31.742Z">
+<meta property="og:updated_time" content="2019-03-13T11:39:09.519Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何写出高性能DOM？">
-<meta name="twitter:description" content="为什么要写高性能DOM？一个网站，在页面上承载最多内容的就是DOM，而且无论是我们通过加载JS、加载图片，他们也是通过写HTML标签来实现的。而我们性能优化要做的无非就是几大块： 站点的网络消耗DOM的初始化过程（浏览器）DOM的结构以及动态操作（人为）JS执行过程（浏览器）JS逻辑组织（人为）站点的网络消耗我们基本上没法控制的，而且网络环境非常复杂，我们作为一个下行的终端实际上选择不了你接触什么">
+<meta name="twitter:description" content="为什么要写高性能DOM?一个网站，在页面上承载最多内容的就是DOM，而且无论是我们通过加载JS、加载图片，他们也是通过写HTML标签来实现的。而我们性能优化要做的无非就是几大块：  站点的网络消耗   DOM的初始化过程（浏览器）   DOM的结构以及动态操作（人为）   JS执行过程（浏览器）   JS逻辑组织（人为）    站点的网络消耗我们基本上没法控制的，而且网络环境非常复杂，我们作为一个">
 
 
 
@@ -386,15 +386,24 @@
       
 
       
-        <p><strong>为什么要写高性能DOM？</strong><br>一个网站，在页面上承载最多内容的就是DOM，而且无论是我们通过加载JS、加载图片，他们也是通过写HTML标签来实现的。而我们性能优化要做的无非就是几大块：</p>
-<p>站点的网络消耗<br>DOM的初始化过程（浏览器）<br>DOM的结构以及动态操作（人为）<br>JS执行过程（浏览器）<br>JS逻辑组织（人为）<br>站点的网络消耗我们基本上没法控制的，而且网络环境非常复杂，我们作为一个下行的终端实际上选择不了你接触什么样的网络环境的。   </p>
+        <h3 id="为什么要写高性能DOM"><a href="#为什么要写高性能DOM" class="headerlink" title="为什么要写高性能DOM?"></a>为什么要写高性能DOM?</h3><p>一个网站，在页面上承载最多内容的就是DOM，而且无论是我们通过加载JS、加载图片，他们也是通过写HTML标签来实现的。而我们性能优化要做的无非就是几大块：</p>
+<ul>
+<li>站点的网络消耗  </li>
+<li>DOM的初始化过程（浏览器）  </li>
+<li>DOM的结构以及动态操作（人为）  </li>
+<li>JS执行过程（浏览器）  </li>
+<li>JS逻辑组织（人为）  </li>
+</ul>
+<p>站点的网络消耗我们基本上没法控制的，而且网络环境非常复杂，我们作为一个下行的终端实际上选择不了你接触什么样的网络环境的。   </p>
 <p>DOM的初始化过程其实我们也是无法控制的，因为DOM的初始化是跟浏览器里面的DOM解析引擎相关的，它解析快解析慢我们改不了。</p>
 <p>DOM的结构以及动态操作，这就是我们相关的。一个页面的DOM结构是我们在制作页面的时候自己来下定义的，我们可以做多层嵌套，也可以做底层嵌套，我们可以做绝对定位也可以做相对定位。动态操作就是DOM在运行到一定阶段之后。</p>
 <p>JS执行过程跟浏览器的内核相关，它的执行快慢我们也无法改变，我们能优化的就是JS逻辑组织部分。</p>
-<p><strong>回流（Reflow）和重绘（Repaint）</strong><br>提高高性能DOM就不得不提到回流和重绘，那么什么是回流什么是重绘？<br><strong>回流 </strong><br>对于DOM结构中的各个元素都有自己的盒子模型，这些都需要浏览器根据各种样式（浏览器的、开发人员定义的）来计算并根据计算结果将元素放到它该出现的位置，这个过程称为回流。<br><strong><br>重绘 </strong><br>当各种盒子的位置、大小以及其他属性，例如颜色、字体大小等都确定下来后，浏览器于是便把这些元素都按照各自的特性绘制了一遍，于是页面的内容出现了，这个过程称之为重绘。</p>
-<p><strong>什么情况下会触发回流和重绘？</strong><br>DOM元素的添加、修改（内容）、删除（回流+重绘），仅修改DOM元素的字体颜色（只有重绘，因为不需要调整布局），回流一定触发重绘，但是重绘不一定触发回流。</p>
+<h3 id="回流（Reflow）和重绘（Repaint）"><a href="#回流（Reflow）和重绘（Repaint）" class="headerlink" title="回流（Reflow）和重绘（Repaint）"></a>回流（Reflow）和重绘（Repaint）</h3><p>提高高性能DOM就不得不提到回流和重绘，那么什么是回流什么是重绘？ </p>
+<h3 id="回流"><a href="#回流" class="headerlink" title="回流"></a>回流</h3><p>对于DOM结构中的各个元素都有自己的盒子模型，这些都需要浏览器根据各种样式（浏览器的、开发人员定义的）来计算并根据计算结果将元素放到它该出现的位置，这个过程称为回流。</p>
+<h3 id="重绘"><a href="#重绘" class="headerlink" title="重绘"></a>重绘</h3><p>当各种盒子的位置、大小以及其他属性，例如颜色、字体大小等都确定下来后，浏览器于是便把这些元素都按照各自的特性绘制了一遍，于是页面的内容出现了，这个过程称之为重绘。</p>
+<h3 id="什么情况下会触发回流和重绘？"><a href="#什么情况下会触发回流和重绘？" class="headerlink" title="什么情况下会触发回流和重绘？"></a>什么情况下会触发回流和重绘？</h3><p>DOM元素的添加、修改（内容）、删除（回流+重绘），仅修改DOM元素的字体颜色（只有重绘，因为不需要调整布局），回流一定触发重绘，但是重绘不一定触发回流。</p>
 <p>现在我们知道了触发重绘和回流的触发条件，那我们为什么要避免他们？为什么避免他们高性能DOM就能够写出来呢？</p>
-<p><strong>如何避免触发回流和重绘</strong><br>Display的值会影响布局，从而影响整个页面元素的位子发生变化，所以会更改render树的结构，先将元素从document中删除，完成修改后再把元素放回原来的位置，如果需要创建多个DOM节点，可以使用documentFragment创建完后一次性的加入document</p>
+<h3 id="如何避免触发回流和重绘"><a href="#如何避免触发回流和重绘" class="headerlink" title="如何避免触发回流和重绘"></a>如何避免触发回流和重绘</h3><p>Display的值会影响布局，从而影响整个页面元素的位子发生变化，所以会更改render树的结构，先将元素从document中删除，完成修改后再把元素放回原来的位置，如果需要创建多个DOM节点，可以使用documentFragment创建完后一次性的加入document</p>
 
       
     </div>
@@ -415,7 +424,7 @@
   <p><span>本文标题:</span><a href="/2018/02/26/如何写出高性能DOM？/">如何写出高性能DOM？</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
   <p><span>发布时间:</span>2018年02月26日 - 23:02</p>
-  <p><span>最后更新:</span>2018年04月12日 - 11:04</p>
+  <p><span>最后更新:</span>2019年03月13日 - 19:03</p>
   <p><span>原始链接:</span><a href="/2018/02/26/如何写出高性能DOM？/" title="如何写出高性能DOM？">https://ilove-coding.github.io/2018/02/26/如何写出高性能DOM？/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2018/02/26/如何写出高性能DOM？/"  aria-label="复制成功！"></i></span>
   </p>
@@ -571,8 +580,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -591,7 +609,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -602,7 +620,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -686,6 +704,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要写高性能DOM"><span class="nav-number">1.</span> <span class="nav-text">为什么要写高性能DOM?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回流（Reflow）和重绘（Repaint）"><span class="nav-number">2.</span> <span class="nav-text">回流（Reflow）和重绘（Repaint）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回流"><span class="nav-number">3.</span> <span class="nav-text">回流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重绘"><span class="nav-number">4.</span> <span class="nav-text">重绘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么情况下会触发回流和重绘？"><span class="nav-number">5.</span> <span class="nav-text">什么情况下会触发回流和重绘？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何避免触发回流和重绘"><span class="nav-number">6.</span> <span class="nav-text">如何避免触发回流和重绘</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -700,7 +734,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-star"></i>
   </span>

@@ -91,18 +91,18 @@
 
 
 
-<meta name="description" content="Vue-ToDoList 看到一个很好的网页版待办事项列表（http://www.todolist.cn/）它的边界之处在于不需要注册就可以使用，数据存储在用户浏览器的html5本地数据库里，简单又安全  所以我就用vue模仿着做了一个，顺便整合一下vue的一些基础知识待办事项的数据结构-dataArr12345&amp;#123;	id:Math.random(), //id	title:&apos;&apos;,  //">
+<meta name="description" content="Vue-ToDoList 看到一个很好的网页版待办事项列表（http://www.todolist.cn/）它的边界之处在于不需要注册就可以使用，数据存储在用户浏览器的html5本地数据库里，简单又安全  所以我就用vue模仿着做了一个，顺便整合一下vue的一些基础知识待办事项的数据结构-dataArr   12345&amp;#123;	id:Math.random(), //id	title:&apos;&apos;,">
 <meta name="keywords" content="todolist,vue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue-待办事项列表">
 <meta property="og:url" content="https://ilove-coding.github.io/2018/01/24/Vue待办事项列表/index.html">
 <meta property="og:site_name" content="潼潼爱coding">
-<meta property="og:description" content="Vue-ToDoList 看到一个很好的网页版待办事项列表（http://www.todolist.cn/）它的边界之处在于不需要注册就可以使用，数据存储在用户浏览器的html5本地数据库里，简单又安全  所以我就用vue模仿着做了一个，顺便整合一下vue的一些基础知识待办事项的数据结构-dataArr12345&amp;#123;	id:Math.random(), //id	title:&apos;&apos;,  //">
+<meta property="og:description" content="Vue-ToDoList 看到一个很好的网页版待办事项列表（http://www.todolist.cn/）它的边界之处在于不需要注册就可以使用，数据存储在用户浏览器的html5本地数据库里，简单又安全  所以我就用vue模仿着做了一个，顺便整合一下vue的一些基础知识待办事项的数据结构-dataArr   12345&amp;#123;	id:Math.random(), //id	title:&apos;&apos;,">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-24T08:18:06.000Z">
+<meta property="og:updated_time" content="2019-03-13T10:07:28.731Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue-待办事项列表">
-<meta name="twitter:description" content="Vue-ToDoList 看到一个很好的网页版待办事项列表（http://www.todolist.cn/）它的边界之处在于不需要注册就可以使用，数据存储在用户浏览器的html5本地数据库里，简单又安全  所以我就用vue模仿着做了一个，顺便整合一下vue的一些基础知识待办事项的数据结构-dataArr12345&amp;#123;	id:Math.random(), //id	title:&apos;&apos;,  //">
+<meta name="twitter:description" content="Vue-ToDoList 看到一个很好的网页版待办事项列表（http://www.todolist.cn/）它的边界之处在于不需要注册就可以使用，数据存储在用户浏览器的html5本地数据库里，简单又安全  所以我就用vue模仿着做了一个，顺便整合一下vue的一些基础知识待办事项的数据结构-dataArr   12345&amp;#123;	id:Math.random(), //id	title:&apos;&apos;,">
 
 
 
@@ -389,7 +389,8 @@
         <h1 id="Vue-ToDoList"><a href="#Vue-ToDoList" class="headerlink" title="Vue-ToDoList"></a>Vue-ToDoList</h1><blockquote>
 <p>看到一个很好的网页版待办事项列表（<a href="http://www.todolist.cn/" target="_blank" rel="noopener">http://www.todolist.cn/</a>）<br>它的边界之处在于不需要注册就可以使用，数据存储在用户浏览器的html5本地数据库里，简单又安全</p>
 </blockquote>
-<p>所以我就用vue模仿着做了一个，顺便整合一下vue的一些基础知识<br><strong>待办事项的数据结构-dataArr</strong><br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attribute">id</span>:Math.<span class="built_in">random</span>(), //id</span><br><span class="line">	title:<span class="string">''</span>,  //内容</span><br><span class="line">	completed:false //状态（完成/正在进行)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>所以我就用vue模仿着做了一个，顺便整合一下vue的一些基础知识<br><strong>待办事项的数据结构-dataArr</strong>  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	id:<span class="built_in">Math</span>.random(), <span class="comment">//id</span></span><br><span class="line">	title:<span class="string">''</span>,  <span class="comment">//内容</span></span><br><span class="line">	completed:<span class="literal">false</span> <span class="comment">//状态（完成/正在进行)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>待办事项列表的主要功能包括：</strong>  </p>
 <ol>
 <li>点击输入框输入内容，按下回车键，判断输入内容是否为空，若不为空则添加一条新的待办事项，状态默认为正在进行</li>
@@ -409,8 +410,18 @@
 <p><strong>localStorage实现本地数据存储</strong>  </p>
 <p>最后要解决的问题就是数据的存储，这里使用的是html5的本地存储localStorage对象</p>
 <blockquote>
-<p>localStorage：<br>setItem(key,value)<br>getItem(key)<br>注意:存储数组和对象格式localStorage会自动处理<br>数组：取出数组中每一项，逗号分隔<br>对象：转成[object Object]字符串<br>–解决办法：<br>  存值时 JSON.stringify()手动转字符串，<br>  取值时 JSON.parse()转成对象  </p>
+<p>localStorage：<br>setItem(key,value)<br>getItem(key)  </p>
 </blockquote>
+<ul>
+<li>注意:存储数组和对象格式localStorage会自动处理  </li>
+<li>数组：取出数组中每一项，逗号分隔  </li>
+<li>对象：转成[object Object]字符串  </li>
+<li>解决办法：  <ul>
+<li>存值时 JSON.stringify()手动转字符串，  </li>
+<li>取值时 JSON.parse()转成对象  </li>
+</ul>
+</li>
+</ul>
 <p>将数据对象存储在localStorage中，并且利用Vue的watch方法深度监控其变化，只要数据对象有变化就更新localStorage  </p>
 <p><a href="https://htmlpreview.github.io/?https://github.com/iLove-Coding/Vue-record/blob/master/todolist/index.html" target="_blank" rel="noopener">效果展示</a></p>
 
@@ -433,7 +444,7 @@
   <p><span>本文标题:</span><a href="/2018/01/24/Vue待办事项列表/">Vue-待办事项列表</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
   <p><span>发布时间:</span>2018年01月24日 - 15:01</p>
-  <p><span>最后更新:</span>2018年01月24日 - 16:01</p>
+  <p><span>最后更新:</span>2019年03月13日 - 18:03</p>
   <p><span>原始链接:</span><a href="/2018/01/24/Vue待办事项列表/" title="Vue-待办事项列表">https://ilove-coding.github.io/2018/01/24/Vue待办事项列表/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2018/01/24/Vue待办事项列表/"  aria-label="复制成功！"></i></span>
   </p>
@@ -618,7 +629,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -629,7 +640,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -743,7 +754,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-star"></i>
   </span>
