@@ -78,7 +78,7 @@
 
 
 
-  <meta name="keywords" content="js笔记," />
+  <meta name="keywords" content="性能优化," />
 
 
 
@@ -91,18 +91,18 @@
 
 
 
-<meta name="description" content="###如何判断元素是否出现在可视区？ 方法一：1.通过document.documentElement.clientHeight || window.innerHeight  获取屏幕可视窗口高度2.通过element.offsetTop获取元素相对于文档顶部的距离3.通过document.documentElement.scrollTop || document.body.scrollTop">
-<meta name="keywords" content="js笔记">
+<meta name="description" content="js中的很多事件，如scroll事件、resize事件、鼠标事件（mousemove、mouseover等）、            键盘事件（keyup、keydowm等）都存在被频繁触发的问题            频繁触发回调导致大量计算会引发页面抖动甚至卡顿，因此我们必须用一些手段来控制事件被触发的频率–            事件节流（throttle）和事件防抖（debounce）">
+<meta name="keywords" content="性能优化">
 <meta property="og:type" content="article">
-<meta property="og:title" content="判断元素是否在可视区域">
-<meta property="og:url" content="https://ilove-coding.github.io/2019/03/14/判断元素是否在可视区域/index.html">
+<meta property="og:title" content="事件节流与防抖">
+<meta property="og:url" content="https://ilove-coding.github.io/2018/04/12/事件节流与防抖/index.html">
 <meta property="og:site_name" content="潼潼爱coding">
-<meta property="og:description" content="###如何判断元素是否出现在可视区？ 方法一：1.通过document.documentElement.clientHeight || window.innerHeight  获取屏幕可视窗口高度2.通过element.offsetTop获取元素相对于文档顶部的距离3.通过document.documentElement.scrollTop || document.body.scrollTop">
+<meta property="og:description" content="js中的很多事件，如scroll事件、resize事件、鼠标事件（mousemove、mouseover等）、            键盘事件（keyup、keydowm等）都存在被频繁触发的问题            频繁触发回调导致大量计算会引发页面抖动甚至卡顿，因此我们必须用一些手段来控制事件被触发的频率–            事件节流（throttle）和事件防抖（debounce）">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-14T09:30:05.570Z">
+<meta property="og:updated_time" content="2019-03-14T12:24:55.702Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="判断元素是否在可视区域">
-<meta name="twitter:description" content="###如何判断元素是否出现在可视区？ 方法一：1.通过document.documentElement.clientHeight || window.innerHeight  获取屏幕可视窗口高度2.通过element.offsetTop获取元素相对于文档顶部的距离3.通过document.documentElement.scrollTop || document.body.scrollTop">
+<meta name="twitter:title" content="事件节流与防抖">
+<meta name="twitter:description" content="js中的很多事件，如scroll事件、resize事件、鼠标事件（mousemove、mouseover等）、            键盘事件（keyup、keydowm等）都存在被频繁触发的问题            频繁触发回调导致大量计算会引发页面抖动甚至卡顿，因此我们必须用一些手段来控制事件被触发的频率–            事件节流（throttle）和事件防抖（debounce）">
 
 
 
@@ -132,14 +132,14 @@
 
 
 
-  <link rel="canonical" href="https://ilove-coding.github.io/2019/03/14/判断元素是否在可视区域/"/>
+  <link rel="canonical" href="https://ilove-coding.github.io/2018/04/12/事件节流与防抖/"/>
 
 
 
 
 
 
-  <title>判断元素是否在可视区域 | 潼潼爱coding</title>
+  <title>事件节流与防抖 | 潼潼爱coding</title>
   
 
 
@@ -266,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/03/14/判断元素是否在可视区域/">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2018/04/12/事件节流与防抖/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tongtong">
@@ -283,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">判断元素是否在可视区域</h1>
+          <h1 class="post-title" itemprop="name headline">事件节流与防抖</h1>
         
 
         <div class="post-meta">
@@ -295,8 +295,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-14T17:00:54+08:00">
-                2019-03-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T10:58:15+08:00">
+                2018-04-12
               </time>
             
 
@@ -318,8 +318,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/js笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">js笔记</span>
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
                   </a>
                 </span>
 
@@ -386,52 +386,21 @@
       
 
       
-        <p>###如何判断元素是否出现在可视区？</p>
-<h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><p>1.通过document.documentElement.clientHeight || window.innerHeight  获取屏幕可视窗口高度<br>2.通过element.offsetTop获取元素相对于文档顶部的距离<br>3.通过document.documentElement.scrollTop || document.body.scrollTop  获取浏览器窗口顶部与文档顶部之间的距离，也就是滚动条滚动的距离<br>如果2 - 3 &lt; 1成立，则元素在可视区域</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isInSight1</span>(<span class="params">el</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> innerHeight = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">window</span>.innerHeight;</span><br><span class="line">    <span class="keyword">const</span> scrollTop = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;</span><br><span class="line">    <span class="keyword">return</span> el.offsetTop - scrollTop &lt; innerHeight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法二：getBoundingClientRect"><a href="#方法二：getBoundingClientRect" class="headerlink" title="方法二：getBoundingClientRect()"></a>方法二：getBoundingClientRect()</h3><p>这个方法返回一个名为ClientRect的DOMRect对象，包含了top、right、botton、left、width、height这些值。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isInSight2</span>(<span class="params">el</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> bound = el.getBoundingClientRect();</span><br><span class="line">    <span class="keyword">const</span> innerHeight = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">window</span>.innerHeight;</span><br><span class="line">    <span class="keyword">return</span> bound.top &lt;= innerHeight + <span class="number">100</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法三：IntersectionObserver"><a href="#方法三：IntersectionObserver" class="headerlink" title="方法三：IntersectionObserver"></a>方法三：IntersectionObserver</h3><p>这个API可以自动观察元素是否在视口内。<br>参考资料：<br><a href="https://github.com/WICG/IntersectionObserver" target="_blank" rel="noopener">API Sketch for Intersection Observers</a>  </p>
-<p>基本使用：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> io = <span class="keyword">new</span> IntersectionObserver(callback, option);</span><br><span class="line"><span class="comment">// 开始观察</span></span><br><span class="line">io.observe(<span class="built_in">document</span>.getElementById(<span class="string">'example'</span>));</span><br><span class="line"><span class="comment">// 停止观察</span></span><br><span class="line">io.unobserve(element);</span><br><span class="line"><span class="comment">// 关闭观察器</span></span><br><span class="line">io.disconnect();</span><br></pre></td></tr></table></figure>
-<p>callback的参数是一个数组，每个数组都是一个IntersectionObserverEntry对象，包括以下属性：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">属性</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">time</td>
-<td style="text-align:left">可见性发生变化的时间，单位为毫秒</td>
-</tr>
-<tr>
-<td style="text-align:left">rootBounds</td>
-<td style="text-align:left">同getBoundingClientRect方法返回值相同</td>
-</tr>
-<tr>
-<td style="text-align:left">boundingClientRect</td>
-<td style="text-align:left">目标元素的矩形区域信息</td>
-</tr>
-<tr>
-<td style="text-align:left">intersectionRect</td>
-<td style="text-align:left">目标元素与视（或根元素）的交叉区域信息</td>
-</tr>
-<tr>
-<td style="text-align:left">intersectionRatio</td>
-<td style="text-align:left">目标元素的可见比例，即intersectionRect占boundingClientRect的比例，完全可见时为1，完全不可见时小于等于0</td>
-</tr>
-<tr>
-<td style="text-align:left">target</td>
-<td style="text-align:left">被观察的目标元素</td>
-</tr>
-</tbody>
-</table>
-<p>我们需要用到intersectionRatio来判断是否在可视区域内，当intersectionRatio &gt; 0 &amp;&amp; intersectionRatio &lt;= 1即在可视区域内。</p>
-<p>应用：实现图片懒加载</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 替换img标签的src，加载图片资源</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">el</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> source = el.dataset.src;</span><br><span class="line">    el.src = source;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> io = <span class="keyword">new</span> IntersectionObserver(<span class="function"><span class="params">ioes</span> =&gt;</span> &#123;</span><br><span class="line">    ioes.forEach(<span class="function"><span class="params">ioe</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 被观察的目标元素，是一个 DOM 节点对象</span></span><br><span class="line">        <span class="keyword">const</span> el = ioe.target;</span><br><span class="line">        <span class="keyword">const</span> intersectionRatio = ioe.intersectionRatio;</span><br><span class="line">        <span class="comment">// intersectionRatio:完全可见时为1，完全不可见时小于等于0</span></span><br><span class="line">        <span class="keyword">if</span> (intersectionRatio &gt; <span class="number">0</span> &amp;&amp; intersectionRatio &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!el.src) &#123;</span><br><span class="line">                loadImg(el);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        el.onload = el.onerror = <span class="function"><span class="params">()</span> =&gt;</span> io.unobserve(el);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> imgs = <span class="built_in">document</span>.querySelectorAll(<span class="string">'.pic'</span>); <span class="comment">// 获取需要懒加载的全部图片元素</span></span><br><span class="line">imgs.forEach(<span class="function"><span class="params">item</span> =&gt;</span> io.observe(item));</span><br></pre></td></tr></table></figure>
+        <blockquote>
+<p>js中的很多事件，如scroll事件、resize事件、鼠标事件（mousemove、mouseover等）、<br>            键盘事件（keyup、keydowm等）都存在被频繁触发的问题<br>            频繁触发回调导致大量计算会引发页面抖动甚至卡顿，因此我们必须用一些手段来控制事件被触发的频率–<br>            事件节流（throttle）和事件防抖（debounce）</p>
+</blockquote>
+<h3 id="节流与防抖"><a href="#节流与防抖" class="headerlink" title="节流与防抖"></a>节流与防抖</h3><p>这两个东西都以闭包的形式存在，通过对事件对应的回调函数进行包裹、以自由变量的形式缓存时间信息，最后用setTimeout来控制事件的触发频率</p>
+<h3 id="Throttle：第一次为准"><a href="#Throttle：第一次为准" class="headerlink" title="Throttle：第一次为准"></a>Throttle：第一次为准</h3><p>核心思想：在某段事件内，不管触发多少次回调，都以这段时间内的第一次为准，即在一段时间内<strong>无视后来产生的回调请求</strong><br>实际交互：用户触发了一次srcoll事件，我们就为这个触发操作开启计时器，直到这段时间到了，第一次触发的scroll事件对应的回调才会执行，这段时间其他scroll的回调都会被无视  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fn是我们需要包装的事件回调, interval是时间间隔的阈值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span> (<span class="params">fn, interval</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> lastTime = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 保存调用时的上下文</span></span><br><span class="line">        <span class="keyword">const</span> context = <span class="keyword">this</span>;</span><br><span class="line">        <span class="comment">// 保存调用时的参数</span></span><br><span class="line">        <span class="keyword">const</span> args = <span class="built_in">arguments</span>;</span><br><span class="line">        <span class="keyword">const</span> nowTime = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</span><br><span class="line">        <span class="keyword">if</span> (nowTime - lastTime &gt;= interval) &#123;</span><br><span class="line">            lastTime = nowTime;</span><br><span class="line">            fn.apply(context, args);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="debounce-最后一次为准"><a href="#debounce-最后一次为准" class="headerlink" title="debounce: 最后一次为准"></a>debounce: 最后一次为准</h3><p>核心思想：某段时间内，不管触发多少次回调，都只认最后一次<br>实际交互：用户每次触发scroll事件都会清除当前计时器，重新计时间</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, delay</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 定时器</span></span><br><span class="line">    <span class="keyword">let</span> timer = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 保存调用时的上下文</span></span><br><span class="line">        <span class="keyword">const</span> context = <span class="keyword">this</span>;</span><br><span class="line">        <span class="comment">// 保存调用时的参数</span></span><br><span class="line">        <span class="keyword">const</span> args = <span class="built_in">arguments</span>;</span><br><span class="line">        <span class="comment">// 每次事件被触发都去除之前的旧定时器</span></span><br><span class="line">        <span class="keyword">if</span> (timer) &#123;</span><br><span class="line">            clearTimeout(timer);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 设定新的计时器</span></span><br><span class="line">        timer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            fn.apply(context, args);</span><br><span class="line">        &#125;, delay)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="用throttle来优化debounce"><a href="#用throttle来优化debounce" class="headerlink" title="用throttle来优化debounce"></a>用throttle来优化debounce</h3><p>想象一下，如果用户操作十分频繁–每次都不等debounce设置的delay就进行下一次触发<br>每次都重新生成定时器，回调函数一直被延迟，用户同样会觉得页面卡死</p>
+<p>因此debounce需要一个“底线”，我们可以结合throttle的思想，设定一个原则：<br>delay时间内，重复触发可以重新生成定时器，delay时间到了，必须要给用户一个相应</p>
+<p>这种结合版的思路，已经应用到很多成熟的前端库，作为加强版throttle函数的实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">upThrottle</span>(<span class="params">fn, delay</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> timer = <span class="literal">null</span>,</span><br><span class="line">        lastTime = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 保存调用时的上下文</span></span><br><span class="line">        <span class="keyword">const</span> context = <span class="keyword">this</span>;</span><br><span class="line">        <span class="comment">// 保存调用时的参数</span></span><br><span class="line">        <span class="keyword">const</span> args = <span class="built_in">arguments</span>;</span><br><span class="line">        <span class="comment">// 记录本次触发的时间</span></span><br><span class="line">        <span class="keyword">const</span> nowTime = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 判断上次触发的时间和本次触发的时间差是否小于时间间隔的阈值</span></span><br><span class="line">        <span class="keyword">if</span> (nowTime - lastTime &lt; delay) &#123;</span><br><span class="line">            <span class="comment">// 如果时间间隔小于我们设定的时间间隔阈值，则为本次触发操作设立一个新的定时器</span></span><br><span class="line">            clearTimeout(timer);</span><br><span class="line">            timer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                lastTime = nowTime;</span><br><span class="line">                fn.apply(context, args);</span><br><span class="line">            &#125;, delay);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 如果时间间隔超出了我们设定的时间间隔阈值，那就不等了，立刻反馈给用户一次响应</span></span><br><span class="line">            lastTime = nowTime;</span><br><span class="line">            fn.apply(context, args);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p>优化图片懒加载</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> imgs = <span class="built_in">document</span>.querySelectorAll(<span class="string">'.pic'</span>);</span><br><span class="line"><span class="keyword">let</span> num = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isInSight</span>(<span class="params">el</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> bound = el.getBoundingClientRect();</span><br><span class="line">    <span class="keyword">const</span> innerHeight = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">window</span>.innerHeight;</span><br><span class="line">    <span class="keyword">return</span> bound.top &lt;= innerHeight + <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">lazyload</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// num用于统计当前显示到了哪一张图片，避免每次都从第一张图片开始检查是否露出</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = num; i &lt; imgs.length; i++) &#123;</span><br><span class="line">        <span class="comment">// 元素相对于文档顶部的距离 - 滚动高度 &lt; 可视窗高度</span></span><br><span class="line">        <span class="keyword">if</span> (isInSight(imgs[i])) &#123;</span><br><span class="line">            imgs[i].src = imgs[i].dataset[<span class="string">'src'</span>];</span><br><span class="line">            <span class="comment">// 前i张图片已经加载完毕，下次从第i+1张开始检查是否露出</span></span><br><span class="line">            num = i + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> scroll_throttle = upThrottle(lazyload, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听Scroll事件</span></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'load'</span>, lazyload, <span class="literal">false</span>);</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>, scroll_throttle, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h3><p><a href="https://htmlpreview.github.io/?https://github.com/iLove-Coding/practice-demos/blob/master/%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD/index.html" target="_blank" rel="noopener"><br>点击查看实现效果</a></p>
 
       
     </div>
@@ -449,12 +418,12 @@
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/2019/03/14/判断元素是否在可视区域/">判断元素是否在可视区域</a></p>
+  <p><span>本文标题:</span><a href="/2018/04/12/事件节流与防抖/">事件节流与防抖</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
-  <p><span>发布时间:</span>2019年03月14日 - 17:03</p>
-  <p><span>最后更新:</span>2019年03月14日 - 17:03</p>
-  <p><span>原始链接:</span><a href="/2019/03/14/判断元素是否在可视区域/" title="判断元素是否在可视区域">https://ilove-coding.github.io/2019/03/14/判断元素是否在可视区域/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2019/03/14/判断元素是否在可视区域/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2018年04月12日 - 10:04</p>
+  <p><span>最后更新:</span>2019年03月14日 - 20:03</p>
+  <p><span>原始链接:</span><a href="/2018/04/12/事件节流与防抖/" title="事件节流与防抖">https://ilove-coding.github.io/2018/04/12/事件节流与防抖/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2018/04/12/事件节流与防抖/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -520,7 +489,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/js笔记/" rel="tag"><i class="fa fa-tag"></i> js笔记</a>
+            <a href="/tags/性能优化/" rel="tag"><i class="fa fa-tag"></i> 性能优化</a>
           
         </div>
       
@@ -533,8 +502,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/13/cookie/" rel="next" title="cookie">
-                <i class="fa fa-chevron-left"></i> cookie
+              <a href="/2018/02/28/promise对象封装ajax/" rel="next" title="promise对象封装ajax">
+                <i class="fa fa-chevron-left"></i> promise对象封装ajax
               </a>
             
           </div>
@@ -542,6 +511,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/12/正则表达式/" rel="prev" title="正则表达式">
+                正则表达式 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -737,7 +710,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一："><span class="nav-number">1.</span> <span class="nav-text">方法一：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二：getBoundingClientRect"><span class="nav-number"></span> <span class="nav-text">方法二：getBoundingClientRect()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法三：IntersectionObserver"><span class="nav-number"></span> <span class="nav-text">方法三：IntersectionObserver</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#节流与防抖"><span class="nav-number">1.</span> <span class="nav-text">节流与防抖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Throttle：第一次为准"><span class="nav-number">2.</span> <span class="nav-text">Throttle：第一次为准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#debounce-最后一次为准"><span class="nav-number">3.</span> <span class="nav-text">debounce: 最后一次为准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用throttle来优化debounce"><span class="nav-number">4.</span> <span class="nav-text">用throttle来优化debounce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用"><span class="nav-number">5.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#效果展示"><span class="nav-number">6.</span> <span class="nav-text">效果展示</span></a></li></ol></div>
             
 
           </div>
