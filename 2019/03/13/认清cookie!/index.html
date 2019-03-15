@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "45775042"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="js," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="潼潼爱coding" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="啥是cookie？cookie是一小段文本信息，伴随着用户请求在web服务器和浏览器之间传递用于解决 “如何记录客户端的用户信息” cookie存在哪里？ cookie 是存在用户硬盘中，用户每次访问站点时，Web应用程序都可以读取 Cookie 包含的信息。当用户再次访问这个站点时，浏览器就会在本地硬盘上查找与该 URL 相关联的 Cookie。如果该 Cookie 存在，浏览器就将它添加到re">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="认清cookie!">
+<meta property="og:url" content="https://ilove-coding.github.io/2019/03/13/认清cookie!/index.html">
+<meta property="og:site_name" content="潼潼爱coding">
+<meta property="og:description" content="啥是cookie？cookie是一小段文本信息，伴随着用户请求在web服务器和浏览器之间传递用于解决 “如何记录客户端的用户信息” cookie存在哪里？ cookie 是存在用户硬盘中，用户每次访问站点时，Web应用程序都可以读取 Cookie 包含的信息。当用户再次访问这个站点时，浏览器就会在本地硬盘上查找与该 URL 相关联的 Cookie。如果该 Cookie 存在，浏览器就将它添加到re">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://lc-gold-cdn.xitu.io/1c6f25c0b9d4c52cbaa9.png">
+<meta property="og:updated_time" content="2019-03-15T07:38:39.154Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="认清cookie!">
+<meta name="twitter:description" content="啥是cookie？cookie是一小段文本信息，伴随着用户请求在web服务器和浏览器之间传递用于解决 “如何记录客户端的用户信息” cookie存在哪里？ cookie 是存在用户硬盘中，用户每次访问站点时，Web应用程序都可以读取 Cookie 包含的信息。当用户再次访问这个站点时，浏览器就会在本地硬盘上查找与该 URL 相关联的 Cookie。如果该 Cookie 存在，浏览器就将它添加到re">
+<meta name="twitter:image" content="https://lc-gold-cdn.xitu.io/1c6f25c0b9d4c52cbaa9.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ilove-coding.github.io/2019/03/13/认清cookie!/"/>
+
+
+
+
+
+
+  <title>认清cookie! | 潼潼爱coding</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/iLove-Coding"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">潼潼爱coding</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端开发小迷妹~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/03/13/认清cookie!/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tongtong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="潼潼爱coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">认清cookie!</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-13T21:03:06+08:00">
+                2019-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">js笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="啥是cookie？"><a href="#啥是cookie？" class="headerlink" title="啥是cookie？"></a>啥是cookie？</h3><p>cookie是一小段文本信息，伴随着用户请求在web服务器和浏览器之间传递<br>用于解决 “如何记录客户端的用户信息”</p>
+<h3 id="cookie存在哪里？"><a href="#cookie存在哪里？" class="headerlink" title="cookie存在哪里？"></a>cookie存在哪里？</h3><p> cookie 是存在用户硬盘中，用户每次访问站点时，Web应用程序都可以读取 Cookie 包含的信息。当用户再次访问这个站点时，浏览器就会在本地硬盘上查找与该 URL 相关联的 Cookie。如果该 Cookie 存在，浏览器就将它添加到request header的Cookie字段中，与http请求一起发送到该站点。</p>
+<h3 id="cookie如何添加？"><a href="#cookie如何添加？" class="headerlink" title="cookie如何添加？"></a>cookie如何添加？</h3><ul>
+<li>客户端设置：js提供api – document.cookie<br>⚠️注意：document.cookiecookie的名和值中不能出现分号、逗号、等号和空格，每一个key之间通过分号和空格来分割。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.cookie = <span class="string">'name=value; maxAge=3000; path=/; domain=xx.com; secure'</span></span><br></pre></td></tr></table></figure>
+<p><strong>设置多个cookie</strong><br>通过document.cookie的方式设置cookie每次只能设置一个，写多个会如何呢？</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.<span class="attr">cookie</span> = '<span class="attr">cookie1=value1;</span> <span class="attr">cookie2=value2'</span></span><br></pre></td></tr></table></figure>
+<p>尝试一下，会发现只有第一个cookie1设置成功，cookie2被无视，因此设置多个cookie，最简单就是多次调用document.cookie</p>
+<ul>
+<li>服务端设置：http响应头<br>浏览器发出的有些请求返回头中有Set-Cookie的字段，服务器通过这个字段告知浏览器它需要设置的cookie，然后浏览器检查一下设置的内容是否符合浏览器对cookie的要求，符合条件则设置成功<br>⚠️注意：响应头里set-cookie字段可以有多个，每一个对应一个要设置的cookie，且只能对应一个。</li>
+</ul>
+<p><img src="https://lc-gold-cdn.xitu.io/1c6f25c0b9d4c52cbaa9.png" alt="示例"></p>
+<h3 id="cookie如何获取？"><a href="#cookie如何获取？" class="headerlink" title="cookie如何获取？"></a>cookie如何获取？</h3><ul>
+<li>客户端主动获取<br>同样是js提供的api – document.cookie  </li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie</span><br></pre></td></tr></table></figure>
+<ul>
+<li>请求头中携带<br>浏览器发送请求时，在请求的头中会自动将“符合条件”的cookie带上。<br>既然是请求头中携带的，那么我们通过ajax发送请求的时候，能否顺便设置一下cookie呢？</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">xhr.open(<span class="string">'GET'</span>, url, <span class="literal">true</span>);</span><br><span class="line">xhr.withCredentials = <span class="literal">true</span>;</span><br><span class="line">xhr.setRequestHeader(<span class="string">'Cookie'</span>, <span class="string">"key=value"</span>);</span><br><span class="line">xhr.send(<span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>xhr.withCredentials:</strong>  </p>
+<p>一般跨域请求的时候，比如A域接收B域的请求时，接收不到B域的cookies，也就是说，A服务器的request.getCookies() 为空。解决这个问题，一般把XMLHttpRequest这个对象的withCredentials属性设置为true</p>
+<p>实验一下可以发现，我们设置的cookie并没有生效，并且chrome浏览器下我们会看到一行报错</p>
+<blockquote>
+<p>Refused to set unsafe header “Cookie”</p>
+</blockquote>
+<p>因为浏览器的安全限制，我们不能自己随便设置请求头中的cookie。</p>
+<h3 id="cookie有哪些属性？"><a href="#cookie有哪些属性？" class="headerlink" title="cookie有哪些属性？"></a>cookie有哪些属性？</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">属性名</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">domain</td>
+<td style="text-align:left">限制cookie的使用范围，只能在domain值范围内才能访问该cookie</td>
+</tr>
+<tr>
+<td style="text-align:left">path</td>
+<td style="text-align:left">domain和path共同限制了课访问该cookie的url，如果某个cookie限制了path=’/abc’，那么只有’domain/abc’下的所有url可以访问该cookie</td>
+</tr>
+<tr>
+<td style="text-align:left">expires/max-age</td>
+<td style="text-align:left">cookie的过期时间，默认设置为session，即页面关闭后cookie会被清理。<br>expires 是 http/1.0协议中的选项，在新的http/1.1协议中expires已经由 max-age 选项代替。expires必须是 GMT 格式的时间。<br>max-age的单位为秒，cookie失效时刻 = 创建时刻 + max-age</td>
+</tr>
+<tr>
+<td style="text-align:left">httpOnly</td>
+<td style="text-align:left">如果被标记为httpOnly，那么document.cookie的方式就无法获取到该cookie。同样的，我们通过js来设置cookie的，也无法被标记为httpOnly。<br>这个值只能通过请求的响应头来设置。默认情况下，cookie不会带httpOnly选项。</td>
+</tr>
+<tr>
+<td style="text-align:left">secure</td>
+<td style="text-align:left">对于被标记为Secure的cookie,只有当请求是HTTPS或者其他安全协议时，该cookie 才能被访问到。<br>同样的，也只有在HTTPS或者其他安全协议时，我们也才能通过js设置secure的cookie。</td>
+</tr>
+<tr>
+<td style="text-align:left">sameSite</td>
+<td style="text-align:left">谷歌开发的一种安全机制，该属性表示 Cookie 不随着跨域请求发送，其目的是尝试阻止CSRF。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>对于domain值的要求</strong></p>
+<ul>
+<li>自身：domain的值可以设置为本身。</li>
+<li>向下：所有子域名</li>
+</ul>
+<p>如果当前页面的域名是 sub.test.com, 那么 domain 可以设置为.sub.test.com。允许所有sub.test.com的子域名访问，如xx.sub.test.com、xx.xx.sub.test.com。</p>
+<ul>
+<li>向上：父级域名,直到顶级域名的下一级</li>
+</ul>
+<p>如果当前页面的域名是sub.test.com, 那么domain可以设置为test.com。但是不能设置为.com。因为.com属于Top-Level Domain。</p>
+<h3 id="cookie的缺点？"><a href="#cookie的缺点？" class="headerlink" title="cookie的缺点？"></a>cookie的缺点？</h3><ul>
+<li>安全性弱：由于cookie在http中是明文传递的，其中包含的数据都可以被他人访问，可能会被篡改、盗用。</li>
+<li>大小限制：cookie的大小限制在4kb左右，不适合大量存储。</li>
+<li>增加流量：cookie每次请求都会被自动添加到Request Header中，无形中增加了流量。cookie信息越大，对服务器请求的时间越长。</li>
+</ul>
+<h3 id="cookie插件"><a href="#cookie插件" class="headerlink" title="cookie插件"></a>cookie插件</h3><p>tiny-cookie(vue-cookie)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*!</span></span><br><span class="line"><span class="comment"> * tiny-cookie - A tiny cookie manipulation plugin</span></span><br><span class="line"><span class="comment"> * https://github.com/Alex1990/tiny-cookie</span></span><br><span class="line"><span class="comment"> * Under the MIT license | (c) Alex Chao</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">!(<span class="function"><span class="keyword">function</span>(<span class="params">root, factory</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Uses CommonJS, AMD or browser global to create a jQuery plugin.</span></span><br><span class="line">  <span class="comment">// See: https://github.com/umdjs/umd</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">'function'</span> &amp;&amp; define.amd) &#123;</span><br><span class="line">    <span class="comment">// Expose this plugin as an AMD module. Register an anonymous module.</span></span><br><span class="line">    define(factory);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> exports === <span class="string">'object'</span>) &#123;</span><br><span class="line">    <span class="comment">// Node/CommonJS module</span></span><br><span class="line">    <span class="built_in">module</span>.exports = factory();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// Browser globals </span></span><br><span class="line">    root.Cookie = factory();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;(<span class="keyword">this</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="meta">  'use strict'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// The public function which can get/set/remove cookie.</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">Cookie</span>(<span class="params">key, value, opts</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (value === <span class="keyword">void</span> <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> Cookie.get(key);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (value === <span class="literal">null</span>) &#123;</span><br><span class="line">      Cookie.remove(key);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      Cookie.set(key, value, opts);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检查是否启用了cookie</span></span><br><span class="line">  Cookie.enabled = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> key = <span class="string">'__test_key'</span>;</span><br><span class="line">    <span class="keyword">var</span> enabled;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">document</span>.cookie = key + <span class="string">'=1'</span>;</span><br><span class="line">    enabled = !!<span class="built_in">document</span>.cookie;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (enabled) Cookie.remove(key);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> enabled;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 根据key名得到cookie的值</span></span><br><span class="line">  Cookie.get = <span class="function"><span class="keyword">function</span>(<span class="params">key, raw</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> key !== <span class="string">'string'</span> || !key) <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    key = <span class="string">'(?:^|; )'</span> + escapeRe(key) + <span class="string">'(?:=([^;]*?))?(?:;|$)'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> reKey = <span class="keyword">new</span> <span class="built_in">RegExp</span>(key);</span><br><span class="line">    <span class="keyword">var</span> res = reKey.exec(<span class="built_in">document</span>.cookie);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res !== <span class="literal">null</span> ? (raw ? res[<span class="number">1</span>] : <span class="built_in">decodeURIComponent</span>(res[<span class="number">1</span>])) : <span class="literal">null</span>;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 在不解码的情况下获取cookie的值。</span></span><br><span class="line">  Cookie.getRaw = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Cookie.get(key, <span class="literal">true</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置cookie的值</span></span><br><span class="line">  Cookie.set = <span class="function"><span class="keyword">function</span>(<span class="params">key, value, raw, opts</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (raw !== <span class="literal">true</span>) &#123;</span><br><span class="line">      opts = raw;</span><br><span class="line">      raw = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    opts = opts ? convert(opts) : convert(&#123;&#125;);</span><br><span class="line">    <span class="keyword">var</span> cookie = key + <span class="string">'='</span> + (raw ? value : <span class="built_in">encodeURIComponent</span>(value)) + opts;</span><br><span class="line">    <span class="built_in">document</span>.cookie = cookie;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 在不编码的情况下设置cookie的值</span></span><br><span class="line">  Cookie.setRaw = <span class="function"><span class="keyword">function</span>(<span class="params">key, value, opts</span>) </span>&#123;</span><br><span class="line">    Cookie.set(key, value, <span class="literal">true</span>, opts);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 用指定的键删除cookie</span></span><br><span class="line">  Cookie.remove = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>) </span>&#123;</span><br><span class="line">    Cookie.set(key, <span class="string">'a'</span>, &#123; <span class="attr">expires</span>: <span class="keyword">new</span> <span class="built_in">Date</span>() &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 工具函数</span></span><br><span class="line">  <span class="comment">// ---------------</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 转义特殊字符</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">escapeRe</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.replace(<span class="regexp">/[.*+?^$|[\]()&#123;&#125;\\-]/g</span>, <span class="string">'\\$&amp;'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将对象转换为cookie选项字符串。</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">convert</span>(<span class="params">opts</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> res = <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> p <span class="keyword">in</span> opts) &#123;</span><br><span class="line">      <span class="keyword">if</span> (opts.hasOwnProperty(p)) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (p === <span class="string">'expires'</span>) &#123;</span><br><span class="line">          <span class="keyword">var</span> expires = opts[p];</span><br><span class="line">          <span class="keyword">if</span> (<span class="keyword">typeof</span> expires !== <span class="string">'object'</span>) &#123;</span><br><span class="line">            expires += <span class="keyword">typeof</span> expires === <span class="string">'number'</span> ? <span class="string">'D'</span> : <span class="string">''</span>;</span><br><span class="line">            expires = computeExpires(expires);</span><br><span class="line">          &#125;</span><br><span class="line">          opts[p] = expires.toUTCString(); <span class="comment">// 可根据世界时 (UTC) 把 Date 对象转换为字符串</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (p === <span class="string">'secure'</span>) &#123;</span><br><span class="line">          <span class="keyword">if</span> (opts[p]) &#123;</span><br><span class="line">            res += <span class="string">';'</span> + p;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        res += <span class="string">';'</span> + p + <span class="string">'='</span> + opts[p];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!opts.hasOwnProperty(<span class="string">'path'</span>)) &#123;</span><br><span class="line">      res += <span class="string">';path=/'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 按给定字符串返回expires</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">computeExpires</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> expires = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">    <span class="keyword">var</span> lastCh = str.charAt(str.length - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">var</span> value = <span class="built_in">parseInt</span>(str, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (lastCh) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'Y'</span>: expires.setFullYear(expires.getFullYear() + value); <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'M'</span>: expires.setMonth(expires.getMonth() + value); <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'D'</span>: expires.setDate(expires.getDate() + value); <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'h'</span>: expires.setHours(expires.getHours() + value); <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'m'</span>: expires.setMinutes(expires.getMinutes() + value); <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'s'</span>: expires.setSeconds(expires.getSeconds() + value); <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">default</span>: expires = <span class="keyword">new</span> <span class="built_in">Date</span>(str);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> expires;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> Cookie;</span><br><span class="line"></span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/03/13/认清cookie!/">认清cookie!</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
+  <p><span>发布时间:</span>2019年03月13日 - 21:03</p>
+  <p><span>最后更新:</span>2019年03月15日 - 15:03</p>
+  <p><span>原始链接:</span><a href="/2019/03/13/认清cookie!/" title="认清cookie!">https://ilove-coding.github.io/2019/03/13/认清cookie!/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2019/03/13/认清cookie!/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+</div>
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/path/to/wechat-reward-image" alt="tongtong 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/path/to/alipay-reward-image" alt="tongtong 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+<div>
+
+  <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>-------------</div>
+    
+</div>
+
+</div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"><i class="fa fa-tag"></i> js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/03/h5页面在微信端的分享/" rel="next" title="h5页面在微信端的分享">
+                <i class="fa fa-chevron-left"></i> h5页面在微信端的分享
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/14/判断元素是否在可视区域/" rel="prev" title="判断元素是否在可视区域">
+                判断元素是否在可视区域 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzQxNS85OTcx"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif"
+                alt="tongtong" />
+            
+              <p class="site-author-name" itemprop="name">tongtong</p>
+              <p class="site-description motion-element" itemprop="description">爱生活 爱学习</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/iLove-Coding" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/b210912af0f2" target="_blank" title="jianshu">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>jianshu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ife.baidu.com/" title="百度前端技术学院" target="_blank">百度前端技术学院</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://wf.uisdc.com/cn/" title="google前端开发基础" target="_blank">google前端开发基础</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.36zhen.com/t?id=3448" title="前端书籍资料" target="_blank">前端书籍资料</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#啥是cookie？"><span class="nav-number">1.</span> <span class="nav-text">啥是cookie？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie存在哪里？"><span class="nav-number">2.</span> <span class="nav-text">cookie存在哪里？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie如何添加？"><span class="nav-number">3.</span> <span class="nav-text">cookie如何添加？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie如何获取？"><span class="nav-number">4.</span> <span class="nav-text">cookie如何获取？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie有哪些属性？"><span class="nav-number">5.</span> <span class="nav-text">cookie有哪些属性？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie的缺点？"><span class="nav-number">6.</span> <span class="nav-text">cookie的缺点？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie插件"><span class="nav-number">7.</span> <span class="nav-text">cookie插件</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongtong</span>
+
+  
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+-->
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

@@ -91,18 +91,18 @@
 
 
 
-<meta name="description" content="###如何判断元素是否出现在可视区？ 方法一：1.通过document.documentElement.clientHeight || window.innerHeight  获取屏幕可视窗口高度2.通过element.offsetTop获取元素相对于文档顶部的距离3.通过document.documentElement.scrollTop || document.body.scrollTop">
+<meta name="description" content="如何判断元素是否出现在可视区？方法一：1.通过document.documentElement.clientHeight || window.innerHeight  获取屏幕可视窗口高度2.通过element.offsetTop获取元素相对于文档顶部的距离3.通过document.documentElement.scrollTop || document.body.scrollTop  获取浏览">
 <meta name="keywords" content="js笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="判断元素是否在可视区域">
 <meta property="og:url" content="https://ilove-coding.github.io/2019/03/14/判断元素是否在可视区域/index.html">
 <meta property="og:site_name" content="潼潼爱coding">
-<meta property="og:description" content="###如何判断元素是否出现在可视区？ 方法一：1.通过document.documentElement.clientHeight || window.innerHeight  获取屏幕可视窗口高度2.通过element.offsetTop获取元素相对于文档顶部的距离3.通过document.documentElement.scrollTop || document.body.scrollTop">
+<meta property="og:description" content="如何判断元素是否出现在可视区？方法一：1.通过document.documentElement.clientHeight || window.innerHeight  获取屏幕可视窗口高度2.通过element.offsetTop获取元素相对于文档顶部的距离3.通过document.documentElement.scrollTop || document.body.scrollTop  获取浏览">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-14T09:30:05.570Z">
+<meta property="og:updated_time" content="2019-03-15T03:28:32.850Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="判断元素是否在可视区域">
-<meta name="twitter:description" content="###如何判断元素是否出现在可视区？ 方法一：1.通过document.documentElement.clientHeight || window.innerHeight  获取屏幕可视窗口高度2.通过element.offsetTop获取元素相对于文档顶部的距离3.通过document.documentElement.scrollTop || document.body.scrollTop">
+<meta name="twitter:description" content="如何判断元素是否出现在可视区？方法一：1.通过document.documentElement.clientHeight || window.innerHeight  获取屏幕可视窗口高度2.通过element.offsetTop获取元素相对于文档顶部的距离3.通过document.documentElement.scrollTop || document.body.scrollTop  获取浏览">
 
 
 
@@ -386,8 +386,7 @@
       
 
       
-        <p>###如何判断元素是否出现在可视区？</p>
-<h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><p>1.通过document.documentElement.clientHeight || window.innerHeight  获取屏幕可视窗口高度<br>2.通过element.offsetTop获取元素相对于文档顶部的距离<br>3.通过document.documentElement.scrollTop || document.body.scrollTop  获取浏览器窗口顶部与文档顶部之间的距离，也就是滚动条滚动的距离<br>如果2 - 3 &lt; 1成立，则元素在可视区域</p>
+        <h3 id="如何判断元素是否出现在可视区？"><a href="#如何判断元素是否出现在可视区？" class="headerlink" title="如何判断元素是否出现在可视区？"></a>如何判断元素是否出现在可视区？</h3><h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><p>1.通过document.documentElement.clientHeight || window.innerHeight  获取屏幕可视窗口高度<br>2.通过element.offsetTop获取元素相对于文档顶部的距离<br>3.通过document.documentElement.scrollTop || document.body.scrollTop  获取浏览器窗口顶部与文档顶部之间的距离，也就是滚动条滚动的距离<br>如果2 - 3 &lt; 1成立，则元素在可视区域</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isInSight1</span>(<span class="params">el</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> innerHeight = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">window</span>.innerHeight;</span><br><span class="line">    <span class="keyword">const</span> scrollTop = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;</span><br><span class="line">    <span class="keyword">return</span> el.offsetTop - scrollTop &lt; innerHeight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="方法二：getBoundingClientRect"><a href="#方法二：getBoundingClientRect" class="headerlink" title="方法二：getBoundingClientRect()"></a>方法二：getBoundingClientRect()</h3><p>这个方法返回一个名为ClientRect的DOMRect对象，包含了top、right、botton、left、width、height这些值。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isInSight2</span>(<span class="params">el</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> bound = el.getBoundingClientRect();</span><br><span class="line">    <span class="keyword">const</span> innerHeight = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">window</span>.innerHeight;</span><br><span class="line">    <span class="keyword">return</span> bound.top &lt;= innerHeight + <span class="number">100</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -452,7 +451,7 @@
   <p><span>本文标题:</span><a href="/2019/03/14/判断元素是否在可视区域/">判断元素是否在可视区域</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
   <p><span>发布时间:</span>2019年03月14日 - 17:03</p>
-  <p><span>最后更新:</span>2019年03月14日 - 17:03</p>
+  <p><span>最后更新:</span>2019年03月15日 - 11:03</p>
   <p><span>原始链接:</span><a href="/2019/03/14/判断元素是否在可视区域/" title="判断元素是否在可视区域">https://ilove-coding.github.io/2019/03/14/判断元素是否在可视区域/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2019/03/14/判断元素是否在可视区域/"  aria-label="复制成功！"></i></span>
   </p>
@@ -533,8 +532,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/13/cookie/" rel="next" title="cookie">
-                <i class="fa fa-chevron-left"></i> cookie
+              <a href="/2019/03/13/认清cookie!/" rel="next" title="认清cookie!">
+                <i class="fa fa-chevron-left"></i> 认清cookie!
               </a>
             
           </div>
@@ -737,7 +736,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一："><span class="nav-number">1.</span> <span class="nav-text">方法一：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二：getBoundingClientRect"><span class="nav-number"></span> <span class="nav-text">方法二：getBoundingClientRect()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法三：IntersectionObserver"><span class="nav-number"></span> <span class="nav-text">方法三：IntersectionObserver</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何判断元素是否出现在可视区？"><span class="nav-number">1.</span> <span class="nav-text">如何判断元素是否出现在可视区？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一："><span class="nav-number">1.1.</span> <span class="nav-text">方法一：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二：getBoundingClientRect"><span class="nav-number">2.</span> <span class="nav-text">方法二：getBoundingClientRect()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法三：IntersectionObserver"><span class="nav-number">3.</span> <span class="nav-text">方法三：IntersectionObserver</span></a></li></ol></div>
             
 
           </div>
