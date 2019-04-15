@@ -99,7 +99,7 @@
 <meta property="og:site_name" content="潼潼爱coding">
 <meta property="og:description" content="关于js中类型转换一直都没有梳理清楚，这次认真梳理发现只有三种情况，分别为：  转换为布尔值 转换为字符串 转换为数字     原始值 转换目标 结果     number 布尔值 0、-0、NaN为false，其它均为true   string 布尔值 空字符串(‘ ‘)为false，其它均为true   undefined、null 布尔值 false   引用类型 布尔值 true">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-19T08:03:24.780Z">
+<meta property="og:updated_time" content="2019-03-19T10:37:55.999Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻克js类型转换">
 <meta name="twitter:description" content="关于js中类型转换一直都没有梳理清楚，这次认真梳理发现只有三种情况，分别为：  转换为布尔值 转换为字符串 转换为数字     原始值 转换目标 结果     number 布尔值 0、-0、NaN为false，其它均为true   string 布尔值 空字符串(‘ ‘)为false，其它均为true   undefined、null 布尔值 false   引用类型 布尔值 true">
@@ -517,6 +517,16 @@
 <li>布尔值，转换成数字，true=&gt;1, false=&gt;0</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;</span><br><span class="line">    valueOf() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    toString() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'2'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a &gt; <span class="number">-1</span> <span class="comment">// true, a 是对象，通过 valueOf 转换为原始类型再比较值。</span></span><br></pre></td></tr></table></figure>
+<h4 id="对比-和"><a href="#对比-和" class="headerlink" title="对比== 和 ==="></a>对比== 和 ===</h4><p>对于==来说，如果对比双方的类型不同，会进行类型转换，x == y判断流程：</p>
+<ul>
+<li>首先判断x、y类型是否相同，相同则直接比较大小(x === y)，不同则类型转换继续判断 –&gt;</li>
+<li>若x、y为null和undefined，返回true，否则继续判断 –&gt;</li>
+<li>若x、y为字符串和数字进行比较，将字符串转换为number，再继续判断</li>
+<li>若x、y有一方为布尔值，是的话将布尔值转为number，再继续判断</li>
+<li>判断是否有一方为Object，且另一方为string/number/symbol，是的话将object转换为原始类型再继续判断</li>
+</ul>
+<p>详情参考：<a href="https://www.ecma-international.org/ecma-262/5.1/#sec-11.9.1" target="_blank" rel="noopener">标准文档</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[] == ![] <span class="comment">// true，过程：[] == false -&gt; [] == 0 -&gt; 0 == 0 -&gt;true</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -537,7 +547,7 @@
   <p><span>本文标题:</span><a href="/2019/03/17/攻克js类型转换/">攻克js类型转换</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
   <p><span>发布时间:</span>2019年03月17日 - 14:03</p>
-  <p><span>最后更新:</span>2019年03月19日 - 16:03</p>
+  <p><span>最后更新:</span>2019年03月19日 - 18:03</p>
   <p><span>原始链接:</span><a href="/2019/03/17/攻克js类型转换/" title="攻克js类型转换">https://ilove-coding.github.io/2019/03/17/攻克js类型转换/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2019/03/17/攻克js类型转换/"  aria-label="复制成功！"></i></span>
   </p>
@@ -627,6 +637,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/17/详解如何实现call:apply:bind/" rel="prev" title="详解如何实现call/apply/bind">
+                详解如何实现call/apply/bind <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -718,7 +732,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -729,7 +743,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -740,7 +754,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -822,7 +836,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#转Boolean"><span class="nav-number">1.</span> <span class="nav-text">转Boolean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对象转原始类型"><span class="nav-number">2.</span> <span class="nav-text">对象转原始类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四则运算符"><span class="nav-number">3.</span> <span class="nav-text">四则运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比较运算符"><span class="nav-number">4.</span> <span class="nav-text">比较运算符</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#转Boolean"><span class="nav-number">1.</span> <span class="nav-text">转Boolean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对象转原始类型"><span class="nav-number">2.</span> <span class="nav-text">对象转原始类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四则运算符"><span class="nav-number">3.</span> <span class="nav-text">四则运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比较运算符"><span class="nav-number">4.</span> <span class="nav-text">比较运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对比-和"><span class="nav-number">5.</span> <span class="nav-text">对比== 和 ===</span></a></li></ol></div>
             
 
           </div>
