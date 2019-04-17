@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "45775042"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="js笔记," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="潼潼爱coding" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="令人费解的：Function.proto === Function.prototype why？解释这个现象，需要先深入了解 Object.prototype、Function.prototype、function Object 、function Function 之间的关系。 Object.prototype ECMAScript 上的定义：The value of the [[Prototy">
+<meta name="keywords" content="js笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入探究Function与Object">
+<meta property="og:url" content="https://ilove-coding.github.io/2019/04/16/1-3深入探究Function与Object/index.html">
+<meta property="og:site_name" content="潼潼爱coding">
+<meta property="og:description" content="令人费解的：Function.proto === Function.prototype why？解释这个现象，需要先深入了解 Object.prototype、Function.prototype、function Object 、function Function 之间的关系。 Object.prototype ECMAScript 上的定义：The value of the [[Prototy">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/15/16a212bd792a5b2b">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/15/16a212bd7945be39">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/15/16a212bd71756698">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/15/16a212bd7a9fb634">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/15/16a21312071e2c3a">
+<meta property="og:updated_time" content="2019-04-17T06:25:26.844Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入探究Function与Object">
+<meta name="twitter:description" content="令人费解的：Function.proto === Function.prototype why？解释这个现象，需要先深入了解 Object.prototype、Function.prototype、function Object 、function Function 之间的关系。 Object.prototype ECMAScript 上的定义：The value of the [[Prototy">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/4/15/16a212bd792a5b2b">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ilove-coding.github.io/2019/04/16/1-3深入探究Function与Object/"/>
+
+
+
+
+
+
+  <title>深入探究Function与Object | 潼潼爱coding</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/iLove-Coding"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">潼潼爱coding</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端开发小迷妹~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/16/1-3深入探究Function与Object/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tongtong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="潼潼爱coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">深入探究Function与Object</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-16T20:41:42+08:00">
+                2019-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">js笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>令人费解的：Function.<strong>proto</strong> === Function.prototype</p>
+<p>why？解释这个现象，需要先深入了解 Object.prototype、Function.prototype、function Object 、function Function 之间的关系。</p>
+<h3 id="Object-prototype"><a href="#Object-prototype" class="headerlink" title="Object.prototype"></a>Object.prototype</h3><blockquote>
+<p>ECMAScript 上的定义：<br>The value of the [[Prototype]] internal property of the Object prototype object is null, the value of the [[Class]] internal property is “Object”, and the initial value of the [[Extensible]] internal property is true.</p>
+</blockquote>
+<p>Object.prototype 表示 Object 的原型对象，其 [[Prototype]] 属性是 null。<br>访问器属性 <strong> proto </strong> 暴露了一个对象的内部 [[Prototype]] 。<br> Object.prototype 并不是通过 Object 函数创建的，为什么？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.value = <span class="string">'foo'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> f = <span class="keyword">new</span> Foo();</span><br><span class="line">f.__proto__ === Foo.prototype;</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>实例对象的 <strong> proto </strong> 指向构造函数的 prototype，即 f.<strong> proto </strong> 指向 Foo.prototype，但是 Object.prototype.<strong> proto </strong> === null，所以 Object.prototype 并不是通过 Object 函数创建的，那它如何生成的？</p>
+<p>Object.prototype 是浏览器底层根据 ECMAScript 规范创造的一个对象。</p>
+<p><strong>不考虑 null 的情况下，</strong>Object.prototype 就是原型链的顶端，所有对象继承了它的 toString 等方法和属性。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/4/15/16a212bd792a5b2b" alt=""></p>
+<h3 id="Function-prototype"><a href="#Function-prototype" class="headerlink" title="Function.prototype"></a>Function.prototype</h3><blockquote>
+<p>ECMAScript 上的定义：<br>The Function prototype object is itself a Function object (its [[Class]] is “Function”).<br>The value of the [[Prototype]] internal property of the Function prototype object is the standard built-in Object prototype object.<br>The Function prototype object does not have a valueOf property of its own; however, it inherits the valueOf property from the Object prototype Object.</p>
+</blockquote>
+<p>Function.prototype 对象是一个函数（对象），其 [[Prototype]] 内部属性值指向内建对象 Object.prototype。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.__proto__ === <span class="built_in">Object</span>.prototype <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>Function.prototype 对象自身没有 valueOf 属性，其从 Object.prototype 对象继承了valueOf 属性。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/4/15/16a212bd7945be39" alt=""></p>
+<p>Function.prototype 的 [[Class]] 属性是 Function，所以这是一个函数，但又不大一样。为什么这么说呢？</p>
+<p>因为我们知道只有函数才有 prototype 属性，但并不是所有函数都有这个属性，因为 Function.prototype 这个函数就没有。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype</span><br><span class="line"><span class="comment">// ƒ () &#123; [native code] &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Function</span>.prototype.prototype</span><br><span class="line"><span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> fun = <span class="built_in">Function</span>.prototype.bind()</span><br><span class="line"><span class="comment">// ƒ () &#123; [native code] &#125;</span></span><br><span class="line"></span><br><span class="line">fun.prototype</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>为什么？<br>猜想就是，Function.prototype 是引擎创建出来的函数，引擎认为不需要给这个函数对象添加 prototype 属性，不然 Function.prototype.prototype… 将无休无止并且没有存在的意义。</p>
+<h3 id="function-Object"><a href="#function-Object" class="headerlink" title="function Object"></a>function Object</h3><blockquote>
+<p>ECMAScript定义：<br>The value of the [[Prototype]] internal property of the Object constructor is the standard built-in Function prototype object.</p>
+</blockquote>
+<p>Object 作为构造函数时，其 [[Prototype]] 内部属性值指向 Function.prototype</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Object created by new Function</span></span><br><span class="line">* <span class="built_in">Object</span>.__proto__ === <span class="built_in">Function</span>.prototype <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Function</span>.prototype.__proto__ === <span class="built_in">Object</span>.prototype <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.prototype.__proto__ === <span class="literal">null</span> <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.constructor === <span class="built_in">Object</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2019/4/15/16a212bd71756698" alt=""></p>
+<p>通过对象字面量的方式创建对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> o = &#123;<span class="attr">a</span>: <span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line">o.__proto__ === <span class="built_in">Object</span>.prototype</span><br></pre></td></tr></table></figure>
+<p>通过数组字面量创建对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="string">"yo"</span>, <span class="string">"whadup"</span>, <span class="string">"?"</span>];</span><br><span class="line"></span><br><span class="line">a.__proto__ === <span class="built_in">Array</span>.prototype <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.__proto__ === <span class="built_in">Object</span>.prototype <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>使用function() {}函数创建对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">fn.__proto__ === <span class="built_in">Function</span>.prototype</span><br></pre></td></tr></table></figure>
+<p>使用new Function()，即由 JavaScript 提供的内建构造器函数之一(Object, Function, Array, Boolean, Date, Number, String 等等）创建对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> fun = <span class="keyword">new</span> <span class="built_in">Function</span>()</span><br><span class="line">fun.__proto__ === <span class="built_in">Function</span>.prototype</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bool = <span class="keyword">new</span> <span class="built_in">Boolean</span>()</span><br><span class="line">bool.__proto__ === <span class="built_in">Boolean</span>.prototype</span><br></pre></td></tr></table></figure>
+<p>使用JavaScript构造器函数创建对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="keyword">let</span> t = <span class="keyword">new</span> test()</span><br><span class="line">t.__proto__ === test.prototype</span><br></pre></td></tr></table></figure>
+<h3 id="function-Function"><a href="#function-Function" class="headerlink" title="function Function"></a>function Function</h3><blockquote>
+<p>ECMAScript定义：<br>The Function constructor is itself a Function object and its [[Class]] is “Function”. The value of the [[Prototype]] internal property of the Function constructor is the standard built-in Function prototype object.</p>
+</blockquote>
+<p>Function 构造函数是一个函数对象，其 [[Class]] 属性是 Function。Function 的 [[Prototype]] 属性指向了 Function.prototype，即</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.__proto__ === <span class="built_in">Function</span>.prototype</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2019/4/15/16a212bd7a9fb634" alt=""></p>
+<h3 id="Function-amp-Object-什么情况？？？"><a href="#Function-amp-Object-什么情况？？？" class="headerlink" title="Function &amp; Object 什么情况？？？"></a>Function &amp; Object 什么情况？？？</h3><p>诡异的事实及原因分析：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span><span class="built_in">Object</span> <span class="keyword">instanceof</span> <span class="built_in">Function</span> <span class="comment">// true</span></span><br><span class="line"><span class="comment">// 原因：Object.__proto__===Function.prototype</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span><span class="built_in">Function</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span> <span class="comment">// true</span></span><br><span class="line"><span class="comment">// 原因：Function.__proto__ === Function.prototype，Function.prototype.__proto__ === Object.prototype，</span></span><br><span class="line"><span class="built_in">Function</span>.__proto__.__proto__ === <span class="built_in">Object</span>.prototype</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span><span class="built_in">Object</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span> </span><br><span class="line"><span class="comment">// 原因：Object.__proto__ === Function.prototype，</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.__proto__ === <span class="built_in">Object</span>.prototype，</span><br><span class="line"><span class="built_in">Object</span>.__proto__.__proto__ === <span class="built_in">Object</span>.prototype</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span><span class="built_in">Function</span> <span class="keyword">instanceof</span> <span class="built_in">Function</span></span><br><span class="line"><span class="comment">// 原因：Function.__proto__ === Function.prototype</span></span><br></pre></td></tr></table></figure>
+<p>⚠️为什么Function.<strong>proto</strong> === Function.prototype？<br>也就是说Function 对象是不是由 Function 构造函数创建的一个实例？</p>
+<ul>
+<li>解释1: 是的。<br>因为按照 JavaScript 中“实例”的定义，a 是 b 的实例即 a instanceof b 为 true，默认判断条件就是 b.prototype 在 a 的原型链上。而 Function instanceof Function 为 true，本质上即 Object.getPrototypeOf(Function) === Function.prototype，正符合此定义。</li>
+</ul>
+<ul>
+<li>解释2:不是的。<br>因为Function 是 built-in 的对象，也就是并不存在“Function对象由Function构造函数创建”这样显然会造成鸡生蛋蛋生鸡的问题。实际上，当你直接写一个函数时（如 function f() {} 或 x =&gt; x），也不存在调用 Function 构造器，只有在显式调用 Function 构造器时（如 new Function(‘x’, ‘return x’) ）才有。</li>
+</ul>
+<p>我也觉得第二种说法比较合理，即先有 Function.prototype 然后有的 function Function() ，所以就不存在鸡生蛋蛋生鸡问题了，把  Function.<strong>proto</strong> 指向 Function.prototype 是为了保证原型链的完整，让 Function 可以获取定义在 Object.prototype 上的方法。</p>
+<p>终极关系图：<br><img src="https://user-gold-cdn.xitu.io/2019/4/15/16a21312071e2c3a" alt=""></p>
+<h3 id="内置类型构建过程"><a href="#内置类型构建过程" class="headerlink" title="内置类型构建过程"></a>内置类型构建过程</h3><p>JavaScript 内置类型是浏览器内核自带的，浏览器底层对 JavaScript 的实现基于 C/C++，那么浏览器在初始化 JavaScript 环境时都发生了什么？</p>
+<ol>
+<li>用 C/C++ 构造内部数据结构创建一个 OP 即 (Object.prototype) 以及初始化其内部属性但不包括行为。</li>
+<li>用 C/C++ 构造内部数据结构创建一个 FP 即 (Function.prototype) 以及初始化其内部属性但不包括行为。</li>
+<li>将 FP 的 [[Prototype]] 指向 OP。</li>
+<li>用 C/C++ 构造内部数据结构创建各种内置引用类型。</li>
+<li>将各内置引用类型的[[Prototype]]指向 FP。</li>
+<li>将 Function 的 prototype 指向 FP。</li>
+<li>将 Object 的 prototype 指向 OP。</li>
+<li>用 Function 实例化出 OP，FP，以及 Object 的行为并挂载。</li>
+<li>用 Object 实例化出除 Object 以及 Function 的其他内置引用类型的 prototype 属性对象。</li>
+<li>用 Function 实例化出除Object 以及 Function 的其他内置引用类型的 prototype 属性对象的行为并挂载。</li>
+<li>实例化内置对象 Math 以及 Grobal</li>
+</ol>
+<p>所有内置类型构建完成。</p>
+<p>参考文章：<br><a href="https://juejin.im/post/5cb4861ff265da036504efbc" target="_blank" rel="noopener">https://juejin.im/post/5cb4861ff265da036504efbc</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/04/16/1-3深入探究Function与Object/">深入探究Function与Object</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
+  <p><span>发布时间:</span>2019年04月16日 - 20:04</p>
+  <p><span>最后更新:</span>2019年04月17日 - 14:04</p>
+  <p><span>原始链接:</span><a href="/2019/04/16/1-3深入探究Function与Object/" title="深入探究Function与Object">https://ilove-coding.github.io/2019/04/16/1-3深入探究Function与Object/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2019/04/16/1-3深入探究Function与Object/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+</div>
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/path/to/wechat-reward-image" alt="tongtong 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/path/to/alipay-reward-image" alt="tongtong 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+<div>
+
+  <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>-------------</div>
+    
+</div>
+
+</div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js笔记/" rel="tag"><i class="fa fa-tag"></i> js笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/15/[待完成]axios核心源码实现原理/" rel="next" title="axios核心源码实现原理">
+                <i class="fa fa-chevron-left"></i> axios核心源码实现原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/16/[待完成]Diff算法/" rel="prev" title="Diff算法">
+                Diff算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzQxNS85OTcx"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif"
+                alt="tongtong" />
+            
+              <p class="site-author-name" itemprop="name">tongtong</p>
+              <p class="site-description motion-element" itemprop="description">爱生活 爱学习</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/iLove-Coding" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/b210912af0f2" target="_blank" title="jianshu">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>jianshu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ife.baidu.com/" title="百度前端技术学院" target="_blank">百度前端技术学院</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://wf.uisdc.com/cn/" title="google前端开发基础" target="_blank">google前端开发基础</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.36zhen.com/t?id=3448" title="前端书籍资料" target="_blank">前端书籍资料</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-prototype"><span class="nav-number">1.</span> <span class="nav-text">Object.prototype</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function-prototype"><span class="nav-number">2.</span> <span class="nav-text">Function.prototype</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#function-Object"><span class="nav-number">3.</span> <span class="nav-text">function Object</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#function-Function"><span class="nav-number">4.</span> <span class="nav-text">function Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function-amp-Object-什么情况？？？"><span class="nav-number">5.</span> <span class="nav-text">Function &amp; Object 什么情况？？？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内置类型构建过程"><span class="nav-number">6.</span> <span class="nav-text">内置类型构建过程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongtong</span>
+
+  
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+-->
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

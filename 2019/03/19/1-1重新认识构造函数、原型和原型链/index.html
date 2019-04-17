@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "45775042"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="js笔记," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="潼潼爱coding" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="一、构造函数啥是构造函数？ 构造函数本身就是一个函数，与普通函数没有区别，处于规范的目的首字母大写。构造函数与普通函数的区别是构造函数使用new生成实例，普通函数则直接调用。 ⚠️ constructor返回创建实例对象的构造函数的引用，此属性的值是对函数本身的引用，而不是一个包含函数名称的字符串。 12345678910function Dog (color) &amp;#123;    this.co">
+<meta name="keywords" content="js笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重新认识构造函数、原型和原型链">
+<meta property="og:url" content="https://ilove-coding.github.io/2019/03/19/1-1重新认识构造函数、原型和原型链/index.html">
+<meta property="og:site_name" content="潼潼爱coding">
+<meta property="og:description" content="一、构造函数啥是构造函数？ 构造函数本身就是一个函数，与普通函数没有区别，处于规范的目的首字母大写。构造函数与普通函数的区别是构造函数使用new生成实例，普通函数则直接调用。 ⚠️ constructor返回创建实例对象的构造函数的引用，此属性的值是对函数本身的引用，而不是一个包含函数名称的字符串。 12345678910function Dog (color) &amp;#123;    this.co">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://camo.githubusercontent.com/59aa568c8908a42b8aff322101d34b3c16f3b66c/68747470733a2f2f7773342e73696e61696d672e636e2f6c617267652f303036744e6337396c7931673034773761787071616a33316265303436676d372e6a7067">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/7/169f74f661f79dc1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/7/169f74f6eb1047c8">
+<meta property="og:updated_time" content="2019-04-11T06:37:38.826Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="重新认识构造函数、原型和原型链">
+<meta name="twitter:description" content="一、构造函数啥是构造函数？ 构造函数本身就是一个函数，与普通函数没有区别，处于规范的目的首字母大写。构造函数与普通函数的区别是构造函数使用new生成实例，普通函数则直接调用。 ⚠️ constructor返回创建实例对象的构造函数的引用，此属性的值是对函数本身的引用，而不是一个包含函数名称的字符串。 12345678910function Dog (color) &amp;#123;    this.co">
+<meta name="twitter:image" content="https://camo.githubusercontent.com/59aa568c8908a42b8aff322101d34b3c16f3b66c/68747470733a2f2f7773342e73696e61696d672e636e2f6c617267652f303036744e6337396c7931673034773761787071616a33316265303436676d372e6a7067">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ilove-coding.github.io/2019/03/19/1-1重新认识构造函数、原型和原型链/"/>
+
+
+
+
+
+
+  <title>重新认识构造函数、原型和原型链 | 潼潼爱coding</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/iLove-Coding"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">潼潼爱coding</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端开发小迷妹~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/03/19/1-1重新认识构造函数、原型和原型链/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tongtong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="潼潼爱coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">重新认识构造函数、原型和原型链</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-19T19:36:06+08:00">
+                2019-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">js笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="一、构造函数"><a href="#一、构造函数" class="headerlink" title="一、构造函数"></a>一、构造函数</h3><h4 id="啥是构造函数？"><a href="#啥是构造函数？" class="headerlink" title="啥是构造函数？"></a>啥是构造函数？</h4><p> 构造函数本身就是一个函数，与普通函数没有区别，处于规范的目的首字母大写。构造函数与普通函数的区别是构造函数使用new生成实例，普通函数则直接调用。</p>
+<p>⚠️ <strong>constructor</strong>返回创建实例对象的构造函数的引用，此属性的值是对函数本身的引用，而不是一个包含函数名称的字符串。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dog</span> (<span class="params">color</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.color = color;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> d = <span class="keyword">new</span> Dog(<span class="string">'white'</span>);</span><br><span class="line"></span><br><span class="line">d.constructor === Dog; <span class="comment">// true</span></span><br><span class="line">d.constructor === <span class="built_in">Object</span>; <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line">Dog.constructor === <span class="built_in">Function</span>; <span class="comment">// true</span></span><br><span class="line">Dog.constructor === <span class="built_in">Object</span>; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h4 id="普通函数创建的实例一定没有constructor属性？NO！"><a href="#普通函数创建的实例一定没有constructor属性？NO！" class="headerlink" title="普通函数创建的实例一定没有constructor属性？NO！"></a>普通函数创建的实例一定没有constructor属性？NO！</h4><p>例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dog</span> (<span class="params">color</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.color = color;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> d = dog(<span class="string">'white'</span>); <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">boy</span>(<span class="params">age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        age: age</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> b = boy(<span class="number">18</span>);</span><br><span class="line">p3.constructor === <span class="built_in">Object</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h4 id="Symbol-是构造函数吗"><a href="#Symbol-是构造函数吗" class="headerlink" title="Symbol 是构造函数吗?"></a>Symbol 是构造函数吗?</h4><blockquote>
+<p>Symbol 是基本数据类型，但作为构造函数来说它并不完整，因为它不支持语法 new Symbol()，Chrome 认为其不是构造函数，如果要生成实例直接使用 Symbol() 即可。（来自 MDN）</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Symbol</span>(<span class="number">123</span>); <span class="comment">// Symbol is not a constructor </span></span><br><span class="line"><span class="built_in">Symbol</span>(<span class="number">123</span>); <span class="comment">// Symbol(123)</span></span><br></pre></td></tr></table></figure>
+<p>虽然是基本数据类型，但 Symbol(123) 实例可以获取 constructor 属性值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sym = <span class="built_in">Symbol</span>(<span class="number">123</span>); </span><br><span class="line"><span class="built_in">console</span>.log( sym );</span><br><span class="line"><span class="comment">// Symbol(123)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log( sym.constructor );</span><br><span class="line"><span class="comment">// ƒ Symbol() &#123; [native code] &#125;</span></span><br></pre></td></tr></table></figure>
+<p>这里的 constructor 属性来自哪里？其实是 Symbol 原型上的，即 Symbol.prototype.constructor 返回创建实例原型的函数， 默认为 Symbol 函数。</p>
+<h4 id="constructor的值只读么？不一定！"><a href="#constructor的值只读么？不一定！" class="headerlink" title="constructor的值只读么？不一定！"></a>constructor的值只读么？不一定！</h4><p>引用类型 constructor 属性值是可以修改的，但是对于基本类型来说是只读的，当然 null 和 undefined 没有 constructor 属性。</p>
+<ul>
+<li>引用类型的constructor属性值可以修改这一点原型链继承方案中就可以说明，需要对constructor重新赋值进行修正。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span>(<span class="params">color</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.color = color;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dog</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">Dog.prototype = <span class="keyword">new</span> Animal();</span><br></pre></td></tr></table></figure>
+<h4 id="new操作符模拟实现"><a href="#new操作符模拟实现" class="headerlink" title="new操作符模拟实现"></a>new操作符模拟实现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 1.创建一个空的对象</span></span><br><span class="line">    <span class="keyword">let</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>(),</span><br><span class="line">    <span class="comment">// 2.获取构造函数，同事删除arguments中的第一个参数</span></span><br><span class="line">    con = [].shift.call(<span class="built_in">arguments</span>);</span><br><span class="line">    <span class="comment">// 3.链接到原型，obj可以访问构造函数原型中的属性</span></span><br><span class="line">    <span class="built_in">Object</span>.setPrototypeOf(obj, con.prototype);</span><br><span class="line">    <span class="comment">// 4.绑定this实现继承，obj可以访问构造函数中的属性</span></span><br><span class="line">    <span class="keyword">let</span> ret = con.apply(obj, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="comment">// 5.优先返回构造函数返回的对象</span></span><br><span class="line">    <span class="keyword">return</span> ret <span class="keyword">instanceof</span> <span class="built_in">Object</span> ? ret : obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二、原型"><a href="#二、原型" class="headerlink" title="二、原型"></a>二、原型</h3><p>javascript是基于原型的语言<br>每个对象拥有一个原型对象，对象以原型为模版，从原型继承方法和属性，这些属性和方法定义在对象的构造函数的prototype属性上，而非对象实例本身。<br>例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(Parent.prototype)</span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line">    <span class="keyword">constructor</span>: ƒ Parent()</span><br><span class="line">    __proto__: Object</span><br><span class="line">// &#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出，Parent对象的原型对象上有两个属性，分别是constructor和<strong> proto </strong> ，<strong> proto </strong>已被弃用。  </p>
+<p>构造函数Parent有一个prototype属性，为指向原型的指针，原型Parent.prototype有一个constructor属性，为指向构造函数的指针，是一个循环引用。  </p>
+<p>⚠️<strong><strong> proto </strong></strong>属性，这是一个访问器属性（即 getter 函数和 setter 函数），通过它可以访问到对象的内部[[Prototype]] (一个对象或 null )。最先被 Firefox使用，后来在 ES6 被列为 Javascript 的标准内建属性。[[Prototype]] 是对象的一个内部属性，外部代码无法直接访问。</p>
+<blockquote>
+<p>遵循 ECMAScript 标准，someObject.[[Prototype]] 符号用于指向 someObject 的原型。</p>
+</blockquote>
+<p><strong> proto </strong> 是每个实例上都有的属性，指向构造函数的原型对象，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> Parent();</span><br><span class="line">p.__proto__ === Parent.prototype <span class="comment">// true</span></span><br><span class="line">Parent.prototype.__proto__ === <span class="built_in">Object</span>.prototype <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.__proto__ === <span class="literal">null</span></span><br></pre></td></tr></table></figure>
+<p>⚠️注意：<br><strong> proto </strong> 属性在 ES6 时才被标准化，以确保 Web 浏览器的兼容性，但是不推荐使用，除了标准化的原因之外还有性能问题。为了更好的支持，推荐使用 Object.getPrototypeOf()。</p>
+<blockquote>
+<p>通过改变一个对象的 [[Prototype]] 属性来改变和继承属性会对性能造成非常严重的影响，并且性能消耗的时间也不是简单的花费在 obj.<strong>proto</strong> = … 语句上, 它还会影响到所有继承自该 [[Prototype]] 的对象，如果你关心性能，你就不应该修改一个对象的 [[Prototype]]。</p>
+</blockquote>
+<p>如果要读取或修改对象的 [[Prototype]] 属性，建议使用如下方案，但是此时设置对象的 [[Prototype]] 依旧是一个缓慢的操作，如果性能是一个问题，就要避免这种操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取</span></span><br><span class="line"><span class="built_in">Object</span>.getPrototypeOf()</span><br><span class="line"><span class="built_in">Reflect</span>.getPrototypeOf()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改</span></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf()</span><br><span class="line"><span class="built_in">Reflect</span>.setPrototypeOf()</span><br></pre></td></tr></table></figure>
+<p>如果要创建一个新对象，同时继承另一个对象的 [[Prototype]] ，推荐使用 Object.create()。<br>例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    height: <span class="number">180</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Parent();</span><br><span class="line"><span class="keyword">var</span> child = <span class="built_in">Object</span>.create(p);</span><br></pre></td></tr></table></figure>
+<p>这里 child 是一个新的空对象，有一个指向对象 p 的指针 <strong> proto </strong>。</p>
+<h4 id="Object-create-实现new"><a href="#Object-create-实现new" class="headerlink" title="Object.create()实现new"></a>Object.create()实现new</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 1.获取构造函数并删除arguments中第一个参数</span></span><br><span class="line">    <span class="keyword">let</span> con = [].shift.call(<span class="built_in">arguments</span>);</span><br><span class="line">    <span class="comment">// 2.创建一个空对象并链接到原型，obj可以访问构造函数原型中的属性</span></span><br><span class="line">    <span class="keyword">let</span> obj = <span class="built_in">Object</span>.create(con.prototype);</span><br><span class="line">    <span class="comment">// 3.绑定this，实现继承，obj可以访问构造函数中的属性</span></span><br><span class="line">    <span class="keyword">let</span> ret = con.call(obj, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="comment">// 4.优先返回构造函数返回的对象</span></span><br><span class="line">    <span class="keyword">return</span> ret <span class="keyword">instanceof</span> <span class="built_in">Object</span> ? ret : obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="三、原型链"><a href="#三、原型链" class="headerlink" title="三、原型链"></a>三、原型链</h3><p>每个对象拥有一个原型对象，通过<strong> proto </strong>指针指向上一个原型，并从中<strong>继承</strong>方法和属性，同时原型对象也可能拥有原型，这样一层一层，最终指向null，这种关系被称为<strong>原型链</strong></p>
+<p>例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params">age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Parent(<span class="number">10</span>);</span><br><span class="line">p.constructor === Parent <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>p 实例存在 constructor 属性么？其实不是</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p.__proto__ === Parent.prototype <span class="comment">// true</span></span><br><span class="line">Parent.prototype.constructor === Parent <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>实例对象 p 本身没有 constructor 属性，是通过原型链向上查找 <strong> proto </strong> ，最终查找到 constructor 属性，该属性指向 Parent。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params">age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Parent(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">p;	<span class="comment">// Parent &#123;age: 10&#125;</span></span><br><span class="line">p.__proto__ === Parent.prototype; <span class="comment">// true</span></span><br><span class="line">p.__proto__.__proto__ === <span class="built_in">Object</span>.prototype; <span class="comment">// true</span></span><br><span class="line">p.__proto__.__proto__.__proto__ === <span class="literal">null</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://camo.githubusercontent.com/59aa568c8908a42b8aff322101d34b3c16f3b66c/68747470733a2f2f7773342e73696e61696d672e636e2f6c617267652f303036744e6337396c7931673034773761787071616a33316265303436676d372e6a7067" alt="原型链运作机制"></p>
+<p>⚠️注意：原型上的方法和属性被继承到新对象中，并不是复制到新对象，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Foo.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  	<span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Foo.prototype.length = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> foo = <span class="keyword">new</span> Foo(<span class="string">'test'</span>);</span><br><span class="line"><span class="built_in">console</span>.dir(foo);</span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//   name: 'test',</span></span><br><span class="line"><span class="comment">//  __proto__: &#123;</span></span><br><span class="line"><span class="comment">//     getName: ƒ ()</span></span><br><span class="line"><span class="comment">//     length: 3</span></span><br><span class="line"><span class="comment">//     constructor: ƒ Foo(name)</span></span><br><span class="line"><span class="comment">//     __proto__: &#123;</span></span><br><span class="line"><span class="comment">//          constructor: ƒ Object()</span></span><br><span class="line">            hasOwnProperty: ƒ hasOwnProperty()</span><br><span class="line">            isPrototypeOf: ƒ isPrototypeOf()</span><br><span class="line">            propertyIsEnumerable: ƒ propertyIsEnumerable()</span><br><span class="line">            toLocaleString: ƒ toLocaleString()</span><br><span class="line">            toString: ƒ toString()</span><br><span class="line">            valueOf: ƒ valueOf()</span><br><span class="line">            __defineGetter__: ƒ __defineGetter__()</span><br><span class="line">            __defineSetter__: ƒ __defineSetter__()</span><br><span class="line">            __lookupGetter__: ƒ __lookupGetter__()</span><br><span class="line">            __lookupSetter__: ƒ __lookupSetter__()</span><br><span class="line">            get __proto__: ƒ __proto__()</span><br><span class="line">            set __proto__: ƒ __proto__()</span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">//  &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
+<p>原型上的属性和方法定义在prototype对象上，而非对象实例本身。当访问一个对象的属性/方法时，它不仅在该对象上查找，还会查找该对象的原型，以及该对象的原型的原型，一层层向上查找，直到找到名字匹配的属性/方法或到达原型链的顶端（null）。</p>
+<p>比如调用foo.valueOf()的过程：</p>
+<ul>
+<li>首先检查foo对象是否具有可用的valueOf()方法</li>
+<li>如果没有，检查foo对象的原型对象，即Foo.prototype是否具有可用的valueof()方法</li>
+<li>如果没有，检查Foo.prototype所指对象的原型对象，即Object.prototype是否具有可用的valueOf()方法。找到并调用该方法。</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2019/4/7/169f74f661f79dc1" alt="过程图"></p>
+<h4 id="prototype和-proto"><a href="#prototype和-proto" class="headerlink" title="prototype和 proto "></a>prototype和<strong> proto </strong></h4><p>原型对象prototype是构造函数的属性，<strong> proto</strong> 是每个实例上都有的属性，只有函数才有prototype属性，而每个对象都有<strong> proto </strong>属性来标识自己所继承的原型。这两个是不同的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foo.__proto === Foo.prototype <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>思考：原型链的构建是依赖于prototype还是<strong> proto </strong>?  </p>
+<p>答：原型链的构建依赖于<strong><strong> proto </strong></strong>，通过foo.<strong> proto </strong> 指向 Foo.prototype，foo.<strong> proto </strong> . <strong> proto </strong> 指向 Bichon.prototype，如此一层一层最终链接到 null。过程如下图：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/4/7/169f74f6eb1047c8" alt=""></p>
+<p>⚠️注意：不要使用Son.prototype = Parent，这样不会执行Parent的原型，而是指向函数Parent，这样原型链会回溯到Function.prototype而不是Parent.prototype，Parent原型上的方法将不会在Son的原型链上</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">Parent.prototype.eye = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'black'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">Son.prototype = Parent</span><br><span class="line"></span><br><span class="line">Son.prototype.__proto__ === <span class="built_in">Function</span>.prototype <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> Son()</span><br><span class="line">s.eye(); <span class="comment">// Uncaught TypeError: s.eye is not a function</span></span><br></pre></td></tr></table></figure>
+<h4 id="instanceof原理及实现"><a href="#instanceof原理及实现" class="headerlink" title="instanceof原理及实现"></a>instanceof原理及实现</h4><p>instanceof 运算符用来检测 constructor.prototype 是否存在于参数 object 的原型链上。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> A();</span><br><span class="line"></span><br><span class="line">a <span class="keyword">instanceof</span> A; <span class="comment">// true</span></span><br><span class="line">a <span class="keyword">instanceof</span> B; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>原理就是一层一层查找 <strong>proto</strong>，如果和 constructor.prototype 相等则返回 true，如果一直没有查找成功则返回 false。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">instance.[__proto__...] === instance.constructor.prototype</span><br></pre></td></tr></table></figure>
+<p>模拟实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">instanceof</span>(<span class="params">left, right</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> left = left.__proto__;</span><br><span class="line">    <span class="keyword">let</span> prototype = right.prototype;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (left == <span class="literal">null</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (left === prototype) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        left = left.__proto__;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>⚠️扩展思考题：<br>有以下 3 个判断数组的方法，对比分析它们之间的区别和优劣：</p>
+<blockquote>
+<p>Object.prototype.toString.call() 、 instanceof 以及 Array.isArray()</p>
+</blockquote>
+<p>1.Object.prototype.toString.call()</p>
+<p>每一个继承 Object 的对象都有 toString 方法，如果 toString 方法没有重写的话，会返回 [Object type]，其中 type 为对象的类型。但当除了 Object 类型的对象外，其他类型直接使用 toString 方法时，会直接返回都是内容的字符串，所以我们需要使用call或者apply方法来改变toString方法的执行上下文。</p>
+<p>这种方法对于所有基本的数据类型都能进行判断，即使是 null 和 undefined 。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="string">'An'</span>) <span class="comment">// "[object String]"</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="number">1</span>) <span class="comment">// "[object Number]"</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="built_in">Symbol</span>(<span class="number">1</span>)) <span class="comment">// "[object Symbol]"</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="literal">null</span>) <span class="comment">// "[object Null]"</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="literal">undefined</span>) <span class="comment">// "[object Undefined]"</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;) <span class="comment">// "[object Function]"</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(&#123;<span class="attr">name</span>: <span class="string">'An'</span>&#125;) <span class="comment">// "[object Object]"</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]); <span class="comment">// "[object Array]"</span></span><br></pre></td></tr></table></figure>
+<p>Object.prototype.toString.call() 常用于判断浏览器内置对象时。</p>
+<p>2.instanceof</p>
+<p>instanceof的内部机制是通过判断对象的原型链中是不是能找到类型的 prototype。<br>比如，使用 instanceof判断一个对象是否为数组，instanceof 会判断这个对象的原型链上是否会找到对应的 Array 的原型，找到返回 true，否则返回 false。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[]  <span class="keyword">instanceof</span> <span class="built_in">Array</span>; <span class="comment">// true</span></span><br><span class="line">[]  <span class="keyword">instanceof</span> <span class="built_in">Object</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>但 instanceof 只能用来判断对象类型，原始类型不可以。并且所有对象类型 instanceof Object 都是 true。</p>
+<p>3.Array.isArray()</p>
+<p>用于判断对象是否为数组  </p>
+<ul>
+<li>instanceof 与 isArray<br>当检测Array实例时，Array.isArray 优于 instanceof ，因为 Array.isArray 可以检测出 iframes</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> iframe = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>);</span><br><span class="line"><span class="built_in">document</span>.body.appendChild(iframe);</span><br><span class="line"><span class="keyword">var</span> xArray = <span class="built_in">window</span>.frames[<span class="built_in">window</span>.frames.length<span class="number">-1</span>].Array;</span><br><span class="line"><span class="keyword">var</span> arr = <span class="keyword">new</span> xArray(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>); <span class="comment">// [1,2,3]</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Array</span>.isArray(arr);  <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(arr); <span class="comment">// "[object Array]"</span></span><br><span class="line">arr <span class="keyword">instanceof</span> <span class="built_in">Array</span>; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Array.isArray() 与 Object.prototype.toString.call()<br>Array.isArray()是ES5新增的方法，当不存在 Array.isArray() ，可以用 Object.prototype.toString.call() 实现。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray) &#123;</span><br><span class="line">  <span class="built_in">Array</span>.isArray = <span class="function"><span class="keyword">function</span>(<span class="params">arg</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(arg) === <span class="string">'[object Array]'</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>练习：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line">A.prototype = &#123; <span class="attr">fun</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> A();</span><br><span class="line"><span class="built_in">console</span>.log(a.constructor === A); <span class="comment">// false </span></span><br><span class="line"><span class="comment">// a.constructor === a.__proto__.constructor === A.prototype.constructor === Object</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(A.prototype.constructor === A); <span class="comment">// false </span></span><br><span class="line"><span class="comment">// A.prototype.constructor === Object</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a.hasOwnProperty(<span class="string">'constructor'</span>)); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a <span class="keyword">instanceof</span> A); <span class="comment">// true</span></span><br><span class="line"><span class="comment">// a.__proto__ === A.prototype</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">A.prototype = <span class="keyword">new</span> B();</span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> A();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b.constructor === A); <span class="comment">// false</span></span><br><span class="line"><span class="comment">// b.constructor === b.__proto__.constructor === A.prototype.constructor === B</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(B.prototype.constructor === A); <span class="comment">// false</span></span><br><span class="line"><span class="comment">// B.prototype.constructor === B</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b.constructor.prototype.constructor === A); <span class="comment">// false</span></span><br><span class="line"><span class="comment">// b.constructor.prototype.constructor === b.__proto__.constructor.prototype.constructor === A.prototype.constructor.prototype.constructor === B.prototype.constructor === B</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b.hasOwnProperty(<span class="string">'constructor'</span>)); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b <span class="keyword">instanceof</span> A); <span class="comment">// true</span></span><br><span class="line"><span class="comment">// b.__proto__ === A.protoptype</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b <span class="keyword">instanceof</span> B); <span class="comment">// true</span></span><br><span class="line"><span class="comment">// b.__proto__.__proto__ === B.prototype</span></span><br></pre></td></tr></table></figure>
+<p>参考文章：<br><a href="https://github.com/yygmind/blog/issues/32" target="_blank" rel="noopener">https://github.com/yygmind/blog/issues/32</a><br><a href="https://juejin.im/post/5ca9cebb6fb9a05e505c5f81" target="_blank" rel="noopener">https://juejin.im/post/5ca9cebb6fb9a05e505c5f81</a><br>《javascript高级程序设计》第六章</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/03/19/1-1重新认识构造函数、原型和原型链/">重新认识构造函数、原型和原型链</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
+  <p><span>发布时间:</span>2019年03月19日 - 19:03</p>
+  <p><span>最后更新:</span>2019年04月11日 - 14:04</p>
+  <p><span>原始链接:</span><a href="/2019/03/19/1-1重新认识构造函数、原型和原型链/" title="重新认识构造函数、原型和原型链">https://ilove-coding.github.io/2019/03/19/1-1重新认识构造函数、原型和原型链/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2019/03/19/1-1重新认识构造函数、原型和原型链/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+</div>
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/path/to/wechat-reward-image" alt="tongtong 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/path/to/alipay-reward-image" alt="tongtong 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+<div>
+
+  <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>-------------</div>
+    
+</div>
+
+</div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js笔记/" rel="tag"><i class="fa fa-tag"></i> js笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/17/详解如何实现call:apply:bind/" rel="next" title="详解如何实现call/apply/bind">
+                <i class="fa fa-chevron-left"></i> 详解如何实现call/apply/bind
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/19/[待完成]深入理解模块化/" rel="prev" title="理解模块化">
+                理解模块化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzQxNS85OTcx"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif"
+                alt="tongtong" />
+            
+              <p class="site-author-name" itemprop="name">tongtong</p>
+              <p class="site-description motion-element" itemprop="description">爱生活 爱学习</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/iLove-Coding" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/b210912af0f2" target="_blank" title="jianshu">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>jianshu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ife.baidu.com/" title="百度前端技术学院" target="_blank">百度前端技术学院</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://wf.uisdc.com/cn/" title="google前端开发基础" target="_blank">google前端开发基础</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.36zhen.com/t?id=3448" title="前端书籍资料" target="_blank">前端书籍资料</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、构造函数"><span class="nav-number">1.</span> <span class="nav-text">一、构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#啥是构造函数？"><span class="nav-number">1.1.</span> <span class="nav-text">啥是构造函数？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#普通函数创建的实例一定没有constructor属性？NO！"><span class="nav-number">1.2.</span> <span class="nav-text">普通函数创建的实例一定没有constructor属性？NO！</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Symbol-是构造函数吗"><span class="nav-number">1.3.</span> <span class="nav-text">Symbol 是构造函数吗?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#constructor的值只读么？不一定！"><span class="nav-number">1.4.</span> <span class="nav-text">constructor的值只读么？不一定！</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new操作符模拟实现"><span class="nav-number">1.5.</span> <span class="nav-text">new操作符模拟实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、原型"><span class="nav-number">2.</span> <span class="nav-text">二、原型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-create-实现new"><span class="nav-number">2.1.</span> <span class="nav-text">Object.create()实现new</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、原型链"><span class="nav-number">3.</span> <span class="nav-text">三、原型链</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#prototype和-proto"><span class="nav-number">3.1.</span> <span class="nav-text">prototype和 proto </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#instanceof原理及实现"><span class="nav-number">3.2.</span> <span class="nav-text">instanceof原理及实现</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongtong</span>
+
+  
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+-->
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
