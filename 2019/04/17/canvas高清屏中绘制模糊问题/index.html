@@ -99,7 +99,7 @@
 <meta property="og:site_name" content="潼潼爱coding">
 <meta property="og:description" content="用canvas绘制价格趋势图的时候发现在mac上看线条和文字都非常模糊 为什么？因为 canvas 不是矢量图，而是像图片一样是位图模式的。高 dpi 显示设备意味着每平方英寸有更多的像素。也就是说二倍屏，浏览器就会以2个像素点的宽度来渲染一个像素，该 canvas 在 Retina 屏幕下相当于占据了2倍的空间，相当于图片被放大了一倍，因此绘制出来的图片文字等会变模糊。 因此，要做 Retina">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-17T12:07:16.959Z">
+<meta property="og:updated_time" content="2019-04-18T06:24:30.909Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="canvas高清屏中绘制模糊问题">
 <meta name="twitter:description" content="用canvas绘制价格趋势图的时候发现在mac上看线条和文字都非常模糊 为什么？因为 canvas 不是矢量图，而是像图片一样是位图模式的。高 dpi 显示设备意味着每平方英寸有更多的像素。也就是说二倍屏，浏览器就会以2个像素点的宽度来渲染一个像素，该 canvas 在 Retina 屏幕下相当于占据了2倍的空间，相当于图片被放大了一倍，因此绘制出来的图片文字等会变模糊。 因此，要做 Retina">
@@ -389,9 +389,32 @@
         <p>用canvas绘制价格趋势图的时候发现在mac上看线条和文字都非常模糊</p>
 <h3 id="为什么？"><a href="#为什么？" class="headerlink" title="为什么？"></a>为什么？</h3><p>因为 canvas 不是矢量图，而是像图片一样是位图模式的。高 dpi 显示设备意味着每平方英寸有更多的像素。也就是说二倍屏，浏览器就会以2个像素点的宽度来渲染一个像素，该 canvas 在 Retina 屏幕下相当于占据了2倍的空间，相当于图片被放大了一倍，因此绘制出来的图片文字等会变模糊。</p>
 <p>因此，要做 Retina 屏适配，关键是知道当前屏幕的设备像素比，然后将 canvas 放大到该设备像素比来绘制，然后将 canvas 压缩到一倍来展示。</p>
-<h3 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h3><p>浏览器的 window 对象中有一个 devicePixelRatio 的属性，该属性表示了屏幕的设备像素比，即用几个（通常是2个）像素点宽度来渲染1个像素。</p>
-<p>举例来说，假设 devicePixelRatio 的值为 2 ，一张 100×100 像素大小的图片，在 Retina 屏幕下，会用 2 个像素点的宽度去渲染图片的 1 个像素点，因此该图片在 Retina 屏幕上实际会占据 200×200 像素的空间，相当于图片被放大了一倍，因此图片会变得模糊。</p>
+<h3 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h3><p>浏览器的 window 对象中有一个 devicePixelRatio的属性，该属性表示了屏幕的设备像素比，即用几个（通常是2个）像素点宽度来渲染1个像素。</p>
+<p>举例来说，假设devicePixelRatio的值为2 ，一张 100×100 像素大小的图片，在 Retina 屏幕下，会用 2 个像素点的宽度去渲染图片的 1 个像素点，因此该图片在 Retina 屏幕上实际会占据 200×200 像素的空间，相当于图片被放大了一倍，因此图片会变得模糊。</p>
 <p>类似的，在 canvas context 中也存在一个 backingStorePixelRatio 的属性，该属性的值决定了浏览器在渲染canvas之前会用几个像素来来存储画布信息。 backingStorePixelRatio 属性在各浏览器厂商的获取方式不一样，所以需要加上浏览器前缀来实现兼容。</p>
+<h3 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h3><p>1.首先获取canvas对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> paint = <span class="built_in">document</span>.getElementById(<span class="string">'graphic-canvas'</span>);</span><br><span class="line"><span class="keyword">const</span> ctx = paint.getContext(<span class="string">'2d'</span>);</span><br></pre></td></tr></table></figure>
+<p>2.获取像素比，将 Canvas 宽高进行放大，放大比例为：devicePixelRatio / webkitBackingStorePixelRatio , 我们写了一个兼容的方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">const</span> getPixelRatio = <span class="function"><span class="keyword">function</span> (<span class="params">context</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">const</span> backingStore = context.backingStorePixelRatio ||</span><br><span class="line">                          context.webkitBackingStorePixelRatio ||</span><br><span class="line">                          context.mozBackingStorePixelRatio ||</span><br><span class="line">                          context.msBackingStorePixelRatio ||</span><br><span class="line">                          context.oBackingStorePixelRatio ||</span><br><span class="line">                          context.backingStorePixelRatio || <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">return</span> (<span class="built_in">window</span>.devicePixelRatio || <span class="number">1</span>) / backingStore;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="keyword">const</span> ratio = <span class="keyword">this</span>.getPixelRatio(ctx);</span><br></pre></td></tr></table></figure>
+<p>3.按实际渲染倍率来缩放canvas。<br>⚠️注意：</p>
+<ul>
+<li>要设置canvas的画布大小，使用的是 canvas.width 和 canvas.height；</li>
+<li>要设置画布的实际渲染大小，使用的 style 属性或CSS设置的 width 和height，只是简单的对画布进行缩放。</li>
+</ul>
+<p>例如2倍屏幕下代码实例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;canvas width=<span class="string">"640"</span> height=<span class="string">"800"</span> style=<span class="string">"width:320px; height:400px"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>canvas画布大小是640px × 800px，但是实际渲染到页面的大小是320px × 400px，相当于缩小一倍来显示。</p>
+<p>3倍屏幕下就是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;canvas width=<span class="string">"960"</span> height=<span class="string">"1200"</span> style=<span class="string">"width:320px; height:400px"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>因此，要使canvas适配高倍屏，就是要将canvas画布放大到设备像素比来绘制，最后将canvas压缩成一倍的物理大小来展示。如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">paint.style.width = paint.width + <span class="string">'px'</span>;</span><br><span class="line">paint.style.height = paint.height + <span class="string">'px'</span>;</span><br><span class="line">paint.width = paint.width * ratio; </span><br><span class="line">paint.height = paint.height * ratio;</span><br></pre></td></tr></table></figure>
+<p>4.绘制</p>
+<p>由于 Canvas 放大后，相应的绘制图片时也要放大，有两种方式：</p>
+<p>第一种方法：每一个绘制相应的放大，比较繁琐</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctx.fillText(<span class="string">"我是清晰的文字"</span>, <span class="number">50</span>*ratio, <span class="number">50</span>*ratio);<span class="comment">// 坐标位置乘以像素比</span></span><br></pre></td></tr></table></figure>
+<p>推荐第二种方法，scale方法</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctx.<span class="keyword">scale(ratio, </span>ratio)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>参考文章：<a href="https://www.html.cn/archives/9297" target="_blank" rel="noopener">https://www.html.cn/archives/9297</a></p>
 
       
     </div>
@@ -412,7 +435,7 @@
   <p><span>本文标题:</span><a href="/2019/04/17/canvas高清屏中绘制模糊问题/">canvas高清屏中绘制模糊问题</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
   <p><span>发布时间:</span>2019年04月17日 - 20:04</p>
-  <p><span>最后更新:</span>2019年04月17日 - 20:04</p>
+  <p><span>最后更新:</span>2019年04月18日 - 14:04</p>
   <p><span>原始链接:</span><a href="/2019/04/17/canvas高清屏中绘制模糊问题/" title="canvas高清屏中绘制模糊问题">https://ilove-coding.github.io/2019/04/17/canvas高清屏中绘制模糊问题/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2019/04/17/canvas高清屏中绘制模糊问题/"  aria-label="复制成功！"></i></span>
   </p>
@@ -697,7 +720,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么？"><span class="nav-number">1.</span> <span class="nav-text">为什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决思路"><span class="nav-number">2.</span> <span class="nav-text">解决思路</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么？"><span class="nav-number">1.</span> <span class="nav-text">为什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决思路"><span class="nav-number">2.</span> <span class="nav-text">解决思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决问题"><span class="nav-number">3.</span> <span class="nav-text">解决问题</span></a></li></ol></div>
             
 
           </div>

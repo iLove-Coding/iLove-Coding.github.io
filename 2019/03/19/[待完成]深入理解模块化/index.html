@@ -78,7 +78,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="js笔记," />
 
 
 
@@ -91,17 +91,20 @@
 
 
 
-<meta name="description" content="爱生活 爱学习">
+<meta name="description" content="什么是模块化?模块化就是将一个大的功能拆分为多个块，每一个块都是独立的，你不需要去担心污染全局变量，命名冲突什么的。 模块化的好处：  避免命名冲突和变量污染 依赖管理 增强代码可读性 提高代码复用性  JS在最初是没有模块化设计的，那时候如何避免命名冲突和变量污染呢？ 方法一：函数封装，缺点是污染全局作用域 123function fn1 () &amp;#123;&amp;#125;function fn2">
+<meta name="keywords" content="js笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="理解模块化">
+<meta property="og:title" content="深入理解模块化">
 <meta property="og:url" content="https://ilove-coding.github.io/2019/03/19/[待完成]深入理解模块化/index.html">
 <meta property="og:site_name" content="潼潼爱coding">
-<meta property="og:description" content="爱生活 爱学习">
+<meta property="og:description" content="什么是模块化?模块化就是将一个大的功能拆分为多个块，每一个块都是独立的，你不需要去担心污染全局变量，命名冲突什么的。 模块化的好处：  避免命名冲突和变量污染 依赖管理 增强代码可读性 提高代码复用性  JS在最初是没有模块化设计的，那时候如何避免命名冲突和变量污染呢？ 方法一：函数封装，缺点是污染全局作用域 123function fn1 () &amp;#123;&amp;#125;function fn2">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-19T11:55:45.254Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/8/7/1651221feb8ab9bb">
+<meta property="og:updated_time" content="2019-04-18T09:45:05.117Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="理解模块化">
-<meta name="twitter:description" content="爱生活 爱学习">
+<meta name="twitter:title" content="深入理解模块化">
+<meta name="twitter:description" content="什么是模块化?模块化就是将一个大的功能拆分为多个块，每一个块都是独立的，你不需要去担心污染全局变量，命名冲突什么的。 模块化的好处：  避免命名冲突和变量污染 依赖管理 增强代码可读性 提高代码复用性  JS在最初是没有模块化设计的，那时候如何避免命名冲突和变量污染呢？ 方法一：函数封装，缺点是污染全局作用域 123function fn1 () &amp;#123;&amp;#125;function fn2">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/8/7/1651221feb8ab9bb">
 
 
 
@@ -138,7 +141,7 @@
 
 
 
-  <title>理解模块化 | 潼潼爱coding</title>
+  <title>深入理解模块化 | 潼潼爱coding</title>
   
 
 
@@ -282,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">理解模块化</h1>
+          <h1 class="post-title" itemprop="name headline">深入理解模块化</h1>
         
 
         <div class="post-meta">
@@ -304,6 +307,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">js笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -363,7 +388,53 @@
       
 
       
-        
+        <h3 id="什么是模块化"><a href="#什么是模块化" class="headerlink" title="什么是模块化?"></a>什么是模块化?</h3><p>模块化就是将一个大的功能拆分为多个块，每一个块都是独立的，你不需要去担心污染全局变量，命名冲突什么的。</p>
+<p>模块化的好处：</p>
+<ul>
+<li>避免命名冲突和变量污染</li>
+<li>依赖管理</li>
+<li>增强代码可读性</li>
+<li>提高代码复用性</li>
+</ul>
+<p>JS在最初是没有模块化设计的，那时候如何避免命名冲突和变量污染呢？</p>
+<p>方法一：函数封装，缺点是污染全局作用域</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span> (<span class="params"></span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>方法二：使用对象，缺点是没有私有变量，外部可以修改</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myModule = &#123;</span><br><span class="line">    var1: <span class="number">1</span>,</span><br><span class="line">    fn1: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法三：使用IIFE(立即执行函数表达式)，在老项目中很常见，一个 JS 文件中就是一个立即执行函数。</p>
+<ul>
+<li>创建一个立即调用的匿名函数表达式</li>
+<li>return一个变量，其中这个变量里包含你要暴露的东西</li>
+<li>返回的这个变量将赋值给 module</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myMoudule = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> num = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        publicName: <span class="number">5</span>,</span><br><span class="line">        getPrivateNum: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> num;</span><br><span class="line">        &#125;,</span><br><span class="line">        setPrivateNum: <span class="function"><span class="keyword">function</span> (<span class="params">reNum</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> num = reNum;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+<h3 id="模块化规范"><a href="#模块化规范" class="headerlink" title="模块化规范"></a>模块化规范</h3><ul>
+<li>CommonJS</li>
+<li>AMD 异步模块定义</li>
+<li>CMD 通用模块定义</li>
+<li>ES6 模块化</li>
+</ul>
+<h3 id="CommonJS-文件即模块"><a href="#CommonJS-文件即模块" class="headerlink" title="CommonJS 文件即模块"></a>CommonJS 文件即模块</h3><blockquote>
+<p>《深入浅出nodejs》一书中提到，每个模块文件的require，exports和module这3个变量并没有在模块中定义，也并非全局函数/对象。而是在编译的时候Node对js文件内容进行了头尾的包装。在头部加了(function (exports, require, module, <strong>filename, </strong>dirname) {，在尾部加了 \n});。</p>
+</blockquote>
+<ul>
+<li>使用module.exports(exports)暴露对外的接口  </li>
+<li>模块引用时会找到绝对路径</li>
+<li>模块加载时是同步操作</li>
+<li>默认会加后缀js,json,…  </li>
+<li>模块加载过会有缓存，把文件名作为key，module作为value</li>
+<li>node实现模块化就是增加了一个闭包，并且自执行这个闭包（runInThisContext）</li>
+<li>不同模块下的变量不会相互冲突</li>
+</ul>
+<p>nodeJS也是使用CommonJS规范</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    a: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// or </span></span><br><span class="line">exports.a = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// b.js</span></span><br><span class="line"><span class="keyword">var</span> <span class="built_in">module</span> = <span class="built_in">require</span>(<span class="string">'./a.js'</span>)</span><br><span class="line"><span class="built_in">module</span>.a <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<p>module.exports 和 exports什么原理呢？</p>
+<p>require流程图：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/8/7/1651221feb8ab9bb" alt=""></p>
+<p>基本实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//node原生的模块，用来读写文件(fileSystem)</span></span><br><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="comment">//node原生的模块，用来解析文件路径</span></span><br><span class="line"><span class="keyword">let</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="comment">//提供了一系列 API 用于在 V8 虚拟机环境中编译和运行代码。</span></span><br><span class="line"><span class="keyword">let</span> vm = <span class="built_in">require</span>(<span class="string">'vm'</span>)</span><br><span class="line"><span class="comment">//Module类，就相当于我们的模块(因为node环境不支持es6的class，这里用function)</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Module</span>(<span class="params">p</span>)</span>&#123;</span><br><span class="line">  <span class="comment">//当前模块的标识</span></span><br><span class="line">  <span class="keyword">this</span>.id = p</span><br><span class="line">  <span class="comment">//没个模块都有一个exports属性</span></span><br><span class="line">  <span class="keyword">this</span>.exports = &#123;&#125;</span><br><span class="line">  <span class="comment">//这个模块默认没有加载完</span></span><br><span class="line">  <span class="keyword">this</span>.loaded = <span class="literal">false</span></span><br><span class="line">  <span class="comment">//模块加载方法</span></span><br><span class="line">  <span class="keyword">this</span>.load = <span class="function"><span class="keyword">function</span>(<span class="params">filepath</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//判断文件是json还是 node还是js</span></span><br><span class="line">    <span class="keyword">let</span> ext = path.extname(filepath)</span><br><span class="line">    <span class="keyword">return</span> Module._extensions[ext](<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//js文件加载的包装类</span></span><br><span class="line">Module._wrapper = [<span class="string">'(function(exports,require,module,__dirname,__filename)&#123;'</span>,<span class="string">'\n&#125;)'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">//所有的加载策略</span></span><br><span class="line">Module._extensions = &#123;</span><br><span class="line">  <span class="string">'.js'</span>: <span class="function"><span class="keyword">function</span>(<span class="params">module</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> fn = Module._wrapper[<span class="number">0</span>] + fs.readFileSync(<span class="built_in">module</span>.id,<span class="string">'utf8'</span>) + Module._wrapper[<span class="number">1</span>]</span><br><span class="line">    <span class="comment">//执行包装后的方法 把js文件中的导出引入module的exports中</span></span><br><span class="line">    <span class="comment">//模块中的this === module.exports === &#123;&#125;  exports也只是module.exports的别名</span></span><br><span class="line">    vm.runInThisContext(fn).call(<span class="built_in">module</span>.exports,<span class="built_in">module</span>.exports,req,<span class="built_in">module</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">module</span>.exports</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">'.json'</span>: <span class="function"><span class="keyword">function</span>(<span class="params">module</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(fs.readFileSync(<span class="built_in">module</span>.id,<span class="string">'utf8'</span>))</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">'.node'</span>: <span class="string">'xxx'</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以绝对路径为key存储一个module</span></span><br><span class="line">Module._catcheModule = &#123;&#125;</span><br><span class="line"><span class="comment">// 解析绝对路径的方法，返回一个绝对路径</span></span><br><span class="line">Module._resolveFileName = <span class="function"><span class="keyword">function</span>(<span class="params">moduleId</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> p = path.resolve(moduleId)</span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    fs.accessSync(p)      </span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line">  &#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//对象中所有的key做成一个数组[]</span></span><br><span class="line">  <span class="keyword">let</span> arr = <span class="built_in">Object</span>.keys(Module._extensions)</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;arr.length;i++)&#123;</span><br><span class="line">    <span class="keyword">let</span> file = p+arr[i]</span><br><span class="line">    <span class="comment">//因为整个模块读取是个同步过程，所以得用sync，这里判断有没有这个文件存在</span></span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">      fs.accessSync(file)      </span><br><span class="line">      <span class="keyword">return</span> file</span><br><span class="line">    &#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(e)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//require方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">req</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 解析绝对路径的方法，返回一个绝对路径</span></span><br><span class="line">  <span class="keyword">let</span> p = Module._resolveFileName(moduleId)</span><br><span class="line">  <span class="comment">// 查看是否有缓存</span></span><br><span class="line">  <span class="keyword">if</span>(Module._catcheModule[p])&#123;</span><br><span class="line">    <span class="comment">//模块已存在</span></span><br><span class="line">    <span class="keyword">return</span> Module._catcheModule[p].exports</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//没有缓存就生成一个</span></span><br><span class="line">  <span class="keyword">let</span> <span class="built_in">module</span> = <span class="keyword">new</span> Module(p)</span><br><span class="line">  Module._catcheModule[p] = <span class="built_in">module</span></span><br><span class="line">  <span class="comment">//加载模块</span></span><br><span class="line">  <span class="built_in">module</span>.exports = <span class="built_in">module</span>.load(p)</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">module</span>.exports</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考文章：<br><a href="https://juejin.im/post/5b67c342e51d45172832123d" target="_blank" rel="noopener">https://juejin.im/post/5b67c342e51d45172832123d</a></p>
+
       
     </div>
     
@@ -380,11 +451,11 @@
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/2019/03/19/[待完成]深入理解模块化/">理解模块化</a></p>
+  <p><span>本文标题:</span><a href="/2019/03/19/[待完成]深入理解模块化/">深入理解模块化</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
   <p><span>发布时间:</span>2019年03月19日 - 19:03</p>
-  <p><span>最后更新:</span>2019年03月19日 - 19:03</p>
-  <p><span>原始链接:</span><a href="/2019/03/19/[待完成]深入理解模块化/" title="理解模块化">https://ilove-coding.github.io/2019/03/19/[待完成]深入理解模块化/</a>
+  <p><span>最后更新:</span>2019年04月18日 - 17:04</p>
+  <p><span>原始链接:</span><a href="/2019/03/19/[待完成]深入理解模块化/" title="深入理解模块化">https://ilove-coding.github.io/2019/03/19/[待完成]深入理解模块化/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2019/03/19/[待完成]深入理解模块化/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
@@ -448,6 +519,12 @@
 
 </div>
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js笔记/" rel="tag"><i class="fa fa-tag"></i> js笔记</a>
+          
+        </div>
       
 
       
@@ -533,8 +610,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -647,6 +733,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是模块化"><span class="nav-number">1.</span> <span class="nav-text">什么是模块化?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块化规范"><span class="nav-number">2.</span> <span class="nav-text">模块化规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CommonJS-文件即模块"><span class="nav-number">3.</span> <span class="nav-text">CommonJS 文件即模块</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
