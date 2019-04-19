@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "45775042"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="axios源码笔记," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="潼潼爱coding" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="仓库地址：https://github.com/axios/axios  Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。 axios功能 在浏览器环境创建 XMLHttpRequests 在 node.js 创建 http 请求 支持promise API 拦截请求和响应 转换请求数据和响应数据 取消请求 自动转换 JSON 数据 客户端支持防御">
+<meta name="keywords" content="axios源码笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="axios源码阅读笔记">
+<meta property="og:url" content="https://ilove-coding.github.io/2019/04/15/axios源码阅读笔记/index.html">
+<meta property="og:site_name" content="潼潼爱coding">
+<meta property="og:description" content="仓库地址：https://github.com/axios/axios  Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。 axios功能 在浏览器环境创建 XMLHttpRequests 在 node.js 创建 http 请求 支持promise API 拦截请求和响应 转换请求数据和响应数据 取消请求 自动转换 JSON 数据 客户端支持防御">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-19T12:32:15.728Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="axios源码阅读笔记">
+<meta name="twitter:description" content="仓库地址：https://github.com/axios/axios  Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。 axios功能 在浏览器环境创建 XMLHttpRequests 在 node.js 创建 http 请求 支持promise API 拦截请求和响应 转换请求数据和响应数据 取消请求 自动转换 JSON 数据 客户端支持防御">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ilove-coding.github.io/2019/04/15/axios源码阅读笔记/"/>
+
+
+
+
+
+
+  <title>axios源码阅读笔记 | 潼潼爱coding</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/iLove-Coding"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">潼潼爱coding</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端开发小迷妹~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/15/axios源码阅读笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tongtong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="潼潼爱coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">axios源码阅读笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-15T17:17:07+08:00">
+                2019-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/axios源码笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">axios源码笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>仓库地址：<a href="https://github.com/axios/axios" target="_blank" rel="noopener">https://github.com/axios/axios</a></p>
+</blockquote>
+<p>Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。</p>
+<h3 id="axios功能"><a href="#axios功能" class="headerlink" title="axios功能"></a>axios功能</h3><ul>
+<li>在浏览器环境创建 XMLHttpRequests</li>
+<li>在 node.js 创建 http 请求</li>
+<li>支持promise API</li>
+<li>拦截请求和响应</li>
+<li>转换请求数据和响应数据</li>
+<li>取消请求</li>
+<li>自动转换 JSON 数据</li>
+<li>客户端支持防御 XSRF</li>
+</ul>
+<p>通过源码来理清这些功能的实现原理</p>
+<h3 id="axios使用"><a href="#axios使用" class="headerlink" title="axios使用"></a>axios使用</h3><p>中文说明文档： <a href="https://www.kancloud.cn/yunye/axios/234845" target="_blank" rel="noopener">https://www.kancloud.cn/yunye/axios/234845</a></p>
+<p>执行get请求:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为给定 ID 的 user 创建请求</span></span><br><span class="line">axios.get(<span class="string">'/user?ID=12345'</span>)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(response);</span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(error);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可选地，上面的请求可以这样做</span></span><br><span class="line">axios.get(<span class="string">'/user'</span>, &#123;</span><br><span class="line">    params: &#123;</span><br><span class="line">      ID: <span class="number">12345</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(response);</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(error);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>指向post请求:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">axios.post(<span class="string">'/user'</span>, &#123;</span><br><span class="line">    firstName: <span class="string">'Fred'</span>,</span><br><span class="line">    lastName: <span class="string">'Flintstone'</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(response);</span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(error);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="源码阅读笔记"><a href="#源码阅读笔记" class="headerlink" title="源码阅读笔记"></a>源码阅读笔记</h3><p><strong>1.axios/lib/axios.js</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> utils = <span class="built_in">require</span>(<span class="string">'./utils'</span>);</span><br><span class="line"><span class="keyword">var</span> bind = <span class="built_in">require</span>(<span class="string">'./helpers/bind'</span>);</span><br><span class="line"><span class="keyword">var</span> Axios = <span class="built_in">require</span>(<span class="string">'./core/Axios'</span>);</span><br><span class="line"><span class="keyword">var</span> defaults = <span class="built_in">require</span>(<span class="string">'./defaults'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Create an instance of Axios</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createInstance</span>(<span class="params">defaultConfig</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 实例化 Axios</span></span><br><span class="line">  <span class="keyword">var</span> context = <span class="keyword">new</span> Axios(defaultConfig);</span><br><span class="line">  <span class="comment">// 自定义bind方法，返回一个函数（）=&gt; &#123;Axios.prototype.request.apply(context,args)&#125;</span></span><br><span class="line">  <span class="keyword">var</span> instance = bind(Axios.prototype.request, context);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Copy axios.prototype to instance</span></span><br><span class="line">  utils.extend(instance, Axios.prototype, context);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Copy context to instance</span></span><br><span class="line">  utils.extend(instance, context);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> instance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create the default instance to be exported</span></span><br><span class="line"><span class="keyword">var</span> axios = createInstance(defaults);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Expose Axios class to allow class inheritance</span></span><br><span class="line">axios.Axios = Axios;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Factory for creating new instances</span></span><br><span class="line">axios.create = <span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params">instanceConfig</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> createInstance(utils.merge(defaults, instanceConfig));</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Expose Cancel &amp; CancelToken</span></span><br><span class="line">axios.Cancel = <span class="built_in">require</span>(<span class="string">'./cancel/Cancel'</span>);</span><br><span class="line">axios.CancelToken = <span class="built_in">require</span>(<span class="string">'./cancel/CancelToken'</span>);</span><br><span class="line">axios.isCancel = <span class="built_in">require</span>(<span class="string">'./cancel/isCancel'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Expose all/spread</span></span><br><span class="line">axios.all = <span class="function"><span class="keyword">function</span> <span class="title">all</span>(<span class="params">promises</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.all(promises);</span><br><span class="line">&#125;;</span><br><span class="line">axios.spread = <span class="built_in">require</span>(<span class="string">'./helpers/spread'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = axios;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Allow use of default import syntax in TypeScript</span></span><br><span class="line"><span class="built_in">module</span>.exports.default = axios;</span><br></pre></td></tr></table></figure>
+<p>**2.axios/lib/util.js方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// Object.prototype.toString.call(val) === '[object Array]'</span></span><br><span class="line">  isArray: isArray,</span><br><span class="line">  <span class="comment">// Object.prototype.toString.call(val) === '[object ArrayBuffer]'</span></span><br><span class="line">  isArrayBuffer: isArrayBuffer,</span><br><span class="line">  isBuffer: isBuffer,</span><br><span class="line">  isFormData: isFormData,</span><br><span class="line">  isArrayBufferView: isArrayBufferView,</span><br><span class="line">  <span class="comment">// typeof val === 'string'</span></span><br><span class="line">  isString: isString,</span><br><span class="line">  <span class="comment">// typeof val === 'number'</span></span><br><span class="line">  isNumber: isNumber,</span><br><span class="line">  <span class="comment">// val !== null &amp;&amp; typeof val === 'object'</span></span><br><span class="line">  isObject: isObject,</span><br><span class="line">  <span class="comment">// typeof val === 'undefined'</span></span><br><span class="line">  isUndefined: isUndefined,</span><br><span class="line">  <span class="comment">// Object.prototype.toString.call(val) === '[object Date]'</span></span><br><span class="line">  isDate: isDate,</span><br><span class="line">  <span class="comment">// Object.prototype.toString.call(val) === '[object File]'</span></span><br><span class="line">  isFile: isFile,</span><br><span class="line">  <span class="comment">// Object.prototype.toString.call(val) === '[object Blob]'</span></span><br><span class="line">  isBlob: isBlob,</span><br><span class="line">    <span class="comment">// Object.prototype.toString.call(val) === '[object Function]'</span></span><br><span class="line">  isFunction: isFunction,</span><br><span class="line">  <span class="comment">// isObject(val) &amp;&amp; isFunction(val.pipe)</span></span><br><span class="line">  isStream: isStream,</span><br><span class="line">  <span class="comment">// typeof URLSearchParams !== 'undefined' &amp;&amp; val instanceof URLSearchParams;</span></span><br><span class="line">  isURLSearchParams: isURLSearchParams,</span><br><span class="line">  <span class="comment">// </span></span><br><span class="line">  isStandardBrowserEnv: isStandardBrowserEnv,</span><br><span class="line">  forEach: forEach,</span><br><span class="line">  merge: merge,</span><br><span class="line">  extend: extend,</span><br><span class="line">  <span class="comment">// str.replace(/^\s*/, '').replace(/\s*$/, '');</span></span><br><span class="line">  trim: trim</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>is开头的isXxx方法名 都是判断是否是 Xxx 类型</p>
+<p>extend 将 b 里面的属性和方法继承给 a , 并且将 b 里面的方法的执行上个下文都绑定到 thisArg</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">extend</span>(<span class="params">a, b, thisArg</span>) </span>&#123;</span><br><span class="line">  forEach(b, <span class="function"><span class="keyword">function</span> <span class="title">assignValue</span>(<span class="params">val, key</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (thisArg &amp;&amp; <span class="keyword">typeof</span> val === <span class="string">'function'</span>) &#123;</span><br><span class="line">      a[key] = bind(val, thisArg);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      a[key] = val;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>extent中有个bind方法，在axios/lib/helpers/bind.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> <span class="title">bind</span>(<span class="params">fn, thisArg</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">wrap</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> args = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; args.length; i++) &#123;</span><br><span class="line">      args[i] = <span class="built_in">arguments</span>[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fn.apply(thisArg, args);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>自定义 forEach 方法支持遍历基本数据，数组，对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">forEach</span>(<span class="params">obj, fn</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Don't bother if no value provided</span></span><br><span class="line">  <span class="keyword">if</span> (obj === <span class="literal">null</span> || <span class="keyword">typeof</span> obj === <span class="string">'undefined'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Force an array if not already something iterable</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> obj !== <span class="string">'object'</span>) &#123;</span><br><span class="line">    <span class="comment">/*eslint no-param-reassign:0*/</span></span><br><span class="line">    obj = [obj];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isArray(obj)) &#123;</span><br><span class="line">    <span class="comment">// Iterate over array values</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = obj.length; i &lt; l; i++) &#123;</span><br><span class="line">      fn.call(<span class="literal">null</span>, obj[i], i, obj);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// Iterate over object keys</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.hasOwnProperty.call(obj, key)) &#123;</span><br><span class="line">        fn.call(<span class="literal">null</span>, obj[key], key, obj);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>merge 合并对象的属性，相同属性后面的替换前的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params"><span class="regexp">/* obj1, obj2, obj3, ... */</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> result = &#123;&#125;;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">assignValue</span>(<span class="params">val, key</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> result[key] === <span class="string">'object'</span> &amp;&amp; <span class="keyword">typeof</span> val === <span class="string">'object'</span>) &#123;</span><br><span class="line">      result[key] = merge(result[key], val);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      result[key] = val;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = <span class="built_in">arguments</span>.length; i &lt; l; i++) &#123;</span><br><span class="line">    forEach(<span class="built_in">arguments</span>[i], assignValue);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>回看上面的重点方法 createInstance</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createInstance</span>(<span class="params">defaultConfig</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 实例化 Axios</span></span><br><span class="line">  <span class="keyword">var</span> context = <span class="keyword">new</span> Axios(defaultConfig);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 将 Axios.prototype.request 的执行上下文绑定到 context</span></span><br><span class="line">    <span class="comment">// bind 方法返回的是一个函数</span></span><br><span class="line">  <span class="keyword">var</span> instance = bind(Axios.prototype.request, context);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 将 Axios.prototype 上的所有方法的执行上下文绑定到 context , 并且继承给 instance</span></span><br><span class="line">  utils.extend(instance, Axios.prototype, context);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 将 context 继承给 instance</span></span><br><span class="line">  utils.extend(instance, context);</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">return</span> instance;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 传入一个默认配置  </span></span><br><span class="line"><span class="keyword">var</span> axios = createInstance(defaults);</span><br></pre></td></tr></table></figure>
+<p>createInstance 函数返回了一个函数 instance.</p>
+<ul>
+<li>instance 是一个函数 Axios.prototype.request 且执行上下文绑定到 context。</li>
+<li>instance 里面还有 Axios.prototype 上面的所有方法，并且这些方法的执行上下文也绑定到 context。</li>
+<li>instance 里面还有 context 上的方法。</li>
+</ul>
+<p><strong>2.axios/lib/core/Axios.js</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> defaults = <span class="built_in">require</span>(<span class="string">'./../defaults'</span>);</span><br><span class="line"><span class="keyword">var</span> utils = <span class="built_in">require</span>(<span class="string">'./../utils'</span>);</span><br><span class="line"><span class="keyword">var</span> InterceptorManager = <span class="built_in">require</span>(<span class="string">'./InterceptorManager'</span>);</span><br><span class="line"><span class="keyword">var</span> dispatchRequest = <span class="built_in">require</span>(<span class="string">'./dispatchRequest'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Create a new instance of Axios</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Axios</span>(<span class="params">instanceConfig</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.defaults = instanceConfig;</span><br><span class="line">  <span class="keyword">this</span>.interceptors = &#123;</span><br><span class="line">    request: <span class="keyword">new</span> InterceptorManager(),</span><br><span class="line">    response: <span class="keyword">new</span> InterceptorManager()</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Dispatch a request</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Axios.prototype.request = <span class="function"><span class="keyword">function</span> <span class="title">request</span>(<span class="params">config</span>) </span>&#123;</span><br><span class="line"> <span class="comment">// 核心方法 request</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 给 Axios.prototype 上面增加 delete,get,head,options 方法</span></span><br><span class="line"><span class="comment">// 这样就可以使用 axios.get(), axios.post() 等等方法</span></span><br><span class="line">utils.forEach([<span class="string">'delete'</span>, <span class="string">'get'</span>, <span class="string">'head'</span>, <span class="string">'options'</span>], <span class="function"><span class="keyword">function</span> <span class="title">forEachMethodNoData</span>(<span class="params">method</span>) </span>&#123;</span><br><span class="line">  <span class="comment">/*eslint func-names:0*/</span></span><br><span class="line">  Axios.prototype[method] = <span class="function"><span class="keyword">function</span>(<span class="params">url, config</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.request(utils.merge(config || &#123;&#125;, &#123;</span><br><span class="line">      method: method,</span><br><span class="line">      url: url</span><br><span class="line">    &#125;));</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">utils.forEach([<span class="string">'post'</span>, <span class="string">'put'</span>, <span class="string">'patch'</span>], <span class="function"><span class="keyword">function</span> <span class="title">forEachMethodWithData</span>(<span class="params">method</span>) </span>&#123;</span><br><span class="line">  <span class="comment">/*eslint func-names:0*/</span></span><br><span class="line">  Axios.prototype[method] = <span class="function"><span class="keyword">function</span>(<span class="params">url, data, config</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.request(utils.merge(config || &#123;&#125;, &#123;</span><br><span class="line">      method: method,</span><br><span class="line">      url: url,</span><br><span class="line">      data: data</span><br><span class="line">    &#125;));</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = Axios;</span><br></pre></td></tr></table></figure>
+<p>上面的所有的方法都是通过调用了 this.request 方法，使用到了 Promise 的链式调用，也使用到了中间件的思想。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Axios</span>(<span class="params">instanceConfig</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.defaults = instanceConfig;</span><br><span class="line">  <span class="keyword">this</span>.interceptors = &#123;</span><br><span class="line">    request: <span class="keyword">new</span> InterceptorManager(),</span><br><span class="line">    response: <span class="keyword">new</span> InterceptorManager()</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Axios.prototype.request = <span class="function"><span class="keyword">function</span> <span class="title">request</span>(<span class="params">config</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Allow for axios('example/url'[, config]) a la fetch API</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> config === <span class="string">'string'</span>) &#123;</span><br><span class="line">    config = utils.merge(&#123;</span><br><span class="line">      url: <span class="built_in">arguments</span>[<span class="number">0</span>]</span><br><span class="line">    &#125;, <span class="built_in">arguments</span>[<span class="number">1</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 合并配置，请求方式，没有默认为 get</span></span><br><span class="line">  config = utils.merge(defaults, &#123;<span class="attr">method</span>: <span class="string">'get'</span>&#125;, <span class="keyword">this</span>.defaults, config);</span><br><span class="line">  config.method = config.method.toLowerCase();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 重点 这个就是拦截器的中间件</span></span><br><span class="line">  <span class="keyword">var</span> chain = [dispatchRequest, <span class="literal">undefined</span>];</span><br><span class="line">  <span class="comment">// 生成一个 promise 对象</span></span><br><span class="line">  <span class="keyword">var</span> promise = <span class="built_in">Promise</span>.resolve(config);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将请求前方法置入 chain 数组的前面 一次置入两个 成功的，失败的，注意forEach是在InterceptorManager.prototype上添加的</span></span><br><span class="line">  <span class="keyword">this</span>.interceptors.request.forEach(<span class="function"><span class="keyword">function</span> <span class="title">unshiftRequestInterceptors</span>(<span class="params">interceptor</span>) </span>&#123;</span><br><span class="line">    chain.unshift(interceptor.fulfilled, interceptor.rejected);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// // 将请求后的方法置入 chain 数组的后面 一次置入两个 成功的，失败的</span></span><br><span class="line">  <span class="keyword">this</span>.interceptors.response.forEach(<span class="function"><span class="keyword">function</span> <span class="title">pushResponseInterceptors</span>(<span class="params">interceptor</span>) </span>&#123;</span><br><span class="line">    chain.push(interceptor.fulfilled, interceptor.rejected);</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 通过 shift 方法把第一个元素从其中删除，并返回第一个元素。</span></span><br><span class="line">  <span class="keyword">while</span> (chain.length) &#123;</span><br><span class="line">    promise = promise.then(chain.shift(), chain.shift());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> promise;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>拦截器的作用就是在请求或响应被 then 或 catch 处理前拦截它们，大致用法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加请求拦截器</span></span><br><span class="line">axios.interceptors.request.use(<span class="function"><span class="keyword">function</span> (<span class="params">config</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 在发送请求之前做些什么</span></span><br><span class="line">    <span class="keyword">return</span> config;</span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 对请求错误做些什么</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加响应拦截器</span></span><br><span class="line">axios.interceptors.response.use(<span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 对响应数据做点什么</span></span><br><span class="line">    <span class="keyword">return</span> response;</span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 对响应错误做点什么</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>通过 promise 链式调用一个一个函数，这个函数就是 chain 数组里面的方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始的 chain 数组 dispatchRequest 是发送请求的方法</span></span><br><span class="line"><span class="keyword">var</span> chain = [dispatchRequest, <span class="literal">undefined</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 然后 遍历 interceptors </span></span><br><span class="line"><span class="comment">// 现在只要理解他是遍历给 chain 里面追加两个方法就可以</span></span><br><span class="line">  <span class="keyword">this</span>.interceptors.request.forEach(<span class="function"><span class="keyword">function</span> <span class="title">unshiftRequestInterceptors</span>(<span class="params">interceptor</span>) </span>&#123;</span><br><span class="line">    chain.unshift(interceptor.fulfilled, interceptor.rejected);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.interceptors.response.forEach(<span class="function"><span class="keyword">function</span> <span class="title">pushResponseInterceptors</span>(<span class="params">interceptor</span>) </span>&#123;</span><br><span class="line">    chain.push(interceptor.fulfilled, interceptor.rejected);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>chain是一个执行队列。这个队列的初始值，是一个带有config参数的Promise</li>
+<li>在chain执行队列中，插入了初始的发送请求的函数dispatchReqeust和与之对应的undefined。后面需要增加一个undefined是因为在Promise中，需要一个success和一个fail的回调函数，这个从代码promise = promise.then(chain.shift(), chain.shift());就能够看出来。因此，dispatchReqeust和undefined我们可以成为一对函数。</li>
+<li>在chain执行队列中，发送请求的函数dispatchReqeust是处于中间的位置。它的前面是请求拦截器，通过unshift方法放入；它的后面是响应拦截器，通过push放入。要注意的是，这些函数都是成对的放入，也就是一次放入两个。</li>
+</ul>
+<p><strong>3.axios/lib/core/InterceptorManager.js</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> utils = <span class="built_in">require</span>(<span class="string">'./../utils'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">InterceptorManager</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 存放方法的数组</span></span><br><span class="line">  <span class="keyword">this</span>.handlers = [];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 use 方法来添加拦截方法</span></span><br><span class="line">InterceptorManager.prototype.use = <span class="function"><span class="keyword">function</span> <span class="title">use</span>(<span class="params">fulfilled, rejected</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.handlers.push(&#123;</span><br><span class="line">    fulfilled: fulfilled,</span><br><span class="line">    rejected: rejected</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.handlers.length - <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 eject 方法来删除拦截方法</span></span><br><span class="line">InterceptorManager.prototype.eject = <span class="function"><span class="keyword">function</span> <span class="title">eject</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.handlers[id]) &#123;</span><br><span class="line">    <span class="keyword">this</span>.handlers[id] = <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加一个 forEach 方法，这就是上述说的 forEach</span></span><br><span class="line">InterceptorManager.prototype.forEach = <span class="function"><span class="keyword">function</span> <span class="title">forEach</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 里面还是依旧使用了 utils 的 forEach，不要纠结这些 forEach 的具体代码</span></span><br><span class="line">  utils.forEach(<span class="keyword">this</span>.handlers, <span class="function"><span class="keyword">function</span> <span class="title">forEachHandler</span>(<span class="params">h</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (h !== <span class="literal">null</span>) &#123;</span><br><span class="line">      fn(h);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = InterceptorManager;</span><br></pre></td></tr></table></figure>
+<p><strong>4.axios/lib/core/dispatchRequest.js</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> utils = <span class="built_in">require</span>(<span class="string">'./../utils'</span>);</span><br><span class="line"><span class="keyword">var</span> transformData = <span class="built_in">require</span>(<span class="string">'./transformData'</span>);</span><br><span class="line"><span class="keyword">var</span> isCancel = <span class="built_in">require</span>(<span class="string">'../cancel/isCancel'</span>);</span><br><span class="line"><span class="keyword">var</span> defaults = <span class="built_in">require</span>(<span class="string">'../defaults'</span>);</span><br><span class="line"><span class="keyword">var</span> isAbsoluteURL = <span class="built_in">require</span>(<span class="string">'./../helpers/isAbsoluteURL'</span>);</span><br><span class="line"><span class="keyword">var</span> combineURLs = <span class="built_in">require</span>(<span class="string">'./../helpers/combineURLs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 取消请求的方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throwIfCancellationRequested</span>(<span class="params">config</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (config.cancelToken) &#123;</span><br><span class="line">    config.cancelToken.throwIfRequested();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> <span class="title">dispatchRequest</span>(<span class="params">config</span>) </span>&#123;</span><br><span class="line">  throwIfCancellationRequested(config);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//如果请求没有取消，执行请求逻辑</span></span><br><span class="line">  <span class="keyword">if</span> (config.baseURL &amp;&amp; !isAbsoluteURL(config.url)) &#123;</span><br><span class="line">    config.url = combineURLs(config.baseURL, config.url);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Ensure headers exist</span></span><br><span class="line">  config.headers = config.headers || &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 转换数据</span></span><br><span class="line">  config.data = transformData(</span><br><span class="line">    config.data,</span><br><span class="line">    config.headers,</span><br><span class="line">    config.transformRequest</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 合并配置</span></span><br><span class="line">  config.headers = utils.merge(</span><br><span class="line">    config.headers.common || &#123;&#125;,</span><br><span class="line">    config.headers[config.method] || &#123;&#125;,</span><br><span class="line">    config.headers || &#123;&#125;</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  utils.forEach(</span><br><span class="line">    [<span class="string">'delete'</span>, <span class="string">'get'</span>, <span class="string">'head'</span>, <span class="string">'post'</span>, <span class="string">'put'</span>, <span class="string">'patch'</span>, <span class="string">'common'</span>],</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">cleanHeaderConfig</span>(<span class="params">method</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">delete</span> config.headers[method];</span><br><span class="line">    &#125;</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取请求的方式，重点！</span></span><br><span class="line">  <span class="keyword">var</span> adapter = config.adapter || defaults.adapter;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> adapter(config).then(<span class="function"><span class="keyword">function</span> <span class="title">onAdapterResolution</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">    throwIfCancellationRequested(config);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 转换响应数据</span></span><br><span class="line">    response.data = transformData(</span><br><span class="line">      response.data,</span><br><span class="line">      response.headers,</span><br><span class="line">      config.transformResponse</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> response;</span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span> <span class="title">onAdapterRejection</span>(<span class="params">reason</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 失败处理</span></span><br><span class="line">    <span class="keyword">if</span> (!isCancel(reason)) &#123;</span><br><span class="line">      throwIfCancellationRequested(config);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Transform response data</span></span><br><span class="line">      <span class="keyword">if</span> (reason &amp;&amp; reason.response) &#123;</span><br><span class="line">        reason.response.data = transformData(</span><br><span class="line">          reason.response.data,</span><br><span class="line">          reason.response.headers,</span><br><span class="line">          config.transformResponse</span><br><span class="line">        );</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(reason);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在最开始实例化 createInstance 方法中我们传入的 defaults是什么？</p>
+<p><strong>5.axios/lib/defaults.js</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> utils = <span class="built_in">require</span>(<span class="string">'./utils'</span>);</span><br><span class="line"><span class="keyword">var</span> normalizeHeaderName = <span class="built_in">require</span>(<span class="string">'./helpers/normalizeHeaderName'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> DEFAULT_CONTENT_TYPE = &#123;</span><br><span class="line">  <span class="string">'Content-Type'</span>: <span class="string">'application/x-www-form-urlencoded'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setContentTypeIfUnset</span>(<span class="params">headers, value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!utils.isUndefined(headers) &amp;&amp; utils.isUndefined(headers[<span class="string">'Content-Type'</span>])) &#123;</span><br><span class="line">    headers[<span class="string">'Content-Type'</span>] = value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getDefaultAdapter 方法是来获取请求的方式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getDefaultAdapter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> adapter;</span><br><span class="line">  <span class="comment">// 如果是浏览器就用 XMLHttpRequest</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> XMLHttpRequest !== <span class="string">'undefined'</span>) &#123;</span><br><span class="line">    adapter = <span class="built_in">require</span>(<span class="string">'./adapters/xhr'</span>);</span><br><span class="line">     <span class="comment">// process 是 node 环境的全局变量</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> process !== <span class="string">'undefined'</span>) &#123;</span><br><span class="line">    <span class="comment">// 如果是 node 环境那么久通过 node http 的请求方法</span></span><br><span class="line">    adapter = <span class="built_in">require</span>(<span class="string">'./adapters/http'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> adapter;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> defaults = &#123;</span><br><span class="line">  <span class="comment">// adapter 就是请求的方法</span></span><br><span class="line">  adapter: getDefaultAdapter(),</span><br><span class="line">  <span class="comment">// 下面一些请求头，转换数据，请求,详情的数据</span></span><br><span class="line">  <span class="comment">// 这也就是为什么我们可以直接拿到请求的数据时一个对象，如果用 ajax 我们拿到的都是 jSON 格式的字符串</span></span><br><span class="line">  <span class="comment">// 然后每次都通过 JSON.stringify（data）来处理结果。</span></span><br><span class="line">  transformRequest: [<span class="function"><span class="keyword">function</span> <span class="title">transformRequest</span>(<span class="params">data, headers</span>) </span>&#123;</span><br><span class="line">    normalizeHeaderName(headers, <span class="string">'Content-Type'</span>);</span><br><span class="line">    <span class="keyword">if</span> (utils.isFormData(data) ||</span><br><span class="line">      utils.isArrayBuffer(data) ||</span><br><span class="line">      utils.isBuffer(data) ||</span><br><span class="line">      utils.isStream(data) ||</span><br><span class="line">      utils.isFile(data) ||</span><br><span class="line">      utils.isBlob(data)</span><br><span class="line">    ) &#123;</span><br><span class="line">      <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (utils.isArrayBufferView(data)) &#123;</span><br><span class="line">      <span class="keyword">return</span> data.buffer;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (utils.isURLSearchParams(data)) &#123;</span><br><span class="line">      setContentTypeIfUnset(headers, <span class="string">'application/x-www-form-urlencoded;charset=utf-8'</span>);</span><br><span class="line">      <span class="keyword">return</span> data.toString();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (utils.isObject(data)) &#123;</span><br><span class="line">      setContentTypeIfUnset(headers, <span class="string">'application/json;charset=utf-8'</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">JSON</span>.stringify(data);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">  &#125;],</span><br><span class="line"></span><br><span class="line">  transformResponse: [<span class="function"><span class="keyword">function</span> <span class="title">transformResponse</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="comment">/*eslint no-param-reassign:0*/</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> data === <span class="string">'string'</span>) &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        data = <span class="built_in">JSON</span>.parse(data);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (e) &#123; <span class="comment">/* Ignore */</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">  &#125;],</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * A timeout in milliseconds to abort a request. If set to 0 (default) a</span></span><br><span class="line"><span class="comment">   * timeout is not created.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  timeout: <span class="number">0</span>,</span><br><span class="line"></span><br><span class="line">  xsrfCookieName: <span class="string">'XSRF-TOKEN'</span>,</span><br><span class="line">  xsrfHeaderName: <span class="string">'X-XSRF-TOKEN'</span>,</span><br><span class="line"></span><br><span class="line">  maxContentLength: <span class="number">-1</span>,</span><br><span class="line"></span><br><span class="line">  validateStatus: <span class="function"><span class="keyword">function</span> <span class="title">validateStatus</span>(<span class="params">status</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> status &gt;= <span class="number">200</span> &amp;&amp; status &lt; <span class="number">300</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">defaults.headers = &#123;</span><br><span class="line">  common: &#123;</span><br><span class="line">    <span class="string">'Accept'</span>: <span class="string">'application/json, text/plain, */*'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">utils.forEach([<span class="string">'delete'</span>, <span class="string">'get'</span>, <span class="string">'head'</span>], <span class="function"><span class="keyword">function</span> <span class="title">forEachMethodNoData</span>(<span class="params">method</span>) </span>&#123;</span><br><span class="line">  defaults.headers[method] = &#123;&#125;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">utils.forEach([<span class="string">'post'</span>, <span class="string">'put'</span>, <span class="string">'patch'</span>], <span class="function"><span class="keyword">function</span> <span class="title">forEachMethodWithData</span>(<span class="params">method</span>) </span>&#123;</span><br><span class="line">  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = defaults;</span><br></pre></td></tr></table></figure>
+<p>6.axios/lib/cancel</p>
+<p>取消http请求:在完成搜索相关的功能时，我们经常会需要频繁的发送请求来进行数据查询的情况。通常来说，我们在下一次请求发送时，就需要取消上一次请求。因此，取消请求相关的功能也是一个优点。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CancelToken = axios.CancelToken;</span><br><span class="line"><span class="keyword">const</span> source = CancelToken.source();</span><br><span class="line"></span><br><span class="line">axios.get(<span class="string">'/user/12345'</span>, &#123;</span><br><span class="line">  cancelToken: source.token</span><br><span class="line">&#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">thrown</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (axios.isCancel(thrown)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Request canceled'</span>, thrown.message);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// handle error</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">axios.post(<span class="string">'/user/12345'</span>, &#123;</span><br><span class="line">  name: <span class="string">'new name'</span></span><br><span class="line">&#125;, &#123;</span><br><span class="line">  cancelToken: source.token</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// cancel the request (the message parameter is optional)</span></span><br><span class="line">source.cancel(<span class="string">'Operation canceled by the user.'</span>);</span><br></pre></td></tr></table></figure>
+<p>首先是元数据Cancel类，它是用来记录取消状态一个类</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * A `Cancel` is an object that is thrown when an operation is canceled.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Cancel</span>(<span class="params">message</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.message = message;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Cancel.prototype.toString = <span class="function"><span class="keyword">function</span> <span class="title">toString</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'Cancel'</span> + (<span class="keyword">this</span>.message ? <span class="string">': '</span> + <span class="keyword">this</span>.message : <span class="string">''</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Cancel.prototype.__CANCEL__ = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = Cancel;</span><br></pre></td></tr></table></figure>
+<p>在CancelToken类中，它通过传递一个Promise的方法来实现了HTTP请求取消</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Cancel = <span class="built_in">require</span>(<span class="string">'./Cancel'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * A `CancelToken` is an object that can be used to request cancellation of an operation.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">CancelToken</span>(<span class="params">executor</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> executor !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'executor must be a function.'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> resolvePromise;</span><br><span class="line">  <span class="keyword">this</span>.promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> <span class="title">promiseExecutor</span>(<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">    resolvePromise = resolve;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> token = <span class="keyword">this</span>;</span><br><span class="line">  executor(<span class="function"><span class="keyword">function</span> <span class="title">cancel</span>(<span class="params">message</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (token.reason) &#123;</span><br><span class="line">      <span class="comment">// Cancellation has already been requested</span></span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    token.reason = <span class="keyword">new</span> Cancel(message);</span><br><span class="line">    resolvePromise(token.reason);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Throws a `Cancel` if cancellation has been requested.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">CancelToken.prototype.throwIfRequested = <span class="function"><span class="keyword">function</span> <span class="title">throwIfRequested</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.reason) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">this</span>.reason;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 返回一个CancelToken类的实例token和一个函数cancel</span></span><br><span class="line"><span class="comment"> * cancels the `CancelToken`.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">CancelToken.source = <span class="function"><span class="keyword">function</span> <span class="title">source</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> cancel;</span><br><span class="line">  <span class="keyword">var</span> token = <span class="keyword">new</span> CancelToken(<span class="function"><span class="keyword">function</span> <span class="title">executor</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">    cancel = c;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    token: token,</span><br><span class="line">    cancel: cancel</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = CancelToken;</span><br></pre></td></tr></table></figure>
+<p>在adapter/xhr.js文件中，有与之相对应的取消请求的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (config.cancelToken) &#123;</span><br><span class="line">    <span class="comment">// 等待取消</span></span><br><span class="line">    config.cancelToken.promise.then(<span class="function"><span class="keyword">function</span> <span class="title">onCanceled</span>(<span class="params">cancel</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!request) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        request.abort();</span><br><span class="line">        reject(cancel);</span><br><span class="line">        <span class="comment">// 重置请求</span></span><br><span class="line">        request = <span class="literal">null</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结合代码总结实现逻辑如下：</p>
+<ol>
+<li>在可能需要取消的请求中，初始化时调用了source方法，这个方法返回了一个CancelToken类的实例A和一个函数cancel。</li>
+<li>在source方法返回实例A中，初始化了一个在pending状态的promise。将整个实例A传递给axios后，这个promise被用于做取消请求的触发器。</li>
+<li>当source方法返回的cancel方法被调用时，实例A中的promise状态由pending变成了fulfilled,立刻触发了then的回调函数，从而触发了axios的取消逻辑——request.abort()，非常巧妙～</li>
+</ol>
+<h3 id="axios的设计值的借鉴之处"><a href="#axios的设计值的借鉴之处" class="headerlink" title="axios的设计值的借鉴之处"></a>axios的设计值的借鉴之处</h3><ul>
+<li>发送请求函数的处理逻辑</li>
+</ul>
+<p>axios在处理发送请求的dispatchRequest函数时，没有当做一个特殊的函数来对待，而是采用一视同仁的方法，将其放在队列的中间位置，从而保证了队列处理的一致性，提高了代码的可阅读性。</p>
+<ul>
+<li>Adapter的处理逻辑</li>
+</ul>
+<p>在adapter的处理逻辑中，axios没有把http和xhr两个模块（一个用于Node.js发送请求，另一个则用于浏览器端发送请求）当成自身的模块直接在dispatchRequest中直接饮用，而是通过配置的方法在default.js文件中进行默认引入。这样既保证了两个模块间的低耦合性，同时又能够为今后用户需要自定义请求发送模块保留了余地。</p>
+<ul>
+<li>取消HTTP请求的处理逻辑</li>
+</ul>
+<p>在取消HTTP请求的逻辑中，axios巧妙的使用了一个Promise来作为触发器，将resolve函数通过callback中参数的形式传递到了外部。这样既能够保证内部逻辑的连贯性，也能够保证在需要进行取消请求时，不需要直接进行相关类的示例数据改动，最大程度上避免了侵入其他的模块。</p>
+<h3 id="彩蛋：如何取消上一个页面所有请求"><a href="#彩蛋：如何取消上一个页面所有请求" class="headerlink" title="彩蛋：如何取消上一个页面所有请求"></a>彩蛋：如何取消上一个页面所有请求</h3><p>SPA时代经常会遇到当前页面未加载完毕时跳转路由或者返回操作, 但是通过network会发现, 若网络环境较差的情况下, 会一直pending, 切换路由后在network中添加新的请求但是正在pending的请求依然存在. 当我们在项目中做了一个上拉加载分页的时候会一直加载中, 用户等待不耐烦后可能会主动触发返回操作, 但是此刻即使用户触发返回操作, 加载分页的请求还是存在, 页面还是会一直提示加载中, 直到该请求加载成功或超时才肯罢休</p>
+<p>实现的思路是将cancel放置于全局变量的数组中, 可以挂在至window对象上或Vue示例上</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">http.interceptors.request.use(<span class="function"><span class="keyword">function</span> (<span class="params">config</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 添加取消标记</span></span><br><span class="line">    config.cancelToken = <span class="keyword">new</span> axios.cancelToken(<span class="function"><span class="params">cancel</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">window</span>._axiosPromiseArr.push(&#123; cancel &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> config</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>在路由切换时进行操作</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">window</span>._axiosPromiseArr.forEach(<span class="function">(<span class="params">ele, index</span>) =&gt;</span> &#123;</span><br><span class="line">        ele.cancel()</span><br><span class="line">        <span class="keyword">delete</span> <span class="built_in">window</span>._axiosPromiseArr[index]</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>参考资料：<br><a href="https://juejin.im/post/5aedd4a2f265da0b9d781b85" target="_blank" rel="noopener">https://juejin.im/post/5aedd4a2f265da0b9d781b85</a><br>axios源码：<a href="https://github.com/axios/axios" target="_blank" rel="noopener">https://github.com/axios/axios</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/04/15/axios源码阅读笔记/">axios源码阅读笔记</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
+  <p><span>发布时间:</span>2019年04月15日 - 17:04</p>
+  <p><span>最后更新:</span>2019年04月19日 - 20:04</p>
+  <p><span>原始链接:</span><a href="/2019/04/15/axios源码阅读笔记/" title="axios源码阅读笔记">https://ilove-coding.github.io/2019/04/15/axios源码阅读笔记/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2019/04/15/axios源码阅读笔记/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+</div>
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/path/to/wechat-reward-image" alt="tongtong 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/path/to/alipay-reward-image" alt="tongtong 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+<div>
+
+  <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>-------------</div>
+    
+</div>
+
+</div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/axios源码笔记/" rel="tag"><i class="fa fa-tag"></i> axios源码笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/12/async函数理解与实现/" rel="next" title="async函数理解与实现">
+                <i class="fa fa-chevron-left"></i> async函数理解与实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/16/1-3深入探究Function与Object/" rel="prev" title="深入探究Function与Object">
+                深入探究Function与Object <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzQxNS85OTcx"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif"
+                alt="tongtong" />
+            
+              <p class="site-author-name" itemprop="name">tongtong</p>
+              <p class="site-description motion-element" itemprop="description">爱生活 爱学习</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/iLove-Coding" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/b210912af0f2" target="_blank" title="jianshu">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>jianshu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ife.baidu.com/" title="百度前端技术学院" target="_blank">百度前端技术学院</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://wf.uisdc.com/cn/" title="google前端开发基础" target="_blank">google前端开发基础</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.36zhen.com/t?id=3448" title="前端书籍资料" target="_blank">前端书籍资料</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#axios功能"><span class="nav-number">1.</span> <span class="nav-text">axios功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#axios使用"><span class="nav-number">2.</span> <span class="nav-text">axios使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码阅读笔记"><span class="nav-number">3.</span> <span class="nav-text">源码阅读笔记</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#axios的设计值的借鉴之处"><span class="nav-number">4.</span> <span class="nav-text">axios的设计值的借鉴之处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#彩蛋：如何取消上一个页面所有请求"><span class="nav-number">5.</span> <span class="nav-text">彩蛋：如何取消上一个页面所有请求</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongtong</span>
+
+  
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+-->
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
