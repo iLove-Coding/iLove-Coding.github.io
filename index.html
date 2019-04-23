@@ -265,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/21/[待完成]webpack3-代码分割/">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/23/webpack4笔记(4)-处理css/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tongtong">
@@ -284,7 +284,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/21/[待完成]webpack3-代码分割/" itemprop="url">webpack3-代码分割</a></h1>
+                <a class="post-title-link" href="/2019/04/23/webpack4笔记(4)-处理css/" itemprop="url">webpack4笔记(4)-处理css</a></h1>
         
 
         <div class="post-meta">
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-21T23:43:10+08:00">
-                2019-04-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-23T19:51:06+08:00">
+                2019-04-23
               </time>
             
 
@@ -306,6 +306,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">webpack笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -367,11 +389,16 @@
       
         
           
-          
-          
+          CSS基础处理webpack中关于css的处理用到两个loader：
+
+css-loader: 用于处理css文件中的@import和url(…)
+style-loader: 将css-loader的输出生成js中的函数调用将css动态添加到html文件中。
+
+1yarn add css-loade
+          ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/04/21/[待完成]webpack3-代码分割/#more" rel="contents">
+            <a class="btn" href="/2019/04/23/webpack4笔记(4)-处理css/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -427,7 +454,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/21/webpack4-环境分离/">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/21/webpack4笔记(3)-代码分割/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tongtong">
@@ -446,7 +473,197 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/21/webpack4-环境分离/" itemprop="url">webpack4-环境分离</a></h1>
+                <a class="post-title-link" href="/2019/04/21/webpack4笔记(3)-代码分割/" itemprop="url">webpack4笔记(3)-代码分割</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-21T23:43:10+08:00">
+                2019-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">webpack笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          为什么要代码分割？
+减少代码重复，比如在多页面的应用中，如果多个页面都同时引用了某些module的情况；
+支持缓存，比如第三方库通常是不会怎么变的，将他们单独抽离出来有利于浏览器缓存。
+
+什么情况下代码分割？
+入口文件，每个入口文件将有单独的一次代码分割
+使用SplitChunksPlugin插件;
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/21/webpack4笔记(3)-代码分割/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+    <div>
+      
+</div>
+
+    
+
+    
+<div>
+
+</div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/21/webpack4笔记(5)-环境分离/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tongtong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="潼潼爱coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/21/webpack4笔记(5)-环境分离/" itemprop="url">webpack4-环境分离</a></h1>
         
 
         <div class="post-meta">
@@ -555,7 +772,7 @@
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/04/21/webpack4-环境分离/#more" rel="contents">
+            <a class="btn" href="/2019/04/21/webpack4笔记(5)-环境分离/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -611,7 +828,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/20/webpack2-进阶知识/">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/20/webpack4笔记(2)-进阶知识/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tongtong">
@@ -630,7 +847,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/20/webpack2-进阶知识/" itemprop="url">webpack2-进阶</a></h1>
+                <a class="post-title-link" href="/2019/04/20/webpack4笔记(2)-进阶知识/" itemprop="url">webpack2-进阶</a></h1>
         
 
         <div class="post-meta">
@@ -740,7 +957,7 @@
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/04/20/webpack2-进阶知识/#more" rel="contents">
+            <a class="btn" href="/2019/04/20/webpack4笔记(2)-进阶知识/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -796,7 +1013,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/20/[待完成]webpack5-性能优化/">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/20/[待完成]webpack4笔记(6)-性能优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tongtong">
@@ -815,7 +1032,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/20/[待完成]webpack5-性能优化/" itemprop="url">webpack5-性能优化</a></h1>
+                <a class="post-title-link" href="/2019/04/20/[待完成]webpack4笔记(6)-性能优化/" itemprop="url">webpack5-性能优化</a></h1>
         
 
         <div class="post-meta">
@@ -924,7 +1141,7 @@
           
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/04/20/[待完成]webpack5-性能优化/#more" rel="contents">
+            <a class="btn" href="/2019/04/20/[待完成]webpack4笔记(6)-性能优化/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1349,7 +1566,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/16/[待完成]webpack6-原理/">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/16/[待完成]webpack4笔记(7)-原理实现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tongtong">
@@ -1368,7 +1585,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/16/[待完成]webpack6-原理/" itemprop="url">webpack6-原理</a></h1>
+                <a class="post-title-link" href="/2019/04/16/[待完成]webpack4笔记(7)-原理实现/" itemprop="url">webpack6-原理</a></h1>
         
 
         <div class="post-meta">
@@ -1455,7 +1672,7 @@
           
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/04/16/[待完成]webpack6-原理/#more" rel="contents">
+            <a class="btn" href="/2019/04/16/[待完成]webpack4笔记(7)-原理实现/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1511,7 +1728,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/16/webpack1-基础配置/">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/16/webpack4笔记(1)-基础配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tongtong">
@@ -1530,7 +1747,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/16/webpack1-基础配置/" itemprop="url">webpack1-基础配置</a></h1>
+                <a class="post-title-link" href="/2019/04/16/webpack4笔记(1)-基础配置/" itemprop="url">webpack1-基础配置</a></h1>
         
 
         <div class="post-meta">
@@ -1642,7 +1859,7 @@
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/04/16/webpack1-基础配置/#more" rel="contents">
+            <a class="btn" href="/2019/04/16/webpack4笔记(1)-基础配置/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1847,168 +2064,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/16/[待完成]Diff算法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tongtong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="潼潼爱coding">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/16/[待完成]Diff算法/" itemprop="url">Diff算法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-16T21:10:08+08:00">
-                2019-04-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          
-          
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/16/[待完成]Diff算法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-    <div>
-      
-</div>
-
-    
-
-    
-<div>
-
-</div>
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2063,7 +2118,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

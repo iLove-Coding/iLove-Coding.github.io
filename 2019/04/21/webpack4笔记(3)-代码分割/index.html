@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "45775042"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="webpack笔记," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="潼潼爱coding" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="为什么要代码分割？ 减少代码重复，比如在多页面的应用中，如果多个页面都同时引用了某些module的情况； 支持缓存，比如第三方库通常是不会怎么变的，将他们单独抽离出来有利于浏览器缓存。  什么情况下代码分割？ 入口文件，每个入口文件将有单独的一次代码分割 使用SplitChunksPlugin插件; 异步加载，比如使用import()。  做代码分割时，通常会对以下情况进行处理：  为第三方依赖库">
+<meta name="keywords" content="webpack笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack4笔记(3)-代码分割">
+<meta property="og:url" content="https://ilove-coding.github.io/2019/04/21/webpack4笔记(3)-代码分割/index.html">
+<meta property="og:site_name" content="潼潼爱coding">
+<meta property="og:description" content="为什么要代码分割？ 减少代码重复，比如在多页面的应用中，如果多个页面都同时引用了某些module的情况； 支持缓存，比如第三方库通常是不会怎么变的，将他们单独抽离出来有利于浏览器缓存。  什么情况下代码分割？ 入口文件，每个入口文件将有单独的一次代码分割 使用SplitChunksPlugin插件; 异步加载，比如使用import()。  做代码分割时，通常会对以下情况进行处理：  为第三方依赖库">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-23T11:39:58.858Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack4笔记(3)-代码分割">
+<meta name="twitter:description" content="为什么要代码分割？ 减少代码重复，比如在多页面的应用中，如果多个页面都同时引用了某些module的情况； 支持缓存，比如第三方库通常是不会怎么变的，将他们单独抽离出来有利于浏览器缓存。  什么情况下代码分割？ 入口文件，每个入口文件将有单独的一次代码分割 使用SplitChunksPlugin插件; 异步加载，比如使用import()。  做代码分割时，通常会对以下情况进行处理：  为第三方依赖库">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ilove-coding.github.io/2019/04/21/webpack4笔记(3)-代码分割/"/>
+
+
+
+
+
+
+  <title>webpack4笔记(3)-代码分割 | 潼潼爱coding</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/iLove-Coding"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">潼潼爱coding</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端开发小迷妹~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/21/webpack4笔记(3)-代码分割/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tongtong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="潼潼爱coding">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">webpack4笔记(3)-代码分割</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-21T23:43:10+08:00">
+                2019-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">webpack笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="为什么要代码分割？"><a href="#为什么要代码分割？" class="headerlink" title="为什么要代码分割？"></a>为什么要代码分割？</h3><ol>
+<li>减少代码重复，比如在多页面的应用中，如果多个页面都同时引用了某些module的情况；</li>
+<li>支持缓存，比如第三方库通常是不会怎么变的，将他们单独抽离出来有利于浏览器缓存。</li>
+</ol>
+<h3 id="什么情况下代码分割？"><a href="#什么情况下代码分割？" class="headerlink" title="什么情况下代码分割？"></a>什么情况下代码分割？</h3><ul>
+<li>入口文件，每个入口文件将有单独的一次代码分割</li>
+<li>使用SplitChunksPlugin插件;</li>
+<li>异步加载，比如使用import()。</li>
+</ul>
+<p>做代码分割时，通常会对以下情况进行处理：</p>
+<ul>
+<li>为第三方依赖库（vendor）单独打包</li>
+<li>为webpack自己的runtime代码（manifest）单独打包</li>
+<li>为公共业务代码单独打包</li>
+</ul>
+<h3 id="webpack4默认分割配置"><a href="#webpack4默认分割配置" class="headerlink" title="webpack4默认分割配置"></a>webpack4默认分割配置</h3><p>Webpack4放弃了CommonsChunkPlugin，使用SplitChunksPlugin，并通过内置的optimization配置段进行配置。详情在 <a href="https://webpack.js.org/plugins/split-chunks-plugin/" target="_blank" rel="noopener">官方文档</a>，重点的几项：</p>
+<ul>
+<li>默认只对两种情况进行分割：一是异步加载的module，二是被其他chunk引用次数大于等于2的module。</li>
+<li>默认生产chunk最小为30k</li>
+<li>默认有两个cacheGroup，一个vendors用于处理第三方依赖库；一个是default（处理当module被引用&gt;=2的情况）</li>
+</ul>
+<p>由于一个module有可能同属于多个cacheGroup，因此可以通过设置某个cacheGroup的优先级(priority)来解决，priority值越大，表示优先级越高，也即会优先其作用。</p>
+<p>Webpack的两个默认cacheGroup的优先级都被设置成了负数，而我们自定义的cacheGroup的默认priority为0，因此可以初步保证自定义的cacheGroup总会优先于默认的起作用。</p>
+<h2 id="单入口代码分割"><a href="#单入口代码分割" class="headerlink" title="单入口代码分割"></a>单入口代码分割</h2><h3 id="webpack默认配置下的代码分割"><a href="#webpack默认配置下的代码分割" class="headerlink" title="webpack默认配置下的代码分割"></a>webpack默认配置下的代码分割</h3><p>引入webpack-bundle-analyzer插件，打包文件分析工具</p>
+<p>src文件夹下建立以下几个文件：</p>
+<ol>
+<li>index.js依赖于A-module，axios库以及MathJS库，异步依赖于lodash库(async-lodash)和underscore库(async-underscore)，B-module(async-b)和C-module(async-c)</li>
+<li>B-module和C-module都依赖于D-module</li>
+<li>C-module依赖于E-module</li>
+</ol>
+<p>执行 yarn build:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">dist/</span><br><span class="line">├── async-<span class="selector-tag">b</span><span class="selector-class">.d524a562ae289f073b19</span><span class="selector-class">.js</span></span><br><span class="line">├── async-c<span class="selector-class">.d524a562ae289f073b19</span><span class="selector-class">.js</span></span><br><span class="line">├── bundle-analyzer-report.html</span><br><span class="line">├── index.html</span><br><span class="line">├── main<span class="selector-class">.d524a562ae289f073b19</span><span class="selector-class">.js</span></span><br><span class="line">├── vendors~async-lodash<span class="selector-class">.d524a562ae289f073b19</span><span class="selector-class">.js</span></span><br><span class="line">└── vendors~async-underscore<span class="selector-class">.d524a562ae289f073b19</span><span class="selector-class">.js</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>B-module和C-module由于是index.js异步引入的，因此分别为其创建了一个输出文件</li>
+<li>对于异步引入的lodash和underscore而言，由于来自于第三方库，webpack对第三方库有默认的配置(配置有名为vendors的cacheGroup)，因此webpakc会为每个第三方库单独默认生成对应的异步加载文件</li>
+<li>main.d524a562ae289f073b19.js中包含了所有非异步加载的模块，包含了第三方库axios和MathJS，以及A-module。</li>
+</ul>
+<h3 id="定制代码分割"><a href="#定制代码分割" class="headerlink" title="定制代码分割"></a>定制代码分割</h3><p>默认配置下生成的bundle存在缺点：</p>
+<ol>
+<li>webpack本身的runtime代码没有分离出来</li>
+<li>main.d524a562ae289f073b19.js既包含了第三方库，又包含了我们自己的代码</li>
+<li>B-module和C-module同时依赖了D-module，但是D-module在B-module和C-module中重复存在</li>
+<li>webpack默认通过数字编号给module起名，如果module发生增减，会导致包含第三方库在内的bundle都会发生改变</li>
+</ol>
+<p>定制代码分割要针对以上问题作出处理：</p>
+<ul>
+<li>问题1：通过webpack自带的runtimeChunk配置解决runtime代码分离问题：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">optimization: &#123;</span><br><span class="line">    runtimeChunk: &#123;</span><br><span class="line">        <span class="string">"name"</span>: <span class="string">"mainfest"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>webpack会为runtime代码单独生成名为manifest-*.js的文件。</p>
+<ul>
+<li>问题2：需要将所有的第三方库从main.js中抽离出来。webpack默认情况下只会对异步加载的第三方库进行分割，此时我们需要修改一下配置：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spliteChunks: &#123;</span><br><span class="line">    chunks: <span class="string">'all'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将chunks值改为all(先前的默认值为async)，表示对所有的第三方库进行代码分割(包括async和initial)。此时生产的代码中多了一个vendors~main.*.js文件。</p>
+<ul>
+<li>问题3：要新加一个cacheGroup，该cacheGroup对于被引用<br>此时大于等于2的module进行分割：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cacheGroups: &#123;</span><br><span class="line">    common: &#123;</span><br><span class="line">        minChunks: <span class="number">2</span>,</span><br><span class="line">        name: <span class="string">'commons'</span>,</span><br><span class="line">        chunks: <span class="string">'async'</span>,</span><br><span class="line">        priority: <span class="number">10</span>,</span><br><span class="line">        reuseExistingChunk: <span class="literal">true</span>,</span><br><span class="line">        enforce: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>webpack官网其实并不建议设置name属性，原文如下：</p>
+<blockquote>
+<p>When assigning equal names to different split chunks, all vendor modules are placed into a single shared chunk, though it’s not recommend since it can result in more code downloaded.</p>
+</blockquote>
+<p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>minChunks: 2</td>
+<td>表示被引用次数大于等于2的module符合该cacheGroup的条件</td>
+</tr>
+<tr>
+<td>name:’commons’</td>
+<td>表示将所有符合条件的module都放到同一个名为commons的文件中，如果不配置此项，webapck会默认根据module被引用情况生成多个bundle文件</td>
+</tr>
+<tr>
+<td>chunks: ‘async’</td>
+<td>表示通过异步加载的module符合条件,B-module和C-module虽然本身是通过async引入的，但是他们对D-module的引用是通过initial的方式引入的，因此按理应该设置成chunks: ‘initial‘才对，然而事实上这里必须设置成async，D-module才会独立出来。</td>
+</tr>
+<tr>
+<td>priority: 10</td>
+<td>表示优先处理，因为webpack默认的两个cacheGroup的优先级为负数。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>module发生增减，会导致包含第三方库在内的bundle都会发生改变<br>问题，加入HashedModuleIdsPlugin插件即可解决：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">new</span> webpack.HashedModuleIdsPlugin()</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="单入口项目建议配置"><a href="#单入口项目建议配置" class="headerlink" title="单入口项目建议配置"></a>单入口项目建议配置</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> CleanWebpackPlugin = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> BundleAnalyzerPlugin = <span class="built_in">require</span>(<span class="string">'webpack-bundle-analyzer'</span>).BundleAnalyzerPlugin;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">'[name].[hash].js'</span>,</span><br><span class="line">        chunkFilename: <span class="string">'[name].[hash].js'</span>,</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//use inline-source-map for development:</span></span><br><span class="line">    devtool: <span class="string">'inline-source-map'</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">//use source-map for production:</span></span><br><span class="line">    <span class="comment">// devtool: 'source-map',</span></span><br><span class="line">    devServer: &#123;</span><br><span class="line">        contentBase: <span class="string">'./dist'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">                loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">                include: [path.resolve(__dirname, <span class="string">'src'</span>)],</span><br><span class="line">                exclude: [path.resolve(__dirname, <span class="string">'node_modules'</span>)]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> CleanWebpackPlugin(),</span><br><span class="line">        <span class="keyword">new</span> BundleAnalyzerPlugin(&#123;</span><br><span class="line">            openAnalyzer: <span class="literal">true</span>,</span><br><span class="line">            analyzerMode: <span class="string">'static'</span>,</span><br><span class="line">            reportFilename: <span class="string">'bundle-analyzer-report.html'</span></span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">            template: <span class="string">'./src/index.html'</span>,</span><br><span class="line">            filename: <span class="string">'index.html'</span></span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="comment">// 解决 hash 频繁变动的问题</span></span><br><span class="line">        <span class="keyword">new</span> webpack.HashedModuleIdsPlugin()</span><br><span class="line">    ],</span><br><span class="line">    optimization: &#123;</span><br><span class="line">        <span class="comment">// 分割webpack运行时代码</span></span><br><span class="line">        runtimeChunk: &#123;</span><br><span class="line">            name: <span class="string">'manifest'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        spliteChunks: &#123;</span><br><span class="line">            chunks: <span class="string">'all'</span>,</span><br><span class="line">            cacheGroups: &#123;</span><br><span class="line">                common: &#123;</span><br><span class="line">                    <span class="comment">// 最小引用次数</span></span><br><span class="line">                    minChunks: <span class="number">2</span>,</span><br><span class="line">                    <span class="comment">// 符合条件的module都放到同一个名为commons的文件中</span></span><br><span class="line">                    name: <span class="string">'commons'</span>,</span><br><span class="line">                    <span class="comment">// 通过异步加载的module符合条件</span></span><br><span class="line">                    chunks: <span class="string">'async'</span>,</span><br><span class="line">                    <span class="comment">// 提升优先级</span></span><br><span class="line">                    priority: <span class="number">10</span>,</span><br><span class="line">                    <span class="comment">// 使用已存在的</span></span><br><span class="line">                    reuseExistingChunk: <span class="literal">true</span>,</span><br><span class="line">                    <span class="comment">// 强制执行</span></span><br><span class="line">                    enforce: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行 yarn build 输出如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">dist/</span><br><span class="line">├── <span class="keyword">async</span>-b<span class="number">.75</span>f4ab95f64ececd9f8b.js</span><br><span class="line">├── <span class="keyword">async</span>-c<span class="number">.75</span>f4ab95f64ececd9f8b.js</span><br><span class="line">├── bundle-analyzer-report.html</span><br><span class="line">├── commons<span class="number">.75</span>f4ab95f64ececd9f8b.js</span><br><span class="line">├── index.html</span><br><span class="line">├── main<span class="number">.75</span>f4ab95f64ececd9f8b.js</span><br><span class="line">├── manifest<span class="number">.75</span>f4ab95f64ececd9f8b.js</span><br><span class="line">├── vendors~<span class="keyword">async</span>-lodash<span class="number">.75</span>f4ab95f64ececd9f8b.js</span><br><span class="line">├── vendors~<span class="keyword">async</span>-underscore<span class="number">.75</span>f4ab95f64ececd9f8b.js</span><br><span class="line">└── vendors~main<span class="number">.75</span>f4ab95f64ececd9f8b.js</span><br></pre></td></tr></table></figure>
+<h2 id="多入口代码分割"><a href="#多入口代码分割" class="headerlink" title="多入口代码分割"></a>多入口代码分割</h2><h3 id="webpack默认配置下的代码分割-1"><a href="#webpack默认配置下的代码分割-1" class="headerlink" title="webpack默认配置下的代码分割"></a>webpack默认配置下的代码分割</h3><p>src文件夹下建立以下几个文件：</p>
+<ol>
+<li>3个html入口文件，index1.html，index2.html，index3.html</li>
+<li>每个入口文件对应一个js入口文件，index1.js，index2.js，index3.js</li>
+<li>index1.js依赖A-module、F-module、G-module、axios、lodash，异步加载B-module、C-module</li>
+<li>index2.js依赖A-module、G-module、H-module、axios、jquery，异步加载lodash、B-module</li>
+<li>index3.js依赖A-module、F-module、H-module、lodash、jquery，异步加载C-module</li>
+<li>B-module依赖于D-module</li>
+<li>C-module依赖于D-module、E-module</li>
+</ol>
+<p>更改entry和HtmlWebpackPlugin配置，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">entry: &#123;</span><br><span class="line">    <span class="string">'index1'</span>: <span class="string">'./src/index1.js'</span>,</span><br><span class="line">    <span class="string">'index2'</span>: <span class="string">'./src/index2.js'</span>,</span><br><span class="line">    <span class="string">'index3'</span>: <span class="string">'./src/index3.js'</span></span><br><span class="line">&#125;,</span><br><span class="line">plugins: [</span><br><span class="line">    <span class="keyword">new</span> CleanWebpackPlugin([<span class="string">'dist'</span>]),</span><br><span class="line">    <span class="keyword">new</span> BundleAnalyzerPlugin(&#123;</span><br><span class="line">        openAnalyzer: <span class="literal">false</span>,</span><br><span class="line">        analyzerMode: <span class="string">'static'</span>,</span><br><span class="line">        reportFilename: <span class="string">'bundle-analyzer-report.html'</span></span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">        template: <span class="string">'./src/index1.html'</span>,</span><br><span class="line">        filename: <span class="string">'index1.html'</span></span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">        template: <span class="string">'./src/index2.html'</span>,</span><br><span class="line">        filename: <span class="string">'index2.html'</span></span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">        template: <span class="string">'./src/index3.html'</span>,</span><br><span class="line">        filename: <span class="string">'index3.html'</span></span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="keyword">new</span> webpack.HashedModuleIdsPlugin()</span><br><span class="line"></span><br><span class="line">]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>运行 yarn build:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">dist/</span><br><span class="line">├── <span class="keyword">async</span>-b<span class="number">.97</span>a1d3ca8bef2a75acb1.js</span><br><span class="line">├── <span class="keyword">async</span>-c<span class="number">.97</span>a1d3ca8bef2a75acb1.js</span><br><span class="line">├── bundle-analyzer-report.html</span><br><span class="line">├── index1<span class="number">.97</span>a1d3ca8bef2a75acb1.js</span><br><span class="line">├── index1.html</span><br><span class="line">├── index2<span class="number">.97</span>a1d3ca8bef2a75acb1.js</span><br><span class="line">├── index2.html</span><br><span class="line">├── index3<span class="number">.97</span>a1d3ca8bef2a75acb1.js</span><br><span class="line">├── index3.html</span><br><span class="line">└── vendors~<span class="keyword">async</span>-lodash<span class="number">.97</span>a1d3ca8bef2a75acb1.js</span><br></pre></td></tr></table></figure>
+<p>webpack的默认配置：</p>
+<ul>
+<li>只对异步加载的moudule进行分割处理</li>
+<li>生成的分割文件要大于30k</li>
+<li>对异步加载的第三方库(node_modules目录下的库)进行处理</li>
+<li>对引用大于等于2的module进行分割</li>
+</ul>
+<p>由上面的打包结果可以看出，在默认情况下，webpack只对异步加载的库做了分割处理(生成了async-b.3e6a567c8ad867591384.js、async-c.faa08dc1c722e8898326.js和vendors~async-lodash.d810246d214be5df29ec.js)，而其他所有的module都打包到了对应的index.*.js文件中。</p>
+<h3 id="改进默认配置"><a href="#改进默认配置" class="headerlink" title="改进默认配置"></a>改进默认配置</h3><p>可以对配置稍作修改，即将默认的两个cacheGroup的chunks改为all，表示同时对静态加载(initial)和动态加载(async)起作用，以及设置生产的chunk不受最大文件大小限制。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">    optimization: &#123;</span><br><span class="line">        runtimeChunk: &#123;</span><br><span class="line">            <span class="string">"name"</span>: <span class="string">"manifest"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        splitChunks: &#123;</span><br><span class="line">            chunks: <span class="string">'all'</span>,</span><br><span class="line">            minSize: <span class="number">0</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>运行 yarn build 输出：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">dist/</span><br><span class="line">├── <span class="keyword">async</span>-b<span class="number">.6</span>d7cd2350dd7e9f02e59.js</span><br><span class="line">├── <span class="keyword">async</span>-b~<span class="keyword">async</span>-c<span class="number">.6</span>d7cd2350dd7e9f02e59.js</span><br><span class="line">├── <span class="keyword">async</span>-c<span class="number">.6</span>d7cd2350dd7e9f02e59.js</span><br><span class="line">├── bundle-analyzer-report.html</span><br><span class="line">├── index1<span class="number">.6</span>d7cd2350dd7e9f02e59.js</span><br><span class="line">├── index1.html</span><br><span class="line">├── index2<span class="number">.6</span>d7cd2350dd7e9f02e59.js</span><br><span class="line">├── index2.html</span><br><span class="line">├── index3<span class="number">.6</span>d7cd2350dd7e9f02e59.js</span><br><span class="line">├── index3.html</span><br><span class="line">├── manifest<span class="number">.6</span>d7cd2350dd7e9f02e59.js</span><br><span class="line">├── vendors~<span class="keyword">async</span>-lodash~index1~index3<span class="number">.6</span>d7cd2350dd7e9f02e59.js</span><br><span class="line">├── vendors~index1~index2<span class="number">.6</span>d7cd2350dd7e9f02e59.js</span><br><span class="line">└── vendors~index2~index3<span class="number">.6</span>d7cd2350dd7e9f02e59.js</span><br></pre></td></tr></table></figure>
+<ul>
+<li>async-b~async-c.6d7cd2350dd7e9f02e59.js文件是新产生的，由于B-module和C-module同时依赖于D-module产生</li>
+<li>vendors~async-lodash~index1~index3.6d7cd2350dd7e9f02e59.js含了lodash库，是由于index1.js、index3.js静态依赖了lodash，同时index2.js中对lodash有异步依赖；</li>
+<li>vendors~index1~index2.6d7cd2350dd7e9f02e59.js包含了axios库，是由于index1和index2同时引用了axios；</li>
+<li>vendors~index2~index3.6d7cd2350dd7e9f02e59.js包含了jquery库，是由于index2和index3同时引用了jquery。</li>
+</ul>
+<p>此时仍然存在以下几个问题：</p>
+<ul>
+<li>通过HtmlWebpackPlugin生成的三个index.html文件引用了所有的静态依赖，没有达到分离页面的目的；</li>
+<li>三个index.js文件共享或者部分共享了A-module、F-module、G-module和H-module，但是共享模块还是重复出现在了生成的index.js文件中。</li>
+</ul>
+<p>想要达到的目的：</p>
+<ol>
+<li>提取webpack的runtime代码到单独的文件</li>
+<li>所有静态依赖第三方库被分割到同一个文件中</li>
+<li>所有动态依赖的第三方库分别分割到单独的文件，这样才能享受异步加载的好处，即只加载所需要的</li>
+<li>所有动态依赖的自研模块分别分割到单独的文件</li>
+<li>被多次引用的自研发模块统一放到一个文件中，便于多个入口共享</li>
+<li>配置缓存</li>
+</ol>
+<h3 id="定制代码分割-1"><a href="#定制代码分割-1" class="headerlink" title="定制代码分割"></a>定制代码分割</h3><p>先去除掉默认的2个cacheGroup：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">optimization: &#123;</span><br><span class="line">    splitChunks: &#123;</span><br><span class="line">        cacheGroups: &#123;</span><br><span class="line">            <span class="keyword">default</span>: <span class="literal">false</span>,</span><br><span class="line">            vendors: <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行 yarn build，输出：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">dist/</span><br><span class="line">├── async-<span class="selector-tag">b</span><span class="selector-class">.c25a8aa49f1a66c2f974</span><span class="selector-class">.js</span></span><br><span class="line">├── async-c<span class="selector-class">.c25a8aa49f1a66c2f974</span><span class="selector-class">.js</span></span><br><span class="line">├── async-lodash<span class="selector-class">.c25a8aa49f1a66c2f974</span><span class="selector-class">.js</span></span><br><span class="line">├── bundle-analyzer-report.html</span><br><span class="line">├── index1<span class="selector-class">.c25a8aa49f1a66c2f974</span><span class="selector-class">.js</span></span><br><span class="line">├── index1.html</span><br><span class="line">├── index2<span class="selector-class">.c25a8aa49f1a66c2f974</span><span class="selector-class">.js</span></span><br><span class="line">├── index2.html</span><br><span class="line">├── index3<span class="selector-class">.c25a8aa49f1a66c2f974</span><span class="selector-class">.js</span></span><br><span class="line">├── index3.html</span><br><span class="line">└── manifest<span class="selector-class">.c25a8aa49f1a66c2f974</span><span class="selector-class">.js</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>提取webpack的runtime代码</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"> optimization: &#123;</span><br><span class="line">        runtimeChunk: &#123;</span><br><span class="line">            <span class="string">"name"</span>: <span class="string">"manifest"</span></span><br><span class="line">        &#125;,</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>2.将所有静态的第三方依赖放到同一个文件中，加入新的cacheGroup：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">vendor: &#123;</span><br><span class="line">            test: <span class="regexp">/[\\/]node_modules[\\/]/</span>,</span><br><span class="line">            chunks: <span class="string">'initial'</span>,</span><br><span class="line">            enforce: <span class="literal">true</span>,</span><br><span class="line">            priority: <span class="number">10</span>,</span><br><span class="line">            name:<span class="string">'vendor'</span></span><br><span class="line">        &#125;,</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>yarn build 输出结果：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">dist/</span><br><span class="line">├── async-<span class="selector-tag">b</span>.<span class="number">68</span>aff42cd15644abcd53.js</span><br><span class="line">├── async-c.<span class="number">68</span>aff42cd15644abcd53.js</span><br><span class="line">├── async-lodash.<span class="number">68</span>aff42cd15644abcd53.js</span><br><span class="line">├── bundle-analyzer-report.html</span><br><span class="line">├── index1.<span class="number">68</span>aff42cd15644abcd53.js</span><br><span class="line">├── index1.html</span><br><span class="line">├── index2.<span class="number">68</span>aff42cd15644abcd53.js</span><br><span class="line">├── index2.html</span><br><span class="line">├── index3.<span class="number">68</span>aff42cd15644abcd53.js</span><br><span class="line">├── index3.html</span><br><span class="line">├── manifest.<span class="number">68</span>aff42cd15644abcd53.js</span><br><span class="line">└── vendor.<span class="number">68</span>aff42cd15644abcd53.js</span><br></pre></td></tr></table></figure>
+<p>多了一个vendor.68aff42cd15644abcd53.js，包含所有共享的三方依赖（jquey，lodash和axios）</p>
+<p>如果去掉 name: ‘vendor’，得到的输出为：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">dist/</span><br><span class="line">├── async-<span class="selector-tag">b</span>.<span class="number">3</span>c89aa6533d013e845c9.js</span><br><span class="line">├── async-c<span class="selector-class">.f895770163eede087e4b</span><span class="selector-class">.js</span></span><br><span class="line">├── async-c.<span class="number">3</span>c89aa6533d013e845c9.js</span><br><span class="line">├── bundle-analyzer-report.html</span><br><span class="line">├── index1.<span class="number">3</span>c89aa6533d013e845c9.js</span><br><span class="line">├── index1.html</span><br><span class="line">├── index2.<span class="number">3</span>c89aa6533d013e845c9.js</span><br><span class="line">├── index2.html</span><br><span class="line">├── index3.<span class="number">3</span>c89aa6533d013e845c9.js</span><br><span class="line">├── index3.html</span><br><span class="line">├── manifest.<span class="number">3</span>c89aa6533d013e845c9.js</span><br><span class="line">├── vendor~index1~index2.<span class="number">3</span>c89aa6533d013e845c9.js</span><br><span class="line">├── vendor~index1~index3.<span class="number">3</span>c89aa6533d013e845c9.js</span><br><span class="line">└── vendor~index2~index3.<span class="number">3</span>c89aa6533d013e845c9.js</span><br></pre></td></tr></table></figure>
+<p>此时webpack会根据实际模块的共享关系，分开生成精确的chunk文件，比如如果A和B同时依赖于C，那么webpack会专门为A和B生成对应的chunk文件。</p>
+<p>对比发现配置name属性后，所有的依赖都在一个池子里，好处是指定了名字在稍后配置HtmlWebpackPlugin时好操作一下，缺点是如果一个chunk只依赖于池子中的某一小部分，那么也需要引用整个池子。webpack官网推荐不要配置name:’vendor’，但是在多页面的场景下，配置了name:’vendor’会更方便一下。</p>
+<p>3.将所有动态依赖的第三方库放到各自单独的文件中，这是webpack的默认行为。</p>
+<p>4.所有动态依赖的自研发模块分别分割到单独的文件，这也是webpack的默认行为。</p>
+<p>5.将所有依赖的自研发模块放到同一个文件中，这里我们配置只有被依赖2次或者以上的模块才被放到common中，并且优先级低于vendor，配置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">...</span></span><br><span class="line"><span class="attr">common:</span> <span class="string">&#123;</span></span><br><span class="line"><span class="attr">            chunks:</span> <span class="string">"all"</span><span class="string">,</span></span><br><span class="line"><span class="attr">            minChunks:</span> <span class="number">2</span><span class="string">,</span></span><br><span class="line"><span class="attr">            name:</span><span class="string">'common'</span><span class="string">,</span></span><br><span class="line"><span class="attr">            enforce:</span> <span class="literal">true</span><span class="string">,</span></span><br><span class="line"><span class="attr">            priority:</span> <span class="number">5</span></span><br><span class="line">        <span class="string">&#125;,</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+<p>yarn build打包结果多了一个common.6d1f3c64bb3f7cea425f.js文件，其中包含了A-module，F-module，G-moduel，H-module和D-module；而对于E-module，由于只被C-module依赖了一次，因此直接消化在了C-module对应的输出文件中。</p>
+<p>6.配置缓存需要用到HashedModuleIdsPlugin</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line">...</span><br><span class="line"><span class="keyword">new</span> webpack.HashedModuleIdsPlugin()</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>看下此时输出的3个index.html文件引入的js：</p>
+<p>index1.html:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"manifest.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"vendor.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"common.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"index1.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"index2.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"index3.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>index2.html:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"manifest.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">    &lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"vendor.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">    &lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"common.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">    &lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"index1.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">    &lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"index2.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">    &lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"index3.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>index3.html:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"manifest.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">   &lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"vendor.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">   &lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"common.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">   &lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"index1.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">   &lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"index2.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">   &lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"index3.6d1f3c64bb3f7cea425f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>可以看到所有index.html文件中都包含了所有的依赖文件，这当然不是我们想要的结果，因此修改HtmlWebpackPlugin插件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">     template: <span class="string">'./src/index1.html'</span>,</span><br><span class="line">     filename: <span class="string">'index1.html'</span>,</span><br><span class="line">     chunks:[<span class="string">'index1'</span>,<span class="string">'manifest'</span>,<span class="string">'vendor'</span>,<span class="string">'common'</span>]</span><br><span class="line"> &#125;),</span><br><span class="line"> <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">     template: <span class="string">'./src/index2.html'</span>,</span><br><span class="line">     filename: <span class="string">'index2.html'</span>,</span><br><span class="line">     chunks:[<span class="string">'index2'</span>,<span class="string">'manifest'</span>,<span class="string">'vendor'</span>,<span class="string">'common'</span>]</span><br><span class="line"></span><br><span class="line"> &#125;),</span><br><span class="line"> <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">     template: <span class="string">'./src/index3.html'</span>,</span><br><span class="line">     filename: <span class="string">'index3.html'</span>,</span><br><span class="line">     chunks:[<span class="string">'index3'</span>,<span class="string">'manifest'</span>,<span class="string">'vendor'</span>,<span class="string">'common'</span>]</span><br><span class="line"></span><br><span class="line"> &#125;),</span><br></pre></td></tr></table></figure>
+<p>HtmlWebpackPlugin依赖于chunk的名字，这也是为什么前文提到需要为cacheGroup设置name字段的原因，不然webpack会自动为我们生成很多动态的名字，这样无法配置HtmlWebpackPlugin。</p>
+<h3 id="多入口项目建议配置"><a href="#多入口项目建议配置" class="headerlink" title="多入口项目建议配置"></a>多入口项目建议配置</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> CleanWebpackPlugin = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> BundleAnalyzerPlugin = <span class="built_in">require</span>(<span class="string">'webpack-bundle-analyzer'</span>).BundleAnalyzerPlugin;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        <span class="string">'index1'</span>: <span class="string">'./src/index1.js'</span>,</span><br><span class="line">        <span class="string">'index2'</span>: <span class="string">'./src/index2.js'</span>,</span><br><span class="line">        <span class="string">'index3'</span>: <span class="string">'./src/index3.js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">'[name].[hash].js'</span>,</span><br><span class="line">        chunkFilename: <span class="string">'[name].[hash].js'</span>,</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">'dist'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//use inline-source-map for development:</span></span><br><span class="line">    devtool: <span class="string">'inline-source-map'</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">//use source-map for production:</span></span><br><span class="line">    <span class="comment">// devtool: 'source-map',</span></span><br><span class="line">    devServer: &#123;</span><br><span class="line">        contentBase: <span class="string">'./dist'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">                loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">                include: [path.resolve(__dirname, <span class="string">'src'</span>)],</span><br><span class="line">                exclude: [path.resolve(__dirname, <span class="string">'node_modules'</span>)]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> CleanWebpackPlugin(),</span><br><span class="line">        <span class="keyword">new</span> BundleAnalyzerPlugin(&#123;</span><br><span class="line">            openAnalyzer: <span class="literal">true</span>,</span><br><span class="line">            analyzerMode: <span class="string">'static'</span>,</span><br><span class="line">            reportFilename: <span class="string">'bundle-analyzer-report.html'</span></span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">            template: <span class="string">'./src/index1.html'</span>,</span><br><span class="line">            filename: <span class="string">'index1.html'</span>,</span><br><span class="line">            chunks: [<span class="string">'index1'</span>,<span class="string">'manifest'</span>,<span class="string">'vendor'</span>,<span class="string">'common'</span>]</span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">            template: <span class="string">'./src/index2.html'</span>,</span><br><span class="line">            filename: <span class="string">'index2.html'</span>,</span><br><span class="line">            chunks: [<span class="string">'index2'</span>,<span class="string">'manifest'</span>,<span class="string">'vendor'</span>,<span class="string">'common'</span>]</span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">            template: <span class="string">'./src/index3.html'</span>,</span><br><span class="line">            filename: <span class="string">'index3.html'</span>,</span><br><span class="line">            chunks: [<span class="string">'index3'</span>,<span class="string">'manifest'</span>,<span class="string">'vendor'</span>,<span class="string">'common'</span>]</span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="comment">// 解决 hash 频繁变动的问题，设置缓存</span></span><br><span class="line">        <span class="keyword">new</span> webpack.HashedModuleIdsPlugin()</span><br><span class="line">    ],</span><br><span class="line">    optimization: &#123;</span><br><span class="line">        runtimeChunk: &#123;</span><br><span class="line">            <span class="string">"name"</span>: <span class="string">"manifest"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        splitChunks: &#123;</span><br><span class="line">            cacheGroups: &#123;</span><br><span class="line">                <span class="keyword">default</span>: <span class="literal">false</span>,</span><br><span class="line">                vendors: <span class="literal">false</span>,</span><br><span class="line">                vendor: &#123;</span><br><span class="line">                    test: <span class="regexp">/[\\/]node_modules[\\/]/</span>,</span><br><span class="line">                    chunks: <span class="string">'initial'</span>,</span><br><span class="line">                    enforce: <span class="literal">true</span>,</span><br><span class="line">                    priority: <span class="number">10</span>,</span><br><span class="line">                    name:<span class="string">'vendor'</span></span><br><span class="line">                &#125;,</span><br><span class="line">                common: &#123;</span><br><span class="line">                    chunks: <span class="string">"all"</span>,</span><br><span class="line">                    minChunks: <span class="number">2</span>,</span><br><span class="line">                    name:<span class="string">'common'</span>,</span><br><span class="line">                    enforce: <span class="literal">true</span>,</span><br><span class="line">                    priority: <span class="number">5</span></span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/04/21/webpack4笔记(3)-代码分割/">webpack4笔记(3)-代码分割</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
+  <p><span>发布时间:</span>2019年04月21日 - 23:04</p>
+  <p><span>最后更新:</span>2019年04月23日 - 19:04</p>
+  <p><span>原始链接:</span><a href="/2019/04/21/webpack4笔记(3)-代码分割/" title="webpack4笔记(3)-代码分割">https://ilove-coding.github.io/2019/04/21/webpack4笔记(3)-代码分割/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2019/04/21/webpack4笔记(3)-代码分割/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+</div>
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/path/to/wechat-reward-image" alt="tongtong 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/path/to/alipay-reward-image" alt="tongtong 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+<div>
+
+  <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>-------------</div>
+    
+</div>
+
+</div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/webpack笔记/" rel="tag"><i class="fa fa-tag"></i> webpack笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/21/webpack4笔记(5)-环境分离/" rel="next" title="webpack4-环境分离">
+                <i class="fa fa-chevron-left"></i> webpack4-环境分离
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/23/webpack4笔记(4)-处理css/" rel="prev" title="webpack4笔记(4)-处理css">
+                webpack4笔记(4)-处理css <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzQxNS85OTcx"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516370448451&di=1e8172ba90a1a66f4caf86ce44558beb&imgtype=0&src=http%3A%2F%2Fp1.gexing.com%2Ftouxiang%2F20121103%2F1718%2F5094e150a277e_200x200_3.gif"
+                alt="tongtong" />
+            
+              <p class="site-author-name" itemprop="name">tongtong</p>
+              <p class="site-description motion-element" itemprop="description">爱生活 爱学习</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/iLove-Coding" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/b210912af0f2" target="_blank" title="jianshu">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>jianshu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ife.baidu.com/" title="百度前端技术学院" target="_blank">百度前端技术学院</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://wf.uisdc.com/cn/" title="google前端开发基础" target="_blank">google前端开发基础</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.36zhen.com/t?id=3448" title="前端书籍资料" target="_blank">前端书籍资料</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要代码分割？"><span class="nav-number">1.</span> <span class="nav-text">为什么要代码分割？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么情况下代码分割？"><span class="nav-number">2.</span> <span class="nav-text">什么情况下代码分割？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack4默认分割配置"><span class="nav-number">3.</span> <span class="nav-text">webpack4默认分割配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单入口代码分割"><span class="nav-number"></span> <span class="nav-text">单入口代码分割</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack默认配置下的代码分割"><span class="nav-number">1.</span> <span class="nav-text">webpack默认配置下的代码分割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定制代码分割"><span class="nav-number">2.</span> <span class="nav-text">定制代码分割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单入口项目建议配置"><span class="nav-number">3.</span> <span class="nav-text">单入口项目建议配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多入口代码分割"><span class="nav-number"></span> <span class="nav-text">多入口代码分割</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack默认配置下的代码分割-1"><span class="nav-number">1.</span> <span class="nav-text">webpack默认配置下的代码分割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改进默认配置"><span class="nav-number">2.</span> <span class="nav-text">改进默认配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定制代码分割-1"><span class="nav-number">3.</span> <span class="nav-text">定制代码分割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多入口项目建议配置"><span class="nav-number">4.</span> <span class="nav-text">多入口项目建议配置</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongtong</span>
+
+  
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+-->
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
