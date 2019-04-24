@@ -99,7 +99,7 @@
 <meta property="og:site_name" content="潼潼爱coding">
 <meta property="og:description" content="CSS基础处理webpack中关于css的处理用到两个loader：  css-loader: 用于处理css文件中的@import和url(…) style-loader: 将css-loader的输出生成js中的函数调用将css动态添加到html文件中。  1yarn add css-loader style-loader -D 12345678910111213141516171819202">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-23T13:01:46.309Z">
+<meta property="og:updated_time" content="2019-04-24T06:15:41.025Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webpack4笔记(4)-处理css">
 <meta name="twitter:description" content="CSS基础处理webpack中关于css的处理用到两个loader：  css-loader: 用于处理css文件中的@import和url(…) style-loader: 将css-loader的输出生成js中的函数调用将css动态添加到html文件中。  1yarn add css-loader style-loader -D 12345678910111213141516171819202">
@@ -401,7 +401,10 @@
 <p>另外，还需要引入MiniCssExtractPlugin插件本身：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">new</span> MiniCssExtractPlugin(&#123;</span><br><span class="line">        filename: <span class="string">"[name].[hash].css"</span>,</span><br><span class="line">        chunkFilename: <span class="string">"[name].[hash].css"</span></span><br><span class="line">    &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <p>运行yarn build可以看到生成了独立的main.ec3a0b2de01cd68066ac.css，并且在index.html文件中自动引入了该css文件。</p>
-<h3 id="CSS-Modle"><a href="#CSS-Modle" class="headerlink" title="CSS Modle"></a>CSS Modle</h3><p>CSS Module只对类名和动画的名字起作用，css-loader支持CSS Module，CSS Module为每个独立的css文件处理为一个module。此时需要修改webpack.config.js文件中css-loader的配置：</p>
+<h3 id="CSS-Modle"><a href="#CSS-Modle" class="headerlink" title="CSS Modle"></a>CSS Modle</h3><blockquote>
+<p>所有的class的名称和动画的名称默认属于本地作用域的CSS文件。<br>所以CSS Modules不是一个官方的规范，也不是浏览器的一种机制，它是一种构建步骤中的一个进程。（构建通常需要webpack或者browserify的帮助）。通过构建工具的帮助，可以将class的名字或者选择器的名字作用域化。（类似命名空间化。）目的在于解决CSS中的全局作用域问题。</p>
+</blockquote>
+<p>CSS Module只对类名和动画的名字起作用，css-loader支持CSS Module，CSS Module为每个独立的css文件处理为一个module。此时需要修改webpack.config.js文件中css-loader的配置：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    loader: <span class="string">'css-loader'</span>,</span><br><span class="line">    options: &#123;</span><br><span class="line">        sourceMap: <span class="literal">true</span>,</span><br><span class="line">        modules: <span class="literal">true</span>, <span class="comment">// 表示启用CSS Module</span></span><br><span class="line">        localIdentName: <span class="string">'[name]---[local]---[hash:base64:5]'</span> <span class="comment">// 设置css类名的命名方式。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在main.css中加入更多的css：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">body &#123;</span><br><span class="line">    background-color: pink;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div &#123;</span><br><span class="line">    box-sizing: border-box;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.red &#123;</span><br><span class="line">    background-color: red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// :global表示脱离模块化约束而使用全局的声明（即效果跟普通css相同）</span><br><span class="line">:global(.gold)&#123;</span><br><span class="line">    background-color: gold;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// :local表示使用模块化化处理</span><br><span class="line">:local(.aqua)&#123;</span><br><span class="line">    background-color: aqua;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -441,7 +444,7 @@
   <p><span>本文标题:</span><a href="/2019/04/23/webpack4笔记(4)-处理css/">webpack4笔记(4)-处理css</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
   <p><span>发布时间:</span>2019年04月23日 - 19:04</p>
-  <p><span>最后更新:</span>2019年04月23日 - 21:04</p>
+  <p><span>最后更新:</span>2019年04月24日 - 14:04</p>
   <p><span>原始链接:</span><a href="/2019/04/23/webpack4笔记(4)-处理css/" title="webpack4笔记(4)-处理css">https://ilove-coding.github.io/2019/04/23/webpack4笔记(4)-处理css/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2019/04/23/webpack4笔记(4)-处理css/"  aria-label="复制成功！"></i></span>
   </p>
@@ -644,7 +647,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
