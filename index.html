@@ -1137,8 +1137,13 @@ style-loader: 将css-loader的输出生成js中的函数调用将css动态添加
       
         
           
-          
-          
+          webpack的性能瓶颈
+webpack 的构建过程时间长
+webpack 打包的结果体积大
+
+常见优化方案构建过程提速策略1.减轻 loader 工作
+比如 babel-loader 最常见的优化方式是，用 include 或 exclude 来帮我们避免不必要的转译，比如 webpack 官方在
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/04/20/[待完成]webpack4笔记(6)-性能优化/#more" rel="contents">
@@ -1876,8 +1881,7 @@ style-loader: 将css-loader的输出生成js中的函数调用将css动态添加
           
           为什么使用webpack？现今的很多网页其实可以看做是功能丰富的应用，它们拥有着复杂的JavaScript代码和一大堆依赖包。为了简化开发的复杂度，前端社区涌现出了很多好的实践方法。
 
-模块化，让我们可以把复杂的程序细化为小的文件;
-类似于TypeScript这种在JavaScript基础上拓展的开
+处理模块化：*CSS 和 JS 的模块化语法，目前都无法被浏览器兼容。因此，开发环境可以使用既定的模块化语法，但是
           ...
           <!--noindex-->
           <div class="post-button text-center">
