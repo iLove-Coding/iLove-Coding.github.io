@@ -100,7 +100,7 @@
 <meta property="og:description" content="什么是模块化?早期的 JavaScript 往往作为嵌入到 HTML 页面中的用于控制动画与简单的用户交互的脚本语言，所有的嵌入到网页内的 JavaScript 对象都会使用全局的 window 对象来存放未使用 var 定义的变量。这就会导致一个问题，那就是，最后调用的函数或变量取决于我们引入的先后顺序。模块化时代。随着单页应用与富客户端的流行，不断增长的代码库也急需合理的代码分割与依赖管理的解">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/8/7/1651221feb8ab9bb">
-<meta property="og:updated_time" content="2019-04-18T13:02:49.606Z">
+<meta property="og:updated_time" content="2019-04-26T08:10:12.281Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解模块化">
 <meta name="twitter:description" content="什么是模块化?早期的 JavaScript 往往作为嵌入到 HTML 页面中的用于控制动画与简单的用户交互的脚本语言，所有的嵌入到网页内的 JavaScript 对象都会使用全局的 window 对象来存放未使用 var 定义的变量。这就会导致一个问题，那就是，最后调用的函数或变量取决于我们引入的先后顺序。模块化时代。随着单页应用与富客户端的流行，不断增长的代码库也急需合理的代码分割与依赖管理的解">
@@ -453,7 +453,8 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(modules(数组),callback(加载后的回调))</span><br></pre></td></tr></table></figure>
 <p>例如：加载模块A和模块D</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>([<span class="string">'moduleA'</span>, <span class="string">'moduleB'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">moduleA, moduleB</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>requireJS是AMD规范的模块加载器,也是AMD规范的具体实现</p>
+<p>requireJS是AMD规范的模块加载器,也是AMD规范的具体实现，原理实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> factories = &#123;&#125;;     <span class="comment">// 管理一个关联对象，将模块名和函数关联起来</span></span><br><span class="line"><span class="comment">// 定义模块define  三个参数：1.模块名 2.依赖 3.工厂函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">define</span>(<span class="params">name, depend, factory</span>) </span>&#123;</span><br><span class="line">    factories[name] = factory;</span><br><span class="line">    factory.depend = depend;    <span class="comment">// 将依赖记到factory上</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 通过require使用模块</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">require</span>(<span class="params">modules, callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = modules.map(<span class="function"><span class="params">mod</span> =&gt;</span> &#123;   <span class="comment">// 返回一个结果数组</span></span><br><span class="line">        <span class="keyword">let</span> factory = factories[mod];   <span class="comment">// 拿到模块对应的函数</span></span><br><span class="line">        <span class="keyword">let</span> exports;</span><br><span class="line">        <span class="keyword">let</span> depend = factory.depend;    <span class="comment">// 取到函数上的依赖 ['a']</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// require(['song','album'], function(song,album) &#123;&#125;)  可能会有很多依赖</span></span><br><span class="line">        <span class="built_in">require</span>(depend, () =&gt; &#123;         <span class="comment">// 递归require</span></span><br><span class="line">            exports = factory.apply(<span class="literal">null</span>, <span class="built_in">arguments</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> exports;     <span class="comment">// exports得到的是函数返回的值  </span></span><br><span class="line">    &#125;);</span><br><span class="line">    callback.apply(<span class="literal">null</span>, result);   <span class="comment">//  result为一个结果数组，所以用apply</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="CMD-amp-amp-SeaJS"><a href="#CMD-amp-amp-SeaJS" class="headerlink" title="CMD &amp;&amp; SeaJS"></a>CMD &amp;&amp; SeaJS</h3><p>CMD通用模块定义（Common Module Definition） </p>
 <p>例如：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> define(<span class="function"><span class="keyword">function</span> (<span class="params">require, exports, module</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// exports : 对外的接口</span></span><br><span class="line">    <span class="comment">// requires : 依赖的模块</span></span><br><span class="line">    <span class="built_in">require</span>(<span class="string">'./a.js'</span>);<span class="comment">//如果地址是一个模块的话，那么require的返回值就是模块中的exports</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
@@ -528,7 +529,7 @@
   <p><span>本文标题:</span><a href="/2019/03/19/深入理解模块化/">深入理解模块化</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
   <p><span>发布时间:</span>2019年03月19日 - 19:03</p>
-  <p><span>最后更新:</span>2019年04月18日 - 21:04</p>
+  <p><span>最后更新:</span>2019年04月26日 - 16:04</p>
   <p><span>原始链接:</span><a href="/2019/03/19/深入理解模块化/" title="深入理解模块化">https://ilove-coding.github.io/2019/03/19/深入理解模块化/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2019/03/19/深入理解模块化/"  aria-label="复制成功！"></i></span>
   </p>
@@ -713,7 +714,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

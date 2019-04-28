@@ -78,7 +78,7 @@
 
 
 
-  <meta name="keywords" content="webpack笔记," />
+  <meta name="keywords" content="js笔记," />
 
 
 
@@ -91,18 +91,18 @@
 
 
 
-<meta name="description" content="爱生活 爱学习">
-<meta name="keywords" content="webpack笔记">
+<meta name="description" content="12345678910111213141516171819202122function getJson(url) &amp;#123;    return new Promise((resolve, reject) =&amp;gt; &amp;#123;        let xhr = new XMLHttpRequest();        xhr.open(&apos;GET&apos;, url, true);        xh">
+<meta name="keywords" content="js笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="webpack4笔记(7)-原理实现">
-<meta property="og:url" content="https://ilove-coding.github.io/2019/04/16/[待完成]webpack4笔记(7)-原理实现/index.html">
+<meta property="og:title" content="promise对象封装ajax">
+<meta property="og:url" content="https://ilove-coding.github.io/2018/02/28/[待完成]从ajax到promise封装/index.html">
 <meta property="og:site_name" content="潼潼爱coding">
-<meta property="og:description" content="爱生活 爱学习">
+<meta property="og:description" content="12345678910111213141516171819202122function getJson(url) &amp;#123;    return new Promise((resolve, reject) =&amp;gt; &amp;#123;        let xhr = new XMLHttpRequest();        xhr.open(&apos;GET&apos;, url, true);        xh">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-24T06:25:36.687Z">
+<meta property="og:updated_time" content="2019-03-15T03:29:29.279Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="webpack4笔记(7)-原理实现">
-<meta name="twitter:description" content="爱生活 爱学习">
+<meta name="twitter:title" content="promise对象封装ajax">
+<meta name="twitter:description" content="12345678910111213141516171819202122function getJson(url) &amp;#123;    return new Promise((resolve, reject) =&amp;gt; &amp;#123;        let xhr = new XMLHttpRequest();        xhr.open(&apos;GET&apos;, url, true);        xh">
 
 
 
@@ -132,14 +132,14 @@
 
 
 
-  <link rel="canonical" href="https://ilove-coding.github.io/2019/04/16/[待完成]webpack4笔记(7)-原理实现/"/>
+  <link rel="canonical" href="https://ilove-coding.github.io/2018/02/28/[待完成]从ajax到promise封装/"/>
 
 
 
 
 
 
-  <title>webpack4笔记(7)-原理实现 | 潼潼爱coding</title>
+  <title>promise对象封装ajax | 潼潼爱coding</title>
   
 
 
@@ -266,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/16/[待完成]webpack4笔记(7)-原理实现/">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2018/02/28/[待完成]从ajax到promise封装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tongtong">
@@ -283,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">webpack4笔记(7)-原理实现</h1>
+          <h1 class="post-title" itemprop="name headline">promise对象封装ajax</h1>
         
 
         <div class="post-meta">
@@ -295,8 +295,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-16T21:11:36+08:00">
-                2019-04-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-28T00:03:43+08:00">
+                2018-02-28
               </time>
             
 
@@ -318,8 +318,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/webpack笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">webpack笔记</span>
+                  <a href="/categories/js笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">js笔记</span>
                   </a>
                 </span>
 
@@ -386,7 +386,10 @@
       
 
       
-        
+        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getJson</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">        xhr.open(<span class="string">'GET'</span>, url, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">        xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.status === <span class="number">200</span>) &#123;</span><br><span class="line">                    resolve(<span class="keyword">this</span>.responseText, <span class="keyword">this</span>)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">let</span> resJson = &#123;</span><br><span class="line">                        code: <span class="keyword">this</span>.status,</span><br><span class="line">                        response: <span class="keyword">this</span>.response</span><br><span class="line">                    &#125;</span><br><span class="line">                    reject(resJson, <span class="keyword">this</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        xhr.send();</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">postJson</span>(<span class="params">url, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resole, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">        xhr.open(<span class="string">'POST'</span>, url, <span class="literal">true</span>);</span><br><span class="line">        xhr.setRequestHeader(<span class="string">'Content-type'</span>, <span class="string">'application/x-www-form-urlencoded'</span>);</span><br><span class="line"></span><br><span class="line">        xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.status === <span class="number">200</span>) &#123;</span><br><span class="line">                    resolve(<span class="built_in">JSON</span>.parse(<span class="keyword">this</span>.responseText), <span class="keyword">this</span>)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">let</span> resJson = &#123;</span><br><span class="line">                        code: <span class="keyword">this</span>.status,</span><br><span class="line">                        response: <span class="keyword">this</span>.response</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        xhr.send(<span class="built_in">JSON</span>.stringify(data))</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">getJSON(<span class="string">'/api/v1/xxx'</span>)    <span class="comment">// =&gt; 这里面是就try</span></span><br><span class="line">.catch( <span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// dosomething          // =&gt; 这里就是catch到了error，如果处理error以及返还合适的值</span></span><br><span class="line">&#125;)</span><br><span class="line">.then( <span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// dosomething          // 这里就是final</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -403,12 +406,12 @@
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/2019/04/16/[待完成]webpack4笔记(7)-原理实现/">webpack4笔记(7)-原理实现</a></p>
+  <p><span>本文标题:</span><a href="/2018/02/28/[待完成]从ajax到promise封装/">promise对象封装ajax</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
-  <p><span>发布时间:</span>2019年04月16日 - 21:04</p>
-  <p><span>最后更新:</span>2019年04月24日 - 14:04</p>
-  <p><span>原始链接:</span><a href="/2019/04/16/[待完成]webpack4笔记(7)-原理实现/" title="webpack4笔记(7)-原理实现">https://ilove-coding.github.io/2019/04/16/[待完成]webpack4笔记(7)-原理实现/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2019/04/16/[待完成]webpack4笔记(7)-原理实现/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2018年02月28日 - 00:02</p>
+  <p><span>最后更新:</span>2019年03月15日 - 11:03</p>
+  <p><span>原始链接:</span><a href="/2018/02/28/[待完成]从ajax到promise封装/" title="promise对象封装ajax">https://ilove-coding.github.io/2018/02/28/[待完成]从ajax到promise封装/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2018/02/28/[待完成]从ajax到promise封装/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -474,7 +477,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/webpack笔记/" rel="tag"><i class="fa fa-tag"></i> webpack笔记</a>
+            <a href="/tags/js笔记/" rel="tag"><i class="fa fa-tag"></i> js笔记</a>
           
         </div>
       
@@ -487,8 +490,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/16/webpack4笔记(1)-基础配置/" rel="next" title="webpack4笔记(1)-基础配置">
-                <i class="fa fa-chevron-left"></i> webpack4笔记(1)-基础配置
+              <a href="/2018/02/27/关于Date类型/" rel="next" title="关于Date类型">
+                <i class="fa fa-chevron-left"></i> 关于Date类型
               </a>
             
           </div>
@@ -497,8 +500,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/16/[待完成]常见数据结构/" rel="prev" title="常见数据结构">
-                常见数据结构 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/12/事件节流与防抖/" rel="prev" title="事件节流与防抖">
+                事件节流与防抖 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -582,7 +585,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

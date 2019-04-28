@@ -78,7 +78,7 @@
 
 
 
-  <meta name="keywords" content="js笔记," />
+  <meta name="keywords" content="webpack笔记," />
 
 
 
@@ -91,18 +91,18 @@
 
 
 
-<meta name="description" content="12345678910111213141516171819202122function getJson(url) &amp;#123;    return new Promise((resolve, reject) =&amp;gt; &amp;#123;        let xhr = new XMLHttpRequest();        xhr.open(&apos;GET&apos;, url, true);        xh">
-<meta name="keywords" content="js笔记">
+<meta name="description" content="webpack的性能瓶颈 webpack 的构建过程时间长 webpack 打包的结果体积大  常见优化方案构建过程提速策略1.减轻 loader 工作 比如 babel-loader 最常见的优化方式是，用 include 或 exclude 来帮我们避免不必要的转译，比如 webpack 官方在介绍 babel-loader 时给出的示例： 1234567891011121314module:">
+<meta name="keywords" content="webpack笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="promise对象封装ajax">
-<meta property="og:url" content="https://ilove-coding.github.io/2018/02/28/promise对象封装ajax/index.html">
+<meta property="og:title" content="webpack4笔记(6)-性能优化">
+<meta property="og:url" content="https://ilove-coding.github.io/2019/04/20/webpack4笔记(6)-性能优化/index.html">
 <meta property="og:site_name" content="潼潼爱coding">
-<meta property="og:description" content="12345678910111213141516171819202122function getJson(url) &amp;#123;    return new Promise((resolve, reject) =&amp;gt; &amp;#123;        let xhr = new XMLHttpRequest();        xhr.open(&apos;GET&apos;, url, true);        xh">
+<meta property="og:description" content="webpack的性能瓶颈 webpack 的构建过程时间长 webpack 打包的结果体积大  常见优化方案构建过程提速策略1.减轻 loader 工作 比如 babel-loader 最常见的优化方式是，用 include 或 exclude 来帮我们避免不必要的转译，比如 webpack 官方在介绍 babel-loader 时给出的示例： 1234567891011121314module:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-15T03:29:29.279Z">
+<meta property="og:updated_time" content="2019-04-26T08:11:39.963Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="promise对象封装ajax">
-<meta name="twitter:description" content="12345678910111213141516171819202122function getJson(url) &amp;#123;    return new Promise((resolve, reject) =&amp;gt; &amp;#123;        let xhr = new XMLHttpRequest();        xhr.open(&apos;GET&apos;, url, true);        xh">
+<meta name="twitter:title" content="webpack4笔记(6)-性能优化">
+<meta name="twitter:description" content="webpack的性能瓶颈 webpack 的构建过程时间长 webpack 打包的结果体积大  常见优化方案构建过程提速策略1.减轻 loader 工作 比如 babel-loader 最常见的优化方式是，用 include 或 exclude 来帮我们避免不必要的转译，比如 webpack 官方在介绍 babel-loader 时给出的示例： 1234567891011121314module:">
 
 
 
@@ -132,14 +132,14 @@
 
 
 
-  <link rel="canonical" href="https://ilove-coding.github.io/2018/02/28/promise对象封装ajax/"/>
+  <link rel="canonical" href="https://ilove-coding.github.io/2019/04/20/webpack4笔记(6)-性能优化/"/>
 
 
 
 
 
 
-  <title>promise对象封装ajax | 潼潼爱coding</title>
+  <title>webpack4笔记(6)-性能优化 | 潼潼爱coding</title>
   
 
 
@@ -266,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2018/02/28/promise对象封装ajax/">
+    <link itemprop="mainEntityOfPage" href="https://ilove-coding.github.io/2019/04/20/webpack4笔记(6)-性能优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tongtong">
@@ -283,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">promise对象封装ajax</h1>
+          <h1 class="post-title" itemprop="name headline">webpack4笔记(6)-性能优化</h1>
         
 
         <div class="post-meta">
@@ -295,8 +295,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-28T00:03:43+08:00">
-                2018-02-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-20T16:51:10+08:00">
+                2019-04-20
               </time>
             
 
@@ -318,8 +318,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/js笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">js笔记</span>
+                  <a href="/categories/webpack笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">webpack笔记</span>
                   </a>
                 </span>
 
@@ -386,9 +386,49 @@
       
 
       
-        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getJson</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">        xhr.open(<span class="string">'GET'</span>, url, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">        xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.status === <span class="number">200</span>) &#123;</span><br><span class="line">                    resolve(<span class="keyword">this</span>.responseText, <span class="keyword">this</span>)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">let</span> resJson = &#123;</span><br><span class="line">                        code: <span class="keyword">this</span>.status,</span><br><span class="line">                        response: <span class="keyword">this</span>.response</span><br><span class="line">                    &#125;</span><br><span class="line">                    reject(resJson, <span class="keyword">this</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        xhr.send();</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">postJson</span>(<span class="params">url, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resole, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">        xhr.open(<span class="string">'POST'</span>, url, <span class="literal">true</span>);</span><br><span class="line">        xhr.setRequestHeader(<span class="string">'Content-type'</span>, <span class="string">'application/x-www-form-urlencoded'</span>);</span><br><span class="line"></span><br><span class="line">        xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.status === <span class="number">200</span>) &#123;</span><br><span class="line">                    resolve(<span class="built_in">JSON</span>.parse(<span class="keyword">this</span>.responseText), <span class="keyword">this</span>)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">let</span> resJson = &#123;</span><br><span class="line">                        code: <span class="keyword">this</span>.status,</span><br><span class="line">                        response: <span class="keyword">this</span>.response</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        xhr.send(<span class="built_in">JSON</span>.stringify(data))</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">getJSON(<span class="string">'/api/v1/xxx'</span>)    <span class="comment">// =&gt; 这里面是就try</span></span><br><span class="line">.catch( <span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// dosomething          // =&gt; 这里就是catch到了error，如果处理error以及返还合适的值</span></span><br><span class="line">&#125;)</span><br><span class="line">.then( <span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// dosomething          // 这里就是final</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+        <h3 id="webpack的性能瓶颈"><a href="#webpack的性能瓶颈" class="headerlink" title="webpack的性能瓶颈"></a>webpack的性能瓶颈</h3><ul>
+<li>webpack 的构建过程时间长</li>
+<li>webpack 打包的结果体积大</li>
+</ul>
+<h3 id="常见优化方案"><a href="#常见优化方案" class="headerlink" title="常见优化方案"></a>常见优化方案</h3><h4 id="构建过程提速策略"><a href="#构建过程提速策略" class="headerlink" title="构建过程提速策略"></a>构建过程提速策略</h4><p>1.减轻 loader 工作</p>
+<p>比如 babel-loader 最常见的优化方式是，用 include 或 exclude 来帮我们避免不必要的转译，比如 webpack 官方在介绍 babel-loader 时给出的示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">  rules: [</span><br><span class="line">    &#123;</span><br><span class="line">      test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">      exclude: <span class="regexp">/(node_modules|bower_components)/</span>,</span><br><span class="line">      use: &#123;</span><br><span class="line">        loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">        options: &#123;</span><br><span class="line">          presets: [<span class="string">'@babel/preset-env'</span>]</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码帮我们规避了对庞大的 node_modules 文件夹或者 bower_components 文件夹的处理。但通过限定文件范围带来的性能提升是有限的。</p>
+<p>除此之外，如果我们选择开启缓存将转译结果缓存至文件系统，则至少可以将 babel-loader 的工作效率提升两倍。要做到这点，我们只需要为 loader 增加相应的参数设定：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loader: <span class="string">'babel-loader?cacheDirectory=true'</span></span><br></pre></td></tr></table></figure>
+<p>2.注意第三方库</p>
+<p>第三方库以 node_modules 为代表，它们庞大得可怕，却又不可或缺。DllPlugin 是基于 Windows 动态链接库（dll）的思想被创作出来的。这个插件会把第三方库单独打包到一个文件中，这个文件就是一个单纯的依赖库。这个依赖库不会跟着你的业务代码一起被重新打包，只有当依赖自身发生版本变化时才会重新打包。</p>
+<p>3.Happypack——将 loader 由单进程转为多进程</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> HappyPack = <span class="built_in">require</span>(<span class="string">'happypack'</span>)</span><br><span class="line"><span class="comment">// 手动创建进程池</span></span><br><span class="line"><span class="keyword">const</span> happyThreadPool =  HappyPack.ThreadPool(&#123; <span class="attr">size</span>: os.cpus().length &#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      ...</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">        <span class="comment">// 问号后面的查询参数指定了处理这类文件的HappyPack实例的名字</span></span><br><span class="line">        loader: <span class="string">'happypack/loader?id=happyBabel'</span>,</span><br><span class="line">        ...</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">new</span> HappyPack(&#123;</span><br><span class="line">      <span class="comment">// 这个HappyPack的“名字”就叫做happyBabel，和楼上的查询参数遥相呼应</span></span><br><span class="line">      id: <span class="string">'happyBabel'</span>,</span><br><span class="line">      <span class="comment">// 指定进程池</span></span><br><span class="line">      threadPool: happyThreadPool,</span><br><span class="line">      loaders: [<span class="string">'babel-loader?cacheDirectory'</span>]</span><br><span class="line">    &#125;)</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="构建结果体积压缩"><a href="#构建结果体积压缩" class="headerlink" title="构建结果体积压缩"></a>构建结果体积压缩</h4><p>1.文件结构可视化，找出导致体积过大的原因</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> BundleAnalyzerPlugin = <span class="built_in">require</span>(<span class="string">'webpack-bundle-analyzer'</span>).BundleAnalyzerPlugin;</span><br><span class="line"> </span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> BundleAnalyzerPlugin()</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.拆分资源</p>
+<p>代码分割</p>
+<p>3.删除冗余代码（Tree-Shaking）</p>
+<p>典型的应用，就是 Tree-Shaking。基于 import/export 语法，Tree-Shaking 可以在编译的过程中获悉哪些模块并没有真正被使用，这些没用的代码，在最后打包的时候会被去除。</p>
+<p>4.按需加载</p>
+<ul>
+<li>一次不加载完所有的文件内容，只加载此刻需要用到的那部分（会提前做拆分）</li>
+<li>当需要更多内容时，再对用到的内容进行即时加载</li>
+</ul>
+<p>首先 webpack 的配置文件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">    path: path.join(__dirname, <span class="string">'/../dist'</span>),</span><br><span class="line">    filename: <span class="string">'app.js'</span>,</span><br><span class="line">    <span class="comment">// 指定 chunkFilename</span></span><br><span class="line">    chunkFilename: <span class="string">'[name].[chunkhash:5].chunk.js'</span>,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>路由处的代码也要做一下配合：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Router(&#123;</span><br><span class="line">  mode: <span class="string">'history'</span>,</span><br><span class="line">  routes: [</span><br><span class="line">    &#123;</span><br><span class="line">      name: <span class="string">'Main'</span>,</span><br><span class="line">      path: <span class="string">'/main'</span>,</span><br><span class="line">      component: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'@/views/main/'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      path: <span class="string">'/demo'</span>,</span><br><span class="line">      component: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'@/views/demo/'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="Gzip压缩原理"><a href="#Gzip压缩原理" class="headerlink" title="Gzip压缩原理"></a>Gzip压缩原理</h3><p>压缩并不只是构建工具的工作，日常开发有个很方便的压缩操作：开启Gzip。只需在 request headers 中加上这么一句：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">accept</span>-encoding:gzip</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>HTTP 压缩是一种内置到网页服务器和网页客户端中以改进传输速度和带宽利用率的方式。在使用 HTTP 压缩的情况下，HTTP 数据在从服务器发送前就已压缩：兼容的浏览器将在下载所需的格式前宣告支持何种方法给服务器；不支持压缩方法的浏览器将下载未经压缩的数据。最常见的压缩方案包括 Gzip 和 Deflate。</p>
+</blockquote>
+<p>HTTP 压缩就是以缩小体积为目的，对 HTTP 内容进行重新编码的过程</p>
+<p>Gzip 的内核就是 Deflate，目前我们压缩文件用得最多的就是 Gzip。可以说，Gzip 就是 HTTP 压缩的经典例题。</p>
+<p>适用场景：</p>
+<p>如果项目不是极端迷你的超小型文件，建议试试 Gzip。</p>
+<p>疑问：压缩 Gzip，服务端要花时间；解压 Gzip，浏览器要花时间。中间节省出来的传输时间，真的那么可观吗？</p>
+<p>答案是肯定的。如果你手上的项目是 1k、2k 的小文件，那确实有点高射炮打蚊子的意思，不值当。但更多的时候，我们处理的都是具备一定规模的项目文件。实践证明，这种情况下压缩和解压带来的时间开销相对于传输过程中节省下的时间开销来说，可以说是微不足道的。</p>
+<h5 id="webpack-的-Gzip-和服务端的-Gzip"><a href="#webpack-的-Gzip-和服务端的-Gzip" class="headerlink" title="webpack 的 Gzip 和服务端的 Gzip"></a>webpack 的 Gzip 和服务端的 Gzip</h5><p>一般来说，Gzip 压缩是服务器的活儿：服务器了解到我们这边有一个 Gzip 压缩的需求，它会启动自己的 CPU 去为我们完成这个任务。而压缩文件这个过程本身是需要耗费时间的，可以理解为我们以服务器压缩的时间开销和 CPU 开销（以及浏览器解析压缩文件的开销）为代价，省下了一些传输过程中的时间开销。</p>
+<p>既然存在着这样的交换，那么就要求我们学会权衡。服务器的 CPU 性能不是无限的，如果存在大量的压缩需求，服务器也扛不住的。服务器一旦因此慢下来了，用户还是要等。Webpack 中 Gzip 压缩操作的存在，事实上就是为了在构建过程中去做一部分服务器的工作，为服务器分压。</p>
+<p>因此，这两个地方的 Gzip 压缩，谁也不能替代谁。它们必须和平共处，好好合作。作为开发者，我们也应该结合业务压力的实际强度情况，去做好这其中的权衡。</p>
 
       
     </div>
@@ -406,12 +446,12 @@
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/2018/02/28/promise对象封装ajax/">promise对象封装ajax</a></p>
+  <p><span>本文标题:</span><a href="/2019/04/20/webpack4笔记(6)-性能优化/">webpack4笔记(6)-性能优化</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 tongtong 的个人博客">tongtong</a></p>
-  <p><span>发布时间:</span>2018年02月28日 - 00:02</p>
-  <p><span>最后更新:</span>2019年03月15日 - 11:03</p>
-  <p><span>原始链接:</span><a href="/2018/02/28/promise对象封装ajax/" title="promise对象封装ajax">https://ilove-coding.github.io/2018/02/28/promise对象封装ajax/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2018/02/28/promise对象封装ajax/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2019年04月20日 - 16:04</p>
+  <p><span>最后更新:</span>2019年04月26日 - 16:04</p>
+  <p><span>原始链接:</span><a href="/2019/04/20/webpack4笔记(6)-性能优化/" title="webpack4笔记(6)-性能优化">https://ilove-coding.github.io/2019/04/20/webpack4笔记(6)-性能优化/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://ilove-coding.github.io/2019/04/20/webpack4笔记(6)-性能优化/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -477,7 +517,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/js笔记/" rel="tag"><i class="fa fa-tag"></i> js笔记</a>
+            <a href="/tags/webpack笔记/" rel="tag"><i class="fa fa-tag"></i> webpack笔记</a>
           
         </div>
       
@@ -490,8 +530,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/27/关于Date类型/" rel="next" title="关于Date类型">
-                <i class="fa fa-chevron-left"></i> 关于Date类型
+              <a href="/2019/04/17/canvas高清屏中绘制模糊问题/" rel="next" title="canvas高清屏中绘制模糊问题">
+                <i class="fa fa-chevron-left"></i> canvas高清屏中绘制模糊问题
               </a>
             
           </div>
@@ -500,8 +540,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/12/事件节流与防抖/" rel="prev" title="事件节流与防抖">
-                事件节流与防抖 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/20/webpack4笔记(2)-进阶知识/" rel="prev" title="webpack4笔记(2)-进阶知识">
+                webpack4笔记(2)-进阶知识 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -565,8 +605,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -585,7 +634,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -679,6 +728,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack的性能瓶颈"><span class="nav-number">1.</span> <span class="nav-text">webpack的性能瓶颈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见优化方案"><span class="nav-number">2.</span> <span class="nav-text">常见优化方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构建过程提速策略"><span class="nav-number">2.1.</span> <span class="nav-text">构建过程提速策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建结果体积压缩"><span class="nav-number">2.2.</span> <span class="nav-text">构建结果体积压缩</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gzip压缩原理"><span class="nav-number">3.</span> <span class="nav-text">Gzip压缩原理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#webpack-的-Gzip-和服务端的-Gzip"><span class="nav-number">3.0.1.</span> <span class="nav-text">webpack 的 Gzip 和服务端的 Gzip</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
